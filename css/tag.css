@@ -1,4 +1,7 @@
 @charset "UTF-8";
+body {
+    font:normal normal 12px/12px arial,sans-serif;
+}
 /* Clearfix */
 .clearfix:after, #content:after{ content:"\0020"; display:block; clear:both; height:0; font-size:0;}
 .clearfix{ zoom:1;}

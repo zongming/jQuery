@@ -35,7 +35,7 @@
                             widget.css({
                                 "background-position" : "0px " + now + "px"
                             });                        }
-                    })
+                    });
                 
                 // these are not working in firefox, 
                 // "background-position" can't be animated, "background-position-y" can be animated but not work in firefox

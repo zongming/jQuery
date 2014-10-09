@@ -78,6 +78,11 @@
 			    top : 10px;
 			    left: 400px;
 			}
+			#number1 {
+			    position: absolute;
+			    top : 100px;
+			    left: 400px;
+			}
 			.num {
 			    display: inline-block;
 			    background: url('images/num.png') black no-repeat 0 0;
@@ -93,6 +98,7 @@
 		</div>
 		<div id="point"></div>
 		<div id="number"></div>
+		<div id="number1"></div>
 		
 		<script src="js/jquery-1.11.1.js"></script>
 		<script src="js/jquery-ui.js"></script>
@@ -139,7 +145,7 @@
 				// numbers
 				// var n = "123456789".split("");				var n = "94299789".split("");
 				                $.each(n, function(index, n) {
-                   $('<i></i>').appendTo('#number').num1({number: Number(n)});                               // $('<i></i>').appendTo('#number').num({number: Number(n)});                            });
+                   $('<i></i>').appendTo('#number').num1({number: Number(n)});                               $('<i></i>').appendTo('#number').num({number: Number(n)});                            });
                 // throw points    			setInterval(throwIt, 1000);
     			function throwIt() {
     				$('#point').animate(
