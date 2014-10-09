@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>tag</title>
+        <link type="text/css" rel="stylesheet" href="css/tag.css" />
+        <style>
+            ul li {
+                list-style: none;
+            }
+        </style>
+    </head>
+    
+    <body>
+        product tags (3 at most):
+        <ul id="pub-tags-add-list" class="clearfix"></ul>
+        tags recommended:
+        <ul id="pub-tags-list" class="clearfix"></ul>
+        or add tags yourselves:
+        <div id="pub-tags-add" class="clearfix">
+            <input id="pub-tags-input" autocomplete="off" maxlength="10" class="input_text fl" type="text" style="height:18px"/>
+            <div id="pub-tags-box" class="clearfix">
+                <ul id="pub-tags-rec">
+                </ul>
+            </div>
+            <input type="button" id="pub-btn-add" value="add">
+            </input>
+        </div>
+        <script type="text/javascript" src="js/jquery-1.11.1.js"></script>        
+        <script type="text/javascript" src="js/jquery-ui.js"></script>        
+        <script type="text/javascript" src="js/tag.js"></script>        
+    </body>
+</html>
