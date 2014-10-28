@@ -1,0 +1,78 @@
+@charset "UTF-8";
+body {
+    font:normal normal 12px/12px arial,sans-serif;
+}
+/* Clearfix */
+.clearfix:after, #content:after{ content:"\0020"; display:block; clear:both; height:0; font-size:0;}
+.clearfix{ zoom:1;}
+.clear{ clear:both;}
+
+/*product tags*/
+.ptag {
+    cursor: pointer;
+    float : left;
+    margin: 3px 7px 0px 3px;
+    height : 34px;
+    line-height: 22px;
+   
+    background: url(../images/tag/arrow.png) no-repeat left top;
+}
+.ptag > .tagbox {
+    background-color : #F9F9F9;
+    height: 20px;
+    line-height: 20px;
+    border : 1px solid #D9D9D9;
+    border-left: none;
+    margin-left: 7px;
+}
+.ptag .addIcon {
+    float: left;
+    margin-top: 6px;
+
+    margin-left: 4px;
+    width : 8px;
+    height : 8px;
+    background: url(../images/tag/add.png) no-repeat;
+    
+    vertical-align: middle;
+}
+
+.ptag .addIcon1 {
+    background: url(../images/tag/added.png) no-repeat;
+}
+
+.ptag .taglabel {
+    white-space:nowrap;
+    float: left;
+    margin-left: 4px;
+    margin-right:  4px;
+}
+.ptag .deleteIcon {
+    float: left;
+    margin-top: 4px;
+    
+    margin-right:  4px;
+    width : 12px;
+    height : 14px;
+    background: url(../images/tag/delete0.png) no-repeat;
+}
+.ptag :hover{
+    color : orange;
+}
+.ptag:hover .deleteIcon{
+    background: url(../images/tag/delete1.png) no-repeat;
+}
+.ptag-disabled {
+    background: url(../images/tag/arrow_disabled.png) no-repeat  left top;
+}
+.ptag-disabled .tagbox{
+    background-color: #efefef;
+}
+.ptag-disabled,
+.ptag-disabled :hover{
+    color: #c2c2c2;
+}
+.ptag-disabled .addIcon {
+    background: url(../images/tag/add_disabled.png) no-repeat;
+}
+/*tags结束*/
