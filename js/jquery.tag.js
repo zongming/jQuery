@@ -55,7 +55,7 @@
     });
 
     window.tagManger = (function() {
-        var tagsAdded = [];
+        var tagsAdded = [], maxNumberOfTags = 3;
 
         function init(added, allTags) {
             $.each(added, function(index, tag) {
@@ -70,14 +70,20 @@
 
             $.each(allTags, function(index, tag) {
                 $("<li></li>").appendTo('#pub-tags-list').ptag(tag).on("ptagclick", function(event, ui) {
-                    var f = false;
-                    $('#pub-tags-add-list').find(">:qbao-ptag").each(function(index) {
-                        if ($(this).ptag("is", tag.labelName)) {
-                            f = true;
+                    var added = $(this).ptag("option", "added");
+                    if(!added) {
+                        var has = false;
+                        $('#pub-tags-add-list').find(">:qbao-ptag").each(function(index) {
+                            if ($(this).ptag("is", tag.labelName)) {
+                                has = true;
+                                return false;
+                            }
+                        });
+                        if (!has) {
+                            addTag(tag);
                         }
-                    });
-                    if (!f) {
-                        addTag(tag);
+                    } else {
+                        removeTag(tag);
                     }
                 });
             });
@@ -98,12 +104,13 @@
             });
             return i;
         }    
+        
         function getTags() {
             return tagsAdded;
         }
 
         function validateTag(tag) {
-            if (tagsAdded.length >= 3) {
+            if (tagsAdded.length >= maxNumberOfTags) {
                 alert("最多只能添加3个标签");
                 return false;
             }
@@ -118,55 +125,64 @@
             }
             return true;
         }
+        
+        function removeTag(tag) {
+            var $tag = $('#pub-tags-add-list').find(">:qbao-ptag").filter(function(index, element ) {
+                return $(element).ptag("is", tag.labelName);
+            });
+            
+            $tag.remove();
+            
+            $('#pub-tags-list').find(">:qbao-ptag").filter(function(index, element ) {
+                return $(element).ptag("is", tag.labelName);
+            }).each(function(index) {
+                $(this).ptag({
+                    added : false
+                });
+            });
+
+            var index = isInSelecton(tag);
+            tagsAdded.splice(index, 1);
+
+            if (tagsAdded.length < maxNumberOfTags) {
+                $('#pub-tags-list').find(">:qbao-ptag").each(function(index) {
+                    if(isInSelecton($(this).ptag("option")) == -1) {
+                        $(this).ptag({
+                            disabled : false
+                        });
+                    }
+                });
+            }
+
+            if (tagsAdded.length == 0) {//fix ie7 bug
+                $('#pub-tags-add-list').hide();
+            }
+        }
+        
         function addTag(tag) {
             var b = validateTag(tag);
             if(!b) {
                 return;
             }
 
-            $('#pub-tags-list').find(">:qbao-ptag").each(function(index) {
-                if ($(this).ptag("is", tag.labelName)) {
-                    $(this).ptag({
-                        added : true
-                    });
-                }
+            $('#pub-tags-list').find(">:qbao-ptag").filter(function(index, element ) {
+                return $(element).ptag("is", tag.labelName);
+            }).each(function(index) {
+                $(this).ptag({
+                    added : true
+                });
             });
             
             tag.added = true;
             delete tag.type;
 
             $("<li></li>").appendTo('#pub-tags-add-list').ptag(tag).on("ptagclick", function(event, ui) {
-                $(ui).remove();
-
-                $('#pub-tags-list').find(">:qbao-ptag").each(function(index) {
-                    if ($(this).ptag("is", tag.labelName)) {
-                        $(this).ptag({
-                            added : false
-                        });
-                    }
-                });
-
-                var index = isInSelecton(tag);
-                tagsAdded.splice(index, 1);
-
-                if (tagsAdded.length < 3) {
-                    $('#pub-tags-list').find(">:qbao-ptag").each(function(index) {
-                        if(isInSelecton($(this).ptag("option")) == -1) {
-                            $(this).ptag({
-                                disabled : false
-                            });
-                        }
-                    });
-                }
-
-                if (tagsAdded.length == 0) {//fix ie7 bug
-                    $('#pub-tags-add-list').hide();
-                }
+                removeTag(tag);
             });
 
             tagsAdded.push(tag);
 
-            if (tagsAdded.length >= 3) {
+            if (tagsAdded.length >= maxNumberOfTags) {
                 $('#pub-tags-list').find(">:qbao-ptag").each(function(index) {
                     if(isInSelecton($(this).ptag("option")) == -1) {
                         $(this).ptag({
@@ -184,6 +200,7 @@
             init : init,
             getTags : getTags,
             addTag : addTag,
+            removeTag : removeTag,
             validateTag : validateTag
         };
     })();

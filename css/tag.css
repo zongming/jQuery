@@ -38,7 +38,7 @@ body {
 }
 
 .ptag .addIcon1 {
-    background: url(../images/tag/added.png) no-repeat;
+    background: url(../images/tag/remove.png) no-repeat;
 }
 
 .ptag .taglabel {
@@ -70,6 +70,7 @@ body {
 }
 .ptag-disabled,
 .ptag-disabled :hover{
+    cursor: default;
     color: #c2c2c2;
 }
 .ptag-disabled .addIcon {
