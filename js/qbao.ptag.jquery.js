@@ -51,7 +51,16 @@
         },
         is : function(name) {
             return this.options.labelName == name;
-        }
+        },
+        
+        _destroy: function() {
+            this.box.remove();
+            this.addIcon.remove();
+            this.labelSpan.remove();
+            this.deleteIcon.remove();
+    
+            this.widget().removeClass("ptag ptag-disabled");
+        },
     });
 
     window.tagManger = (function() {
