@@ -6,50 +6,30 @@
         <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no" />
         <link type="text/css" href="css/common.css" rel="stylesheet" />
     </head>
-    <body>
+    <body class="bgf7">
         <div class="fr_header">
-            <a href="#" class="icon_return">
-                <img src="images/arrow_left.png">
-                返回
-            </a>
-            <em>签到</em>
-            <a href="#" class="icon_info">
-                <img src="images/info.png">
-            </a>
+            <a href="#" class="icon_return"> <img src="images/arrow_left.png"> 返回 </a>
+            <em>完成签到拼图</em>
+            <a href="#" class="icon_info"> <img src="images/info.png"> </a>
         </div>
-        <div class="fr_wrap qd-list">
-            <!-- <ul>
-                <li>
-                    <a>
-                        <img src="other/img1.png" />
-                    </a>
-                    <a>
-                    <img src="other/img2.png" />
-                    </a>
-                </li>
-                <li>
-                    <a>
-                        <img src="other/img3.png" />
-                    </a>
-                    <a>
-                        <img src="other/img4.png" />
-                    </a>
-                </li>
-                <li>
-                    <a>
-                        <img src="other/img5.png" />
-                    </a>
-                    <a>
-                        <img src="other/img6.png" />
-                    </a>
-                </li>
-            </ul> -->
-            <div class="progress-bar">
-                <div class="progress"></div>
-                <div class="label"></div>
+        <div class="opertionAction">
+            <div id="myWidget">
+                <div class="ddBox posNum1"></div>
+                <div class="ddBox posNum2"></div>
+                <div class="ddBox posNum3"></div>
+                <div class="ddBox posNum4"></div>
+                <div class="ddBox posNum5"></div>
+                <div class="ddBox posNum6"></div>
             </div>
         </div>
-        
+
+        <div class="progress-bar">
+            <div class="progress" style="width: 100%;"></div>
+            <div class="label">
+                完成签到
+            </div>
+        </div>
+
         <div class="desc-pop" style="display: none;">
             <div class="headLine">
                 签到说明
@@ -66,26 +46,33 @@
                 <a href="#">确定</a>
             </div>
         </div>
-        
         <script type="text/javascript" src="js/lib/jquery-1.11.1.js"></script>
-        <script type="text/javascript" src="js/mobile.js"></script>
+        <script type="text/javascript" src="js/mobile.js"></script><!--拼图插件功能-->
+        <script type="text/javascript" src="js/sortable.js"></script><!--拼图插件功能-->
         <script type="text/javascript">
             $(function() {
                 $('.progress-bar').progress(5000).done(function() {
-                    $('.label').text("下一步");
+                    $('.label').text("完成签到");
                     $('.progress-bar').on("click", function() {
-                        alert("next step");
+                        var data = $('#myWidget').data("orders");
+                        alert(data);
                     });
                 });
             });
+            
+            $(function() {
+                $('#myWidget').mbox(2, 3, 90, 90, 5);
+            });
+
             $(function() {
                 $('.btnBar > a').on('click', function() {
-                   $('.desc-pop').close(); 
+                    $('.desc-pop').close();
                 });
                 $('.icon_info').on('click', function() {
                     $('.desc-pop').popup();
                 });
             });
         </script>
+
     </body>
 </html>
