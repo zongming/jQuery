@@ -78,8 +78,12 @@ $.fn.extend({
 
 // 签到排序
 (function() {
-    var orders = [], $c, $t, topLeftX, topLeftY, startX, startY, currentX, currentY, startPosX, startPosY, cols, boxW, boxH, margin, handlers = {
+    var orders = [], $c, $t, topLeftX, topLeftY, startX, startY, currentX, currentY, startPosX, startPosY, cols, boxW, boxH, margin, getAbsolutePosition,
+    
+    handlers = {
         touchstart : function(e) {
+            getAbsolutePosition();
+            
             $c = $(this);
             
             if(e.type == "touchstart") {
@@ -184,7 +188,7 @@ $.fn.extend({
         $t.data("position", p1);
     }
     
-    function findPosition(index) {
+    function findRelativePosition(index) {
         var i = Math.floor(index / cols);
         var j = index % cols;
         return {
@@ -210,7 +214,7 @@ $.fn.extend({
                 $(element).data("number", index + 1);
                 orders.push(index + 1);
                 
-                var p = findPosition(index);
+                var p = findRelativePosition(index);
                 $(element).css({
                     width: boxWidth + "px",
                     height: boxHeight + "px",
@@ -220,22 +224,22 @@ $.fn.extend({
                 });
                 
                 $(element).data("position", p);
-                $(element).addClass("ddBox");
                 $(element).on("touchstart mousedown", handlers.touchstart);
                 $(element).on("touchmove mousemove", handlers.touchmove);
                 $(element).on("touchend mouseup", handlers.touchend);
             });
             
             var that = this;
-            $(window).resize((function() {
-                var child = that.filter(':first-child');
+            getAbsolutePosition = function() {
+                var child = that.find('.ddBox').filter(function(index, element) {
+                    return $(element).data("number") == orders[0];
+                });
                 topLeftX = child.offset().left;
                 topLeftY = child.offset().top;
-                return arguments.callee;
-            })());
+            };
             
             this.data("orders", orders);
-        },
+        }
     });
 })();
 

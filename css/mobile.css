@@ -278,7 +278,38 @@ textarea {
     background-size:64px auto;
     background-position:50% 50%;
 }
-
+.promptBlock ul li {
+    float: left;
+    width: 4.142rem;
+    height: 4.142rem;
+    border: #E6E6E6 0.071rem solid;
+    border-radius: 0.285rem;
+    margin: 0.178rem;
+    text-align: center;
+    line-height: 4.142rem;
+    font-size: 1.285em;
+    background-color: #FFF;
+}
+.promptBlock ul {
+    display: block;
+    width: 14rem;
+    height: 10rem;
+    margin: 0 auto;
+    padding: 0.714rem 0rem;
+}
+.opertionNotice{
+    text-align:center;
+    width:100%;
+    font-size:14px;
+    line-height:18px;
+    margin-top:14px;
+}
+.opertionNotice span{
+    display:block;
+    line-height:18px;
+    font-size:12px;
+    color:#fd472b;
+}
 /*fr_footer*/
 .fr_footer {
 
