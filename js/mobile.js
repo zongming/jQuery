@@ -196,9 +196,9 @@ $.fn.extend({
             left : j * boxW + j * margin
         };
     }
-
-    $.fn.extend({
-        mbox : function(rowNumber, colNumber, boxWidth, boxHeight, boxMargin) {
+    
+    window.mbox = 
+        function(rowNumber, colNumber, boxWidth, boxHeight, boxMargin) {
             margin = boxMargin || 10;
             cols = colNumber || 3;
             boxW = boxWidth || 100;
@@ -239,8 +239,7 @@ $.fn.extend({
             };
             
             this.data("orders", orders);
-        }
-    });
+        };
 })();
 
 
