@@ -1,0 +1,34 @@
+<html>
+	<head>
+		<title>a light point example</title>
+		<style>
+			.a {
+/*				display: block;*/
+				position: absolute;
+				width: 20px;
+				height: 20px;
+				background: url(images/light_point_2.png) no-repeat;
+				cursor: pointer;
+			}
+		</style>
+	</head>
+	<body>
+		<span class="a"></span>
+		<script src="js/lib/jquery-1.11.1.js"></script>
+		<script>
+			function pointLight(o, h, n) {
+				//alert(n);
+				var _o = $(o), i = 0;
+				setInterval(function() {
+					i < n ? i++ : i = 0;
+					_o.css({
+						"backgroundPosition" : "0px " + (-i * h) + "px"
+					});
+				}, 200);
+			}
+
+			pointLight(".a", 20, 7);
+		</script>
+	</body>
+
+</html>
