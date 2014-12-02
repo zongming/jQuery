@@ -84,19 +84,21 @@ $(function() {
         }
     }
     
-    window.start = start;
-
-    start(5).done(function(a) {
-        var n = 0;
-        var loop = setInterval(function() {
-            n++;
-            if(n < 7) {
-                $imgs.eq(a).toggleClass('curr');
-            } else {
-                clearInterval(loop);
-            }
-        }, 300);
-    });
+    window.start = function(t) {
+        start(t).done(function(a) {
+            var n = 0;
+            var loop = setInterval(function() {
+                n++;
+                if(n < 7) {
+                    $imgs.eq(a).toggleClass('curr');
+                } else {
+                    clearInterval(loop);
+                }
+            }, 300);
+        });
+    };
+    
+    window.start(5);
     
     $.error("please call start(5) to start the game");
 });
