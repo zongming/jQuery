@@ -54,12 +54,14 @@ $(function() {
         return d.promise();
     }
     
-    function end() {
-        return d.resolve();
+    function stop() {
+        ending = false;
+        clearInterval(loopFun);
+        return d.resolve(current);
     }
 
-    function next(x, y) {
-        if ((now >= x && now <= y) || ending) {
+    function next(start, end) {
+        if (ending || (now >= start && now <= end)) {
             $imgs.removeClass('curr');
 
             current = now % 10;
@@ -67,9 +69,7 @@ $(function() {
             $imgs.eq(current).addClass('curr');
 
             if (ending && current == target) {
-                ending = false;
-                clearInterval(loopFun);
-                end();
+                stop();
             }
         } else {
             loop++;
@@ -79,15 +79,17 @@ $(function() {
             } else {
                 ending = true;
                 clearInterval(loopFun);
-                loopFun = setInterval($.proxy(next, null, -1, -1), 500);
+                loopFun = setInterval($.proxy(next, null), 500);
             }
         }
     }
     
     window.start = start;
 
-    start(5).done(function() {
-        console.log("done!!! " + current);
+    start(5).done(function(a) {
+        setTimeout(function() {
+            alert(a);
+        }, 200);
     });
     
     $.error("please call start(5) to start the game");
