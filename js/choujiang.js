@@ -87,9 +87,15 @@ $(function() {
     window.start = start;
 
     start(5).done(function(a) {
-        setTimeout(function() {
-            alert(a);
-        }, 200);
+        var n = 0;
+        var loop = setInterval(function() {
+            n++;
+            if(n < 7) {
+                $imgs.eq(a).toggleClass('curr');
+            } else {
+                clearInterval(loop);
+            }
+        }, 300);
     });
     
     $.error("please call start(5) to start the game");
