@@ -25,81 +25,91 @@ $(function() {
 });
 
 $(function() {
-    var d;
-    var $imgs = $('img');
-    var loopFun, now, loop, ending, target, 
-        loops = [{
-            start : 0,
-            end : 4,
-            interval : 500
-        }, {
-            start : 5,
-            end : 29,
-            interval : 100
-        }];
+    var $imgs = $('img'), count = $imgs.size();
+    var deffer, loopFun, step, loop, ending, target, running,
+        loops = [
+                    // { start : 0, end : 4, interval : 400 }, 
+                    // { start : 5, end : 29, interval : 100 }
+                ];
+        // loops = [
+            // { start : 0, end : 0, interval : 1000 }, 
+            // { start : 1, end : 1, interval : 800 },
+            // { start : 2, end : 2, interval : 600 },
+            // { start : 3, end : 3, interval : 400 },
+            // { start : 4, end : 4, interval : 200 },
+            // { start : 5, end : 29, interval : 100 }
+        // ];
     
     function start(t) {
-        d = new $.Deferred();
+        if(running) {
+            return $.Deferred().reject("not ready");
+        }
+        deffer = $.Deferred();
+        running = true;
         
-        target = t % 10;
-        ending = false;
-        loop = 0;
-        now = 0;
+        target = t;
         
-        clearInterval(loopFun);
-        // loopFun = setInterval(next, loops[loop].interval, loops[loop].start, loops[loop].end); not work in IE789
-        // loopFun = setInterval(next.bind(null, loops[loop].start, loops[loop].end), loops[loop].interval); not work in IE78
-        loopFun = setInterval($.proxy(next, null, loops[loop].start, loops[loop].end), loops[loop].interval);
+        step = -1;
+        loop = -1;
+        next(0, 0);
         
-        return d.promise();
+        return deffer.promise();
     }
     
     function stop() {
+        running = false;
         ending = false;
         clearInterval(loopFun);
-        return d.resolve(current);
+        return deffer.resolve(current);
     }
 
     function next(start, end) {
-        if (ending || (now >= start && now <= end)) {
+        if (ending || (step >= start && step <= end)) {
             $imgs.removeClass('curr');
 
-            current = now % 10;
-            now++;
+            current = step % count;
             $imgs.eq(current).addClass('curr');
+            step++;
 
             if (ending && current == target) {
                 stop();
             }
         } else {
             loop++;
+            if(step == -1) {
+                step = 0;
+            }
             clearInterval(loopFun);
             if (loop < loops.length) {
-                loopFun = setInterval($.proxy(next, null, loops[loop].start, loops[loop].end), loops[loop].interval);
+                // loopFun = setInterval(next, loops[loop].interval, loops[loop].start, loops[loop].end); not work in IE789
+                // loopFun = setInterval(next.bind(null, loops[loop].start, loops[loop].end), loops[loop].interval); not work in IE78
+                loopFun = setInterval($.proxy(next(loops[loop].start, loops[loop].end), null, loops[loop].start, loops[loop].end), loops[loop].interval);
             } else {
                 ending = true;
-                clearInterval(loopFun);
-                loopFun = setInterval($.proxy(next, null), 500);
+                loopFun = setInterval($.proxy(next(), null), 400);
             }
         }
+        return next;
     }
     
-    window.start = function(t) {
-        start(t).done(function(a) {
-            var n = 0;
-            var loop = setInterval(function() {
-                n++;
-                if(n < 7) {
-                    $imgs.eq(a).toggleClass('curr');
-                } else {
-                    clearInterval(loop);
-                }
-            }, 300);
-        });
+    window.startCJ = function(t) {
+        start(t)
+            .done(function(a) {
+                var n = 0;
+                var loop = setInterval(function() {
+                    n++;
+                    if(n < 7) {
+                        $imgs.eq(a).toggleClass('curr');
+                    } else {
+                        clearInterval(loop);
+                    }
+                }, 300);
+            })
+            .fail(function(error) {
+                alert(error);
+            });
     };
     
-    window.start(5);
-    
-    $.error("please call start(5) to start the game");
+    window.startCJ(8);
 });
 
