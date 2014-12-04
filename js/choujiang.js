@@ -26,19 +26,18 @@ $(function() {
 
 $(function() {
     var $imgs = $('img'), count = $imgs.size();
-    var deffer, loopFun, step, loop, ending, target, running,
-        loops = [
-                    // { start : 0, end : 4, interval : 400 }, 
-                    // { start : 5, end : 29, interval : 100 }
-                ];
-        // loops = [
-            // { start : 0, end : 0, interval : 1000 }, 
-            // { start : 1, end : 1, interval : 800 },
-            // { start : 2, end : 2, interval : 600 },
-            // { start : 3, end : 3, interval : 400 },
-            // { start : 4, end : 4, interval : 200 },
-            // { start : 5, end : 29, interval : 100 }
-        // ];
+    var deffer, steps, target, running,
+        loops = {
+            0: 400,
+            1: 300,
+            2: 200,
+            3: 100,
+            
+            30: 100,
+            "-1": 200,
+            "-2": 300,
+            "-3": 400
+        };
     
     function start(t) {
         if(running) {
@@ -49,47 +48,64 @@ $(function() {
         
         target = t;
         
-        step = -1;
-        loop = -1;
-        next(0, 0);
+        loops = {
+            0: 400,
+            1: 300,
+            2: 200,
+            3: 100,
+        };
+        
+        var total = t + 30;
+        var m = (total - 4);
+        loops[m] = 100;
+        loops["-1"] = 200;
+        loops["-2"] = 300;
+        loops["-3"] = 400;
+        
+        console.log(loops);
+        
+        steps = [];
+        
+        var n = 0, last;
+        $.each(loops, function(index, interval) {
+            var i = Number(index);
+            if(n == i){
+                steps[i] = interval;
+                n++;
+            } else if(n < i) {
+                for(var j = n; j <= i; j++) {
+                    steps[j] = last;
+                    n++;
+                }
+            } else if(i < 0) {
+                var x = -i + (n - 1); 
+                steps[x] = interval;
+            }
+            last = interval;
+        });
+        
+        next(0);
         
         return deffer.promise();
     }
     
     function stop() {
         running = false;
-        ending = false;
-        clearInterval(loopFun);
         return deffer.resolve(current);
     }
 
-    function next(start, end) {
-        if (ending || (step >= start && step <= end)) {
-            $imgs.removeClass('curr');
-
-            current = step % count;
-            $imgs.eq(current).addClass('curr');
-            step++;
-
-            if (ending && current == target) {
-                stop();
-            }
-        } else {
-            loop++;
-            if(step == -1) {
-                step = 0;
-            }
-            clearInterval(loopFun);
-            if (loop < loops.length) {
-                // loopFun = setInterval(next, loops[loop].interval, loops[loop].start, loops[loop].end); not work in IE789
-                // loopFun = setInterval(next.bind(null, loops[loop].start, loops[loop].end), loops[loop].interval); not work in IE78
-                loopFun = setInterval($.proxy(next(loops[loop].start, loops[loop].end), null, loops[loop].start, loops[loop].end), loops[loop].interval);
-            } else {
-                ending = true;
-                loopFun = setInterval($.proxy(next(), null), 400);
-            }
+    function next(step) {
+        if(step > steps.length) {
+            stop();
+            return;
         }
-        return next;
+        $imgs.removeClass('curr');
+
+        current = step % count;
+        $imgs.eq(current).addClass('curr');
+        
+        var interval = steps[step];
+        setTimeout($.proxy(next, null, step + 1), interval);
     }
     
     window.startCJ = function(t) {
@@ -102,6 +118,7 @@ $(function() {
                         $imgs.eq(a).toggleClass('curr');
                     } else {
                         clearInterval(loop);
+                        alert(a);
                     }
                 }, 300);
             })
