@@ -27,10 +27,11 @@ $(function() {
 $(function() {
     var $imgs = $('img'), count = $imgs.size();
     var deffer, running, current,
-        endingPoint = 0, 
+        ending = false,
+        endingPoint = -1, 
+        starts = [500, 400, 300, 200, 100],
         middle = 100,
-        starts = [400, 300, 200, 100],
-        ends = [100, 200, 300, 400],
+        ends = [100, 200, 300, 400, 500],
         minSteps = 30;
     
     function start() {
@@ -40,6 +41,7 @@ $(function() {
         deffer = $.Deferred();
         running = true;
         ending = false;
+        endingPoint = -1;
         
         next(0);
         
@@ -47,34 +49,45 @@ $(function() {
     }
     
     function stop(t) {
-        endingPoint = (t + count - ends.length) % count; 
-        ending = true;
-        return deffer.resolve(current);
+        endingPoint = (t + count - ends.length - 1) % count; 
     }
 
+    var endingIndex = 0;
     function next(step) {
         $imgs.removeClass('curr');
 
         current = step % count;
         $imgs.eq(current).addClass('curr');
         
+        var interval; // next step interval
+        
         if(step < starts.length) {
-            setTimeout($.proxy(next, null, step + 1), starts[step]);
-        } else if(ending) {
-            if(step % count == endingPoint ) {
-                var i = step % count - endingPoint;
-                if(i < ends.length) {
-                    interval = ends[i];
-                } else {
-                    return;
-                }
-            } else {
+            interval = starts[step];
+        } else if(endingPoint > 0) {
+            if(step < minSteps) {
                 interval = middle;
+            } else {
+                var i, interval;
+                if(!ending && current == endingPoint) {
+                    ending = true;
+                    endingIndex = 0;
+                    interval = ends[endingIndex];
+                } else if(ending){
+                    if(endingIndex < ends.length) {
+                        interval = ends[endingIndex++];
+                    } else {
+                        running = false;
+                        deffer.resolve(current);
+                        return; 
+                    }
+                } else {
+                    interval = middle;
+                }
             }
-            setTimeout($.proxy(next, null, step + 1), interval);
         } else {
-            setTimeout($.proxy(next, null, step + 1), middle);
+            interval = middle;
         }
+        setTimeout($.proxy(next, null, step + 1), interval);
     }
     
     window.stopCJ = function(t) {
@@ -101,5 +114,8 @@ $(function() {
     };
     
     window.startCJ();
+    // wait for sometime
+    window.stopCJ(9);
+    
 });
 
