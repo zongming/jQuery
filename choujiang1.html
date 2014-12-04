@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            .main {
+                position: relative;
+            }
+            img {
+                position: absolute;
+                list-style: none;
+                z-index: 1;
+            }
+            img.curr {
+                z-index: 3;
+            }
+            .mask {
+                z-index: 2;
+                position: absolute;
+                top : 0;
+                left: 0;
+                background: black;
+                
+                opacity: 0.3;
+                filter: alpha(opacity=30);
+                
+                width: 688px;
+                height: 520px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="main">
+            <img src="images/choujiang/1.jpg" />
+            <img src="images/choujiang/2.jpg" />
+            <img src="images/choujiang/3.jpg" />
+            <img src="images/choujiang/4.jpg" />
+            <img src="images/choujiang/5.jpg" />
+            <img src="images/choujiang/6.jpg" />
+            <img src="images/choujiang/7.jpg" />
+            <img src="images/choujiang/8.jpg" />
+            <img src="images/choujiang/9.jpg" />
+            <img src="images/choujiang/10.jpg" />
+        
+            <div class="mask"></div>
+        </div>
+        <script type="text/javascript" src="js/lib/jquery-1.11.1.js"></script>
+        <script type="text/javascript" src="js/choujiang1.js">
+
+        </script>
+        <script>
+            $.error("startCJ(8)");
+        </script>
+    </body>
+</html>
