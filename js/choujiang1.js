@@ -63,7 +63,7 @@ $(function() {
         
         if(step < starts.length) {
             interval = starts[step];
-        } else if(endingPoint > 0) {
+        } else if(endingPoint >= 0) {
             if(step < minSteps) {
                 interval = middle;
             } else {
