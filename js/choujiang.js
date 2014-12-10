@@ -26,91 +26,84 @@ $(function() {
 
 $(function() {
     var $imgs = $('img'), count = $imgs.size();
-    var deffer, steps, target, running,
-        loops = {
-            0: 400,
-            1: 300,
-            2: 200,
-            3: 100,
-            
-            30: 100,
-            "-1": 200,
-            "-2": 300,
-            "-3": 400
-        };
+    var deffer, running, current, target,
+        ending = false,
+        endingPoint = -1, 
+        starts = [500, 400, 300, 200, 100],
+        middle = 100,
+        ends = [100, 200, 300, 400, 500],
+        minSteps = 30;
     
-    function start(t) {
+    function start() {
         if(running) {
             return $.Deferred().reject("not ready");
         }
         deffer = $.Deferred();
         running = true;
-        
-        target = t;
-        
-        loops = {
-            0: 400,
-            1: 300,
-            2: 200,
-            3: 100,
-        };
-        
-        var total = t + 30;
-        var m = (total - 4);
-        loops[m] = 100;
-        loops["-1"] = 200;
-        loops["-2"] = 300;
-        loops["-3"] = 400;
-        
-        console.log(loops);
-        
-        steps = [];
-        
-        var n = 0, last;
-        $.each(loops, function(index, interval) {
-            var i = Number(index);
-            if(n == i){
-                steps[i] = interval;
-                n++;
-            } else if(n < i) {
-                for(var j = n; j <= i; j++) {
-                    steps[j] = last;
-                    n++;
-                }
-            } else if(i < 0) {
-                var x = -i + (n - 1); 
-                steps[x] = interval;
-            }
-            last = interval;
-        });
+        ending = false;
+        endingPoint = -1;
+        target = -1;
         
         next(0);
         
         return deffer.promise();
     }
     
-    function stop() {
-        running = false;
-        return deffer.resolve(current);
+    function stop(t) {
+        target = t;
+        endingPoint = (t + count - ends.length - 1) % count; 
     }
 
+    var endingIndex = 0;
     function next(step) {
-        if(step > steps.length) {
-            stop();
-            return;
-        }
         $imgs.removeClass('curr');
 
         current = step % count;
         $imgs.eq(current).addClass('curr');
         
-        var interval = steps[step];
+        var interval; // next step interval
+        
+        if(step < starts.length) {
+            interval = starts[step];
+        } else if(endingPoint >= 0) {
+            if(step < minSteps) {
+                interval = middle;
+            } else {
+                var i, interval;
+                if(!ending && current == endingPoint) {
+                    ending = true;
+                    endingIndex = 0;
+                    interval = ends[endingIndex];
+                } else if(ending){
+                    if(endingIndex < ends.length) {
+                        interval = ends[endingIndex++];
+                    } else {
+                        running = false;
+                        deffer.resolve(current);
+                        return; 
+                    }
+                } else {
+                    interval = middle;
+                }
+            }
+        } else {
+            interval = middle;
+        }
         setTimeout($.proxy(next, null, step + 1), interval);
     }
     
-    window.startCJ = function(t) {
-        start(t)
+    window.stopCJ = function(t) {
+        stop(t);
+    };
+    
+    window.qunitStart = start; // for qunit
+    window.startCJ = function() {
+        start()
             .done(function(a) {
+                if(target % count != a) {
+                    alert("This should never happen!");
+                    a = target;
+                }
                 var n = 0;
                 var loop = setInterval(function() {
                     n++;
@@ -127,6 +120,6 @@ $(function() {
             });
     };
     
-    window.startCJ(8);
+        
 });
 

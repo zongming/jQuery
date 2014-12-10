@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            .main {
+                position: relative;
+            }
+            img {
+                position: absolute;
+                list-style: none;
+                z-index: 1;
+            }
+            img.curr {
+                z-index: 3;
+            }
+            .mask {
+                z-index: 2;
+                position: absolute;
+                top : 0;
+                left: 0;
+                background: black;
+                
+                opacity: 0.3;
+                filter: alpha(opacity=30);
+                
+                width: 688px;
+                height: 520px;
+            }
+        </style>
+        <meta charset="utf-8">
+        <title>QUnit Example</title>
+        <link rel="stylesheet" href="https://code.jquery.com/qunit/qunit-1.15.0.css">
+    </head>
+    <body>
+
+        <div id="qunit"></div>
+        <div id="qunit-fixture">
+        </div>
+        <div class="main">
+            <img src="../images/choujiang/1.jpg" />
+            <img src="../images/choujiang/2.jpg" />
+            <img src="../images/choujiang/3.jpg" />
+            <img src="../images/choujiang/4.jpg" />
+            <img src="../images/choujiang/5.jpg" />
+            <img src="../images/choujiang/6.jpg" />
+            <img src="../images/choujiang/7.jpg" />
+            <img src="../images/choujiang/8.jpg" />
+            <img src="../images/choujiang/9.jpg" />
+            <img src="../images/choujiang/10.jpg" />
+
+            <div class="mask"></div>
+        </div>
+        <script src="../js/lib/jquery-1.11.1.js"></script>
+        <script src="https://code.jquery.com/qunit/qunit-1.15.0.js"></script>
+
+        <script src="../js/choujiang.js"></script>
+        <script src="js/choujiang.js"></script>
+    </body>
+</html>

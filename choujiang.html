@@ -48,7 +48,15 @@
 
         </script>
         <script>
-            console.log("startCJ(8)");
+            console.log("startCJ();");
+            console.log("wait for sometime, and call stopCJ");
+            console.log("stopCJ(9);");
+            $(function() {
+                window.startCJ();
+                // wait for sometime
+                window.stopCJ(9);
+            });
+
         </script>
     </body>
 </html>
