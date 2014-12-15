@@ -73,22 +73,6 @@
 				background: green;
 			}
 			
-			#number {
-			    position: absolute;
-			    top : 10px;
-			    left: 400px;
-			}
-			#number1 {
-			    position: absolute;
-			    top : 100px;
-			    left: 400px;
-			}
-			.num {
-			    display: inline-block;
-			    background: url('images/num.png') black no-repeat 0 0;
-			    width: 43px; 
-			    height: 58px;  
-			}
 		</style>
 	</head>
 	<body>
@@ -97,13 +81,8 @@
 			<div id="vBar"></div>
 		</div>
 		<div id="point"></div>
-		<div id="number"></div>
-		<div id="number1"></div>
-		
-		<script src="js/lib/jquery-1.11.1.js"></script>
-		<script src="js/lib/jquery-ui.js"></script>
-		<script src="js/jquery.number.js"></script>
-		<script src="js/jquery.number1.js"></script>
+		<script src="js/lib/jquery-1.11.1.js" type="text/javascript"></script>
+        <script src="js/lib/jquery-ui.js" type="text/javascript"></script>
 		<script>
 			$(function() {
 				// IE not support these animations
@@ -141,11 +120,7 @@
                         .delay(1000)
                         .animate({left: 0}, 2000);
 				}
-				
-				// numbers
-				// var n = "123456789".split("");				var n = "94299789".split("");
-				                $.each(n, function(index, n) {
-                   $('<i></i>').appendTo('#number1').num1({number: Number(n)});                               $('<i></i>').appendTo('#number').num({number: Number(n)});                            });
+
                 // throw points    			setInterval(throwIt, 1000);
     			function throwIt() {
     				$('#point').animate(

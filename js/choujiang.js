@@ -69,7 +69,6 @@ $(function() {
             if(step < minSteps) {
                 interval = middle;
             } else {
-                var i, interval;
                 if(!ending && current == endingPoint) {
                     ending = true;
                     endingIndex = 0;
