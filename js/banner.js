@@ -3,11 +3,12 @@
         options: {
             imgSelector: 'img',
             width: 1000,
-            height: 320,
+            height: 200,
             autoPlay: {
                 enabled: true,
                 interval: 5000
-            }
+            },
+            fadeDuration: 1000
         },
         
         current: 0,
@@ -23,8 +24,14 @@
             this.items = this.getItems();
             this.size = this.items.size();
             this.widget().css({
+                position: "relative",
                 width: this.options.width,
                 height: this.options.height
+            });
+            this.items.css({
+                position: "absolute",
+                top: 0,
+                left: 0
             });
             this.items.find(this.options.imgSelector).css({
                 width: this.options.width,
@@ -58,10 +65,13 @@
         
         _swap: function(c, t) {
             var me = this;
+            
+            me.items.eq(t).show();
+            
             $({ n : 0 }).stop().animate({
                 n : 1
             }, {
-                duration : 1000,
+                duration : me.options.fadeDuration,
                 step : function(now, tween) {
                     me.items.eq(c).css({
                         opacity: 1 - now
@@ -72,12 +82,7 @@
                 },
                 complete: function() {
                     me.current = t;
-                    me.items.eq(c).css({
-                        display: 'none'
-                    });
-                    me.items.eq(t).css({
-                        display: 'block'
-                    });
+                    me.items.eq(c).hide();
                 }
             });
         }
