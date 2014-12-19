@@ -6,6 +6,8 @@
     </head>
     <body>
         <div class="numbers"></div>
+        <br />
+        <div class="numbers1"></div>
         
         <input id="n1"/>
         
@@ -20,7 +22,18 @@
         <script type="text/javascript">
             $(function() {
                 $('.numbers').numbers({
+                    rootClass: "number",
                     size: 15,
+                    numberH: 50,
+                    speed: 1500,
+                    value: "￥56,789.12"
+                });
+                
+                $('.numbers1').numbers({
+                    rootClass: "numbers1",
+                    size: 15,
+                    numberH: 41,
+                    speed: 3000,
                     value: "￥56,789.12"
                 });
                 
@@ -29,14 +42,14 @@
                     x = "￥" + String(x).replace(/\d{1,3}(?=(\d{3})+(\.\d*)?$)/g, '$&,');
                     
                     console.log(x);
-                    $('.numbers').numbers({
+                    $(':qbao-numbers').numbers({
                         value: x
                     });
-                }, 1000);
+                }, 3000);
             });
             
             $('#go1').click(function() {
-                $('.numbers').numbers({
+                $(':qbao-numbers').numbers({
                     value: $('#n1').val()
                 });
             });

@@ -9,6 +9,9 @@
     color: #FFF;
     font-size: 0;
 }
+.numbers1 {
+    height: 53px;
+}
 .numbers > span {
     background: url("../../images/number/groupon_bg.png") no-repeat 0 0;
     
@@ -20,7 +23,12 @@
     font-size: 36px;
     border-radius: 5px;
 }
-.numbers > span.comma {
+.numbers1 > span {
+    background: url("../../images/number/groupon_bg1.png") no-repeat 0 0;
+    width: 32px;
+    height: 53px;
+}
+.numbers > span.symbol {
     background: none;
     width: 8px;
     overflow: hidden;
@@ -31,13 +39,13 @@
 .numbers > span > .num {
     display: block;
 }
-.numbers > span.comma > .num {
+.numbers > span.symbol > .num {
     display: none;
 }
-.numbers > span > .comma {
+.numbers > span > .symbol {
     display: none;
 }
-.numbers > span.comma > .comma {
+.numbers > span.symbol > .symbol {
     display: block;
 }
 
@@ -53,6 +61,11 @@
     width: 30px;
     height: 50px;
     font-size: 0;
+}
+.numbers1 > span > .num {
+    height: 41px;
+    width: 28px;
+    background: url('../../images/number/bg_pricenum1.png') no-repeat 0 0;
 }
 
 

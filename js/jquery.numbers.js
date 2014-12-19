@@ -2,7 +2,9 @@
     $.widget("qbao.number", {
         current: 0,
         options: {
-            number: 0
+            number: 0,
+            numberH: 50,
+            speed: 300
         },
         
         _showSymbol: false,
@@ -16,14 +18,14 @@
         
         _create : function() {
             this.$number = $('<i class="num"></i>').appendTo(this.widget());
-            this.$symbol = $('<em class="comma"></em>').appendTo(this.widget());
+            this.$symbol = $('<em class="symbol"></em>').appendTo(this.widget());
             this._refresh();
         },
         
         showSymbol: function(s) {
             this._showSymbol = true;
             
-            this.widget().addClass('comma');
+            this.widget().addClass('symbol');
             this.$symbol.text(s);
             
             this.$number.css({
@@ -34,7 +36,7 @@
         
         showNumber: function(n) {
             this._showSymbol = false;
-            this.widget().removeClass('comma');
+            this.widget().removeClass('symbol');
             this.options.number = n;
             this._refresh();
         },
@@ -50,7 +52,7 @@
                     });
                 } else if(this.options.number == 10) { //￥ no need to automate
                     this.$number.css({
-                        "background-position" : "0px -500px",
+                        "background-position" : "0px " + this.options.numberH * -10 + "px",
                         "visibility": "visible"
                     });
                 } else { //numbers
@@ -60,10 +62,9 @@
                     this.$number.css({
                         "visibility": "visible"
                     });
-                    var gaps = Math.abs(this.options.number - this.current);
-                    var speed = 100;
-                    var y0 = this.current * -50;
-                    var y = this.options.number * -50;
+                    // var gaps = Math.abs(this.options.number - this.current);
+                    var y0 = this.current * -this.options.numberH;
+                    var y = this.options.number * -this.options.numberH;
                     
                     this.forAnimate = this.forAnimate || { n : y0 };
                     
@@ -72,7 +73,8 @@
                         .animate({
                             n : y
                         }, {
-                            duration : gaps * speed,
+                            // duration : gaps * speed,
+                            duration : this.options.speed,
                             step : function(now, tween) {
                                 me.$number.css({
                                     "background-position" : "0px " + now + "px"
@@ -88,16 +90,24 @@
     
     $.widget("qbao.numbers", {
         options: {
-            value: "1234567"
+            value: "1234567",
+            
+            rootClass: "numbers",
+            numberH: 50,
+            speed: 300
         },
-        cache: [],
-        _size: 0,
         
         _create: function() {
+            this.widget().addClass("numbers");
+            this.widget().addClass(this.options.rootClass);
+            this._cache = [];
             this._size = this.options.size;
             
             for(var i = 0; i < this._size; i++) {
-                this.cache[i] = $('<span></span>').number().appendTo(this.widget());
+                this._cache[i] = $('<span></span>').number({
+                    numberH: this.options.numberH,
+                    speed: this.options.speed
+                }).appendTo(this.widget());
             }
             
             this._refresh();
@@ -115,19 +125,19 @@
             
             var array = v.split("");
             
-            for(var i = this.cache.length - 1, j = array.length - 1; i >= 0 && j >= 0 ; i--, j--) {
+            for(var i = this._cache.length - 1, j = array.length - 1; i >= 0 && j >= 0 ; i--, j--) {
                 var n = array[j];
                 if(typeof(n) == "string") {
                     if(n == "￥") {
                         n = 10;
                     }
                     if(isNaN(n)) {
-                        this.cache[i].number("showSymbol", n);
+                        this._cache[i].number("showSymbol", n);
                         continue;
                     } else {
                         n = Number(n);
-                        if(this.cache[i]) {
-                            this.cache[i].number("showNumber", n);
+                        if(this._cache[i]) {
+                            this._cache[i].number("showNumber", n);
                         }
                     }
                 }
@@ -135,7 +145,7 @@
             }
             
             for(var k = i; k >=0; k--) {
-                this.cache[k].number("showNumber", -1);
+                this._cache[k].number("showNumber", -1);
             }
         } 
     });
