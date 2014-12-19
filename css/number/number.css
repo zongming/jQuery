@@ -1,0 +1,45 @@
+.numbers > span {
+    background: url("../../images/number/groupon_bg.png") no-repeat 0 0;
+    
+    display: inline-block;
+    vertical-align: top;
+    margin: 0 3px 0 2px;
+    width: 34px;
+    height: 62px;
+    font-size: 36px;
+    border-radius: 5px;
+}
+.numbers > span.comma {
+    background: none;
+    width: 8px;
+    overflow: hidden;
+    font-size: 30px;
+    line-height: 62px;
+    color: #333;
+}
+.numbers > span > .num {
+    display: block;
+}
+.numbers > span.comma > .num {
+    display: none;
+}
+.numbers > span > .comma {
+    display: none;
+}
+.numbers > span.comma > .comma {
+    display: block;
+}
+
+.numbers > span > .num {
+    display: block;
+    margin: 6px auto;
+    font-size: 0;
+    
+    display: inline-block;
+    background: url('../../images/number/bg_pricenum.png') no-repeat 0 0;
+    width: 43px;
+    height: 58px;
+}
+
+
+

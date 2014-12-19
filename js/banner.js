@@ -64,6 +64,7 @@
                 var t = (c - 1) % this.size;
                 
                 this._swap(c, t);
+                this._refreshAutoPlay();
             }
         },
         
