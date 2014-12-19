@@ -8,12 +8,14 @@
                 enabled: true,
                 interval: 5000
             },
-            fadeDuration: 1000
+            fadeDuration: 500
         },
         
         current: 0,
         size: 0,
         items: undefined,
+        f: undefined,
+        _animating: false,
         
         getItems: function() {
             this.items = this.items || this.widget().find('li');
@@ -23,50 +25,63 @@
         _create: function() {
             this.items = this.getItems();
             this.size = this.items.size();
-            this.widget().css({
-                position: "relative",
+            this.widget().addClass('q-banner').css({
                 width: this.options.width,
                 height: this.options.height
             });
-            this.items.css({
-                position: "absolute",
-                top: 0,
-                left: 0
-            });
-            this.items.find(this.options.imgSelector).css({
-                width: this.options.width,
-                height: this.options.height
-            });
-            this.items.filter(':gt(0)').hide();
+            this.items.addClass('q-banner-item');
+            
+            this.items.find(this.options.imgSelector).addClass('q-banner-img');
             this.items.eq(0).show();
+            this.items.filter(':gt(0)').hide();
             
+            var me = this;
+            this.widget().find('.next').on('click', function() {
+                me.next();
+            });
             
-            if(this.options.autoPlay.enabled) {
-                var me = this;
-                setInterval(function() {
-                    me.next();
-                }, this.options.autoPlay.interval);
-            }
+            this.widget().find('.prev').on('click', function() {
+                me.prev();
+            });
+            
+            this._refreshAutoPlay();
         },
         
         next: function() {
-            var c = this.current;
-            var t = (c + 1) % this.size;
-            
-            this._swap(c, t);
+            if(!this._animating) {
+                var c = this.current;
+                var t = (c + 1) % this.size;
+                
+                this._swap(c, t);
+                
+                this._refreshAutoPlay();
+            }
         },
         
         prev: function() {
-            var c = this.current;
-            var t = (c - 1) % this.size;
-            
-            this._swap(c, t);
+            if(!this._animating) {
+                var c = this.current;
+                var t = (c - 1) % this.size;
+                
+                this._swap(c, t);
+            }
+        },
+        
+        _refreshAutoPlay: function() {
+            if(this.options.autoPlay.enabled) {
+                clearTimeout(this.f);
+                var me = this;
+                this.f = setTimeout(function() {
+                    me.next();
+                }, this.options.autoPlay.interval);
+            }
         },
         
         _swap: function(c, t) {
             var me = this;
             
             me.items.eq(t).show();
+            me._animating = true;
             
             $({ n : 0 }).stop().animate({
                 n : 1
@@ -83,6 +98,7 @@
                 complete: function() {
                     me.current = t;
                     me.items.eq(c).hide();
+                    me._animating = false;
                 }
             });
         }
