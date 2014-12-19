@@ -1,3 +1,14 @@
+.numbers {
+    display: block;
+    padding: 6px 3px;
+    height: 62px;
+    line-height: 50px;
+    border-radius: 5px;
+    background: #BBB;
+    text-align: center;
+    color: #FFF;
+    font-size: 0;
+}
 .numbers > span {
     background: url("../../images/number/groupon_bg.png") no-repeat 0 0;
     
@@ -37,8 +48,11 @@
     
     display: inline-block;
     background: url('../../images/number/bg_pricenum.png') no-repeat 0 0;
-    width: 43px;
-    height: 58px;
+    display: block;
+    margin: 6px auto;
+    width: 30px;
+    height: 50px;
+    font-size: 0;
 }
 
 
