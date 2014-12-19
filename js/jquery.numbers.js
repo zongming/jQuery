@@ -88,7 +88,7 @@
     
     $.widget("qbao.numbers", {
         options: {
-            value: "1234567",
+            value: "1234567"
         },
         cache: [],
         _size: 0,
