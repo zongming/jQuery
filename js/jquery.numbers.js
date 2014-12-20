@@ -1,13 +1,11 @@
 (function($) {
     $.widget("qbao.number", {
-        current: 0,
         options: {
-            number: 0,
+            number: -1,
+            symbol: ",",
             numberH: 50,
             speed: 300
         },
-        
-        _showSymbol: false,
         
         _setOption : function(key, value) {
             this._superApply(arguments);
@@ -24,46 +22,49 @@
         
         showSymbol: function(s) {
             this._showSymbol = true;
-            
-            this.widget().addClass('symbol');
-            this.$symbol.text(s);
-            
-            this.$number.css({
-                "background-position" : "0px 0px"
-            });
-            this.current = 0;
+            this.options.symbol = s;
+            this._refresh();
         },
         
         showNumber: function(n) {
             this._showSymbol = false;
-            this.widget().removeClass('symbol');
+            this.widget().show().removeClass('symbol');
             this.options.number = n;
             this._refresh();
         },
         
+        _restoreTo0: function() {
+            this.$number.css({
+                "background-position" : "0px 0px"
+            });
+            this._currentNumber = 0;
+            this.forAnimate = {n: 0};
+        },
+        
         _refresh : function() {
             if(this._showSymbol) {
+                this.widget().show().addClass('symbol');
+                this.$symbol.text(this.options.symbol);
                 
-            } else if(this.current != this.options.number) {
-                if(this.options.number == -1) { // nothing
+                this._restoreTo0();
+            } else if(this._currentNumber != this.options.number) {
+                this.$number.css({
+                    "visibility": "visible"
+                });
+                if(this.options.number == -1) { // show nothing except a blank box
                     this.$number.css({
-                        "background-position" : "0px 0px",
                         "visibility": "hidden"
                     });
                 } else if(this.options.number == 10) { //￥ no need to automate
                     this.$number.css({
-                        "background-position" : "0px " + this.options.numberH * -10 + "px",
-                        "visibility": "visible"
+                        "background-position" : "0px " + this.options.numberH * -10 + "px"
                     });
                 } else { //numbers
-                    if(this.current == -1) {
-                        this.current = 0;
+                    if(this._currentNumber == -1 || this._currentNumber == 10) {
+                        this._restoreTo0();
                     }
-                    this.$number.css({
-                        "visibility": "visible"
-                    });
-                    // var gaps = Math.abs(this.options.number - this.current);
-                    var y0 = this.current * -this.options.numberH;
+                    // var gaps = Math.abs(this.options.number - this._currentNumber);
+                    var y0 = this._currentNumber * -this.options.numberH;
                     var y = this.options.number * -this.options.numberH;
                     
                     this.forAnimate = this.forAnimate || { n : y0 };
@@ -82,23 +83,24 @@
                             }
                         });
                 }
+                this._currentNumber = this.options.number;
             }
-                
-            this.current = this.options.number;
         }
     });
     
     $.widget("qbao.numbers", {
         options: {
-            value: "1234567",
+            value: "",
+            
+            size: 10,
+            maxNumbers: 8,
+            numberH: 50,
             
             rootClass: "numbers",
-            numberH: 50,
             speed: 300
         },
         
         _create: function() {
-            this.widget().addClass("numbers");
             this.widget().addClass(this.options.rootClass);
             this._cache = [];
             this._size = this.options.size;
@@ -125,27 +127,32 @@
             
             var array = v.split("");
             
+            var numbers = 0;
             for(var i = this._cache.length - 1, j = array.length - 1; i >= 0 && j >= 0 ; i--, j--) {
                 var n = array[j];
-                if(typeof(n) == "string") {
-                    if(n == "￥") {
-                        n = 10;
-                    }
-                    if(isNaN(n)) {
-                        this._cache[i].number("showSymbol", n);
-                        continue;
-                    } else {
-                        n = Number(n);
-                        if(this._cache[i]) {
-                            this._cache[i].number("showNumber", n);
-                        }
-                    }
+                if(n == "￥") {
+                    n = 10;
                 }
-                
+                if(isNaN(n)) {
+                    this._cache[i].number("showSymbol", n);
+                    continue;
+                } else {
+                    n = Number(n);
+                    if(this._cache[i]) {
+                        this._cache[i].number("showNumber", n);
+                    }
+                    numbers++;
+                }
             }
             
             for(var k = i; k >=0; k--) {
                 this._cache[k].number("showNumber", -1);
+                if(numbers < this.options.maxNumbers) {
+                    numbers++;
+                    this._cache[k].show();
+                } else {
+                    this._cache[k].hide();
+                }
             }
         } 
     });

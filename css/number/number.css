@@ -4,12 +4,12 @@
     height: 62px;
     line-height: 50px;
     border-radius: 5px;
-    background: #BBB;
+    background: #DDD;
     text-align: center;
     color: #FFF;
     font-size: 0;
 }
-.numbers1 {
+.numbers-small {
     height: 53px;
 }
 .numbers > span {
@@ -17,13 +17,13 @@
     
     display: inline-block;
     vertical-align: top;
-    margin: 0 3px 0 2px;
+    margin: 0 0 0 1px;
     width: 34px;
     height: 62px;
     font-size: 36px;
     border-radius: 5px;
 }
-.numbers1 > span {
+.numbers-small > span {
     background: url("../../images/number/groupon_bg1.png") no-repeat 0 0;
     width: 32px;
     height: 53px;
@@ -62,7 +62,7 @@
     height: 50px;
     font-size: 0;
 }
-.numbers1 > span > .num {
+.numbers-small > span > .num {
     height: 41px;
     width: 28px;
     background: url('../../images/number/bg_pricenum1.png') no-repeat 0 0;
