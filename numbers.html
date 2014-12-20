@@ -5,8 +5,12 @@
         <link rel="stylesheet" type="text/css" href="css/number/number.css" />
     </head>
     <body>
-        <div class="numbers"></div>
+        <div class="numbers" id="big"></div>
         <br />
+        <div class="numbers-small"></div>
+        <div class="numbers-small"></div>
+        <div class="numbers-small"></div>
+        <div class="numbers-small"></div>
         <div class="numbers-small"></div>
         
         <input id="n1"/>
@@ -33,18 +37,39 @@
                 $('.numbers-small').numbers({
                     rootClass: "numbers numbers-small",
                     size: 15,
-                    maxNumbers: 15, 
+                    maxNumbers: 10, 
                     numberH: 41,
                     speed: 3000,
                     value: "￥56,789.12"
                 });
                 
-                setInterval(function() {
-                    var x = (Math.random(10) * 10000).toFixed(2);
+                var n = 0;
+                var a = setInterval(function() {
+                    // n++;
+                    // if(n == 10) {
+                        // clearInterval(a);
+                    // }
+                    var x;
+                    var y = (Math.random() * 10);
+                    if(y > 5) {
+                        x = (Math.random() * Math.pow(10,y)).toFixed(2);
+                    } else {
+                        x = (Math.random() * Math.pow(10,y)).toFixed(0);
+                    }
                     x = "￥" + String(x).replace(/\d{1,3}(?=(\d{3})+(\.\d*)?$)/g, '$&,');
                     
                     console.log(x);
-                    $(':qbao-numbers').numbers({
+                    $(':qbao-numbers').not('#big').numbers({
+                        value: x
+                    });
+                }, 3000);
+                
+                var b = setInterval(function() {
+                    var x = (Math.random() * 10000).toFixed(2);
+                    x = "￥" + String(x).replace(/\d{1,3}(?=(\d{3})+(\.\d*)?$)/g, '$&,');
+                    
+                    console.log("big: " + x);
+                    $('#big').numbers({
                         value: x
                     });
                 }, 3000);

@@ -34,11 +34,20 @@
         },
         
         _restoreTo0: function() {
-            this.$number.css({
-                "background-position" : "0px 0px"
-            });
+            this._setBackgroundPosition(0);
+            
             this._currentNumber = 0;
             this.forAnimate = {n: 0};
+        },
+        
+        // set background-position without animating
+        _setBackgroundPosition: function(position) {
+            if(this.forAnimate) {
+                $(this.forAnimate).stop();
+            }
+            this.$number.css({
+                "background-position" : "0px " + position + "px"
+            });
         },
         
         _refresh : function() {
@@ -47,19 +56,16 @@
                 this.$symbol.text(this.options.symbol);
                 
                 this._restoreTo0();
-            } else if(this._currentNumber != this.options.number) {
+            } else {
                 this.$number.css({
-                    "visibility": "visible"
+                    "visibility": this.options.number == -1 ? "hidden": "visible"
                 });
-                if(this.options.number == -1) { // show nothing except a blank box
-                    this.$number.css({
-                        "visibility": "hidden"
-                    });
-                } else if(this.options.number == 10) { //￥ no need to automate
-                    this.$number.css({
-                        "background-position" : "0px " + this.options.numberH * -10 + "px"
-                    });
-                } else { //numbers
+                if(this._currentNumber == this.options.number) {
+                    return;
+                }
+                if(this.options.number == 10) { //￥ no need to automate
+                    this._setBackgroundPosition(this.options.numberH * -10);
+                } else if(this.options.number != -1){ //numbers
                     if(this._currentNumber == -1 || this._currentNumber == 10) {
                         this._restoreTo0();
                     }
