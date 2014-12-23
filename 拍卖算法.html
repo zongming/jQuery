@@ -20,8 +20,7 @@
         <script src="js/lib/jquery-1.11.1.js" type="text/javascript"></script>
         <script src="js/lib/jquery-ui.js" type="text/javascript"></script>
         <script src="js/jquery.numbers.js" type="text/javascript"></script>
-        <script src="js/PM.js" type="text/javascript"></script>
-        <div>supported charts :￥ and ,and . and nubmers</div>
+        <script src="js/jquery.auction.js" type="text/javascript"></script>
         <script type="text/javascript">
             $(function() {
                 // $('.numbers').auctionA({
@@ -87,10 +86,10 @@
                 // });
                 
                 $('.numbers1').auctionB({
-                    type: -1,
+                    type: 1,
                     start: 250000,
                     totalTime: 1080000,
-                    currentTime: 0,
+                    currentTime: 1050000,
                     
                     interval: 1000, 
                     
@@ -122,12 +121,6 @@
                     // }
                 // });
                 
-            });
-            
-            $('#go1').click(function() {
-                $(':qbao-numbers').numbers({
-                    value: $('#n1').val()
-                });
             });
             
         </script>

@@ -1,48 +1,12 @@
 (function($) {
-    $.extend({
-       numberUp: function(n, factor) {
-           factor = factor || 2;
-           
-           n = Number(n);
-           var s = n.toString();
-           var i = s.indexOf(".");
-           s = s + "00";
-           
-           if(i > -1) {
-               
-           } else {
-               
-           }
-           s = s.replace('.', "");
-           return Math.round(Number(s)).toFixed(0);  
-       },
-       numberDown: function(n, factor) {
-           factor = factor || 2;
-           n = Number(n);
-           var s = n.toString();
-           s = "00" + s;
-           var i = s.indexOf(".");
-           if(i > -1) {
-               s = s.replace(".", "");
-           } else {
-               i = s.length - factor;
-           }
-           s = s.slice(0, i) + '.' + s.slice(i);
-           return Math.round(Number(s)).toFixed(2); 
-       }
-    });
-    
-    $.widget('qbao.baseaction', {
+    $.widget('qbao.baseAuction', {
         options: {
-            // status: 0, 
             totalTime: 10800000,
             currentTime: 0,
-            // interval: 10000,
             interval: 1000,
+            started: true,
             
-            // type: 0,
             start: 1000.00,
-            // price: 1000.00,
             
             numbers: {
                 rootClass: "numbers",
@@ -50,6 +14,27 @@
                 numberH: 50,
                 maxNumbers: 10
                 // value: "￥56,789.12"        
+            }
+        },
+        
+        _createDefaults: $.noop,
+        _getNextValue: $.noop,
+        setPrice: $.noop,
+        setTime: $.noop,
+        
+        setStarted: function(b) {
+            if(this.options.started != b) {
+                this.options.started = b;
+                if(b) {
+                    this._init();
+                } else {
+                    clearTimeout(this.timeout);
+                    this.options.currentTime = 0;
+                    this.price = this.end;
+                    this.$number.numbers({
+                        value: this._formatCurrent()
+                    });
+                }
             }
         },
         
@@ -62,26 +47,31 @@
             this.$number = this.widget().numbers(
                 this.options.numbers
             );
+            this._createDefaults();
         },
-        _getInitialValue: $.noop,
-        _getNextValue: $.noop,
-        setPrice: $.noop,
         
         _init: function() {
             clearTimeout(this.timeout);
             
-            if(this.options.currentTime > this.options.totalTime) {
+            if(this.options.currentTime >= this.options.totalTime) {
+                this.price = this.end;
+                this.$number.numbers({
+                    value: this._formatCurrent()
+                });
                 return;
             }
             
-            this.price = this._getInitialValue();
+            this.price = this._getNextValue();
             
             if(this.price >= 0) {
                 this.$number.numbers({
                     value: this._formatCurrent()
                 });
-                if(this.options.currentTime < this.options.totalTime) {
-                    this.timeout = this._delay(this._next, this.options.interval);
+                
+                if(this.options.started) {
+                    if(this.options.currentTime < this.options.totalTime) {
+                        this.timeout = this._delay(this._next, this.options.interval);
+                    }
                 }
             }
         },
@@ -98,7 +88,6 @@
                 });
                 
                 console.log("这是第 " + this.times + " 次降价");
-                
                 console.log("当前时间：  " + this.options.currentTime);
                 console.log("........................");
                 
@@ -109,102 +98,94 @@
         }
     });
     
-    $.widget('qbao.auctionA', $.qbao.baseaction, {
+    $.widget('qbao.auctionA', $.qbao.baseAuction, { //价格匀速下降
         options: {
             cutDown: 0
+        },
+        
+        _createDefaults: function() {
+            this.total = this.options.totalTime / this.options.interval; // how many time should the price goes down?
+            this.total = parseInt(this.total);
+            
+            this.end = this.options.start - this.total * this.options.cutDown;
         },
         
         setPrice: function(price) {
             clearTimeout(this.timeout);
             
-            this.price = price;
-            if(this.price >= 0) {
-                this.$number.numbers({
-                    value: this._formatCurrent()
-                });
-            }
-            
-            this.options.currentTime = (this.options.start - price) / this.options.cutDown * this.options.interval;
-            this._init();
-        },
-        
-        _getInitialValue: function() {
-            var times = parseInt(this.options.currentTime / this.options.interval);
-            return this.options.start - times * this.options.cutDown;
-        },
-        
-        _getNextValue: function() {
-            return this.price - this.options.cutDown;
-        }
-    });
-    
-    $.widget('qbao.auctionB', $.qbao.baseaction, {
-        options: {
-            type: 1, // 1 is increse, -1 is decease
-            CDchangeTimes: 10, // cut down change times 竞拍递增次数
-            maxCutDown: 10,
-            minCutDown: 1
-        },
-        
-        _create: function() {
-            this._superApply(arguments);
-            
-            this.prices = [];
-            
-            this._refreshDefaults();
-            
-            var n = this.options.start;
-            for(var i = 0; i < this.total; i++) {
-                if(i % this.stageSize == 0) {
-                    this.prices.push(n);
-                }
-                
-                var m = parseInt(i / this.stageSize); 
-                if(this.options.type == 1) {
-                    n -= this.options.minCutDown + m * this.stageDelta;
-                } else if(this.options.type == -1) {
-                    m += 1;//减速下降需要一开始就把  下降数值 减一次
-                    n -= this.options.maxCutDown - m * this.stageDelta;
-                }
-            }
-            this.prices.push(n);// cache for each stage
-            this.end = n;
-        },
-        
-        _getPriceByTime: function(time) {
-            var t = time / this.options.interval;
-            t = parseInt(t);
-            
-            var j = parseInt(t / this.stageSize);
-            var start = this.prices[j];
-            var k = t % this.stageSize;
-            
-            var n = this._getDeltaByStage(j);
-            var price = start - k * n;
-            
-            return price;
-        },
-        
-        _getTimeByPrice: function(price) {
             if(price > this.options.start) {
                 price = this.options.start;
             } else if(price < this.end) {
                 price = this.end;
             }
-            var j = this.prices.length;
+            
+            // this.price = price;
+            // if(this.price >= 0) {
+                // this.$number.numbers({
+                    // value: this._formatCurrent()
+                // });
+            // }
+            
+            this.options.currentTime = (this.options.start - price) / this.options.cutDown * this.options.interval;
+            this._init();
+        },
+        
+        setTime: function(time) {
+            clearTimeout(this.timeout);
+            
+            if(time < 0) {
+                time = 0;
+            }
+            
+            time = parseInt(time / this.options.interval) * this.options.interval;
+            this.options.currentTime = time;
+            this._init();
+        },
+        
+        _getNextValue: function() {
+            var times = parseInt(this.options.currentTime / this.options.interval);
+            return this.options.start - times * this.options.cutDown;
+        }
+    });
+    
+    $.widget('qbao.auctionB', $.qbao.baseAuction, { //加速、减速降价
+        options: {
+            type: 1, // 1 is increse, -1 is decease
+            CDchangeTimes: 10, // cut down change times 竞拍下跌价格递增、减次数
+            maxCutDown: 10, //最大降幅
+            minCutDown: 1 // 最小降幅
+        },
+        
+        _getPriceByTime: function(time) {
+            time = time / this.options.interval;
+            time = parseInt(time);
+            
+            var stage = parseInt(time / this.stageSize);
+            var start = this.prices[stage];
+            var steps = time % this.stageSize;
+            
+            var d = this._getDeltaByStage(stage);
+            console.log("降价: " + d);
+            var price = start - steps * d;
+            
+            return price;
+        },
+        
+        _getTimeByPrice: function(price) {
+            var stage = this.prices.length;
             $.each(this.prices, function(index, p) {
                 if(p < price) {
-                    j = index;
+                    stage = index;
                     return false;
                 }
             });
-            j = j - 1;
+            stage = stage - 1;
             
-            var start = this.prices[j];
-            var n = this._getDeltaByStage(j);
-            var k = parseInt((start - price) / n);
-            var time = j * this.stageSize + k;
-            return parseInt(time) * this.options.interval;
+            var start = this.prices[stage];
+            var d = this._getDeltaByStage(stage);
+            var k = parseInt((start - price) / d);
+            var time = stage * this.stageSize + k;
+            return time * this.options.interval;
         },
         
         _getDeltaByStage: function(i) {
@@ -221,6 +202,12 @@
         setPrice: function(price) {
             clearTimeout(this.timeout);
             
+            if(price > this.options.start) {
+                price = this.options.start;
+            } else if(price < this.end) {
+                price = this.end;
+            }
+            
             // this.price = price;
             // if(this.price >= 0) {
                 // this.$number.numbers({
@@ -236,12 +223,16 @@
         setTime: function(time) {
             clearTimeout(this.timeout);
             
+            if(time < 0) {
+                time = 0;
+            }
+            
             time = parseInt(time / this.options.interval) * this.options.interval;
             this.options.currentTime = time;
             this._init();
         },
         
-        _refreshDefaults: function() {
+        _createDefaults: function() {
             this.total = this.options.totalTime / this.options.interval; // how many time should the price goes down?
             this.total = parseInt(this.total);
             
@@ -250,13 +241,19 @@
             
             this.stageDelta = (this.options.maxCutDown - this.options.minCutDown) / this.options.CDchangeTimes;// for cut down price, how many should be increased each time
             this.stageDelta = Number(this.stageDelta.toFixed(2));
-        },
-        
-        _getInitialValue: function() {
-            this.times = parseInt(this.options.currentTime / this.options.interval);
             
-            this._refreshDefaults();
-            return this._getPriceByTime(this.options.currentTime);
+            this.prices = []; // cache for each stage
+            
+            var n = this.options.start;
+            for(var i = 0; i < this.total; i++) {
+                if(i % this.stageSize == 0) {
+                    this.prices.push(n);
+                }
+                var m = parseInt(i / this.stageSize); 
+                n -= this._getDeltaByStage(m);
+            }
+            this.prices.push(n); 
+            this.end = Number(n.toFixed(2));
         },
         
         _getNextValue: function() {
