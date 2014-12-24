@@ -159,7 +159,7 @@
     
     $.widget('qbao.auctionB', $.qbao.baseAuction, { //加速、减速降价
         options: {
-            type: 1, // 1 is increse, -1 is decease
+            type: 1, // 1 is increase, -1 is decrease
             CDchangeTimes: 10, // cut down change times 竞拍下跌价格递增、减次数
             maxCutDown: 10, //最大降幅
             minCutDown: 1 // 最小降幅
