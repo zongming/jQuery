@@ -80,15 +80,15 @@
             this.options.currentTime += this.options.interval;
             this.times = parseInt(this.options.currentTime / this.options.interval);
             this.price = this._getNextValue();
-            console.log("价格降为: " + this.price);
             
             if(this.price >= 0) {
                 this.$number.numbers({
                     value: this._formatCurrent()
                 });
                 
-                console.log("这是第 " + this.times + " 次降价");
-                console.log("当前时间：  " + this.options.currentTime);
+                console.log("当前时间：  " + this.options.currentTime + " ms");
+                console.log("第 " + this.times + " 次降价");
+                console.log("价格降为: " + this.price);
                 console.log("........................");
                 
                 if(this.options.currentTime < this.options.totalTime) {
@@ -111,8 +111,6 @@
         },
         
         setPrice: function(price) {
-            clearTimeout(this.timeout);
-            
             if(price > this.options.start) {
                 price = this.options.start;
             } else if(price < this.end) {
@@ -131,14 +129,13 @@
         },
         
         setTime: function(time) {
-            clearTimeout(this.timeout);
-            
             if(time < 0) {
                 time = 0;
             }
             
             time = parseInt(time / this.options.interval) * this.options.interval;
             this.options.currentTime = time;
+            
             this._init();
         },
         
@@ -200,8 +197,6 @@
         },
         
         setPrice: function(price) {
-            clearTimeout(this.timeout);
-            
             if(price > this.options.start) {
                 price = this.options.start;
             } else if(price < this.end) {
@@ -221,8 +216,6 @@
         },
         
         setTime: function(time) {
-            clearTimeout(this.timeout);
-            
             if(time < 0) {
                 time = 0;
             }
