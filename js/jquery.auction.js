@@ -45,9 +45,7 @@
             
             // this.price = price;
             // if(this.price >= 0) {
-                // this.$number.numbers({
-                    // value: this._formatCurrent()
-                // });
+                // this.$number.numbers("setValue", this._formatCurrent());
             // }
             this.options.currentTime = this._getTimeByPrice(price);
             
@@ -63,9 +61,7 @@
                     clearTimeout(this.timeout);
                     this.options.currentTime = 0;
                     this.price = this.end;
-                    this.$number.numbers({
-                        value: this._formatCurrent()
-                    });
+                    this.$number.numbers("setValue", this._formatCurrent());
                 }
             }
         },
@@ -87,25 +83,23 @@
             
             if(this.options.currentTime >= this.options.totalTime) {
                 this.price = this.end;
-                this.$number.numbers({
-                    value: this._formatCurrent()
-                });
+                this.$number.numbers("setValue", this._formatCurrent());
                 return;
             }
             
             this.price = this._getPriceByTime();
-            
-            if(this.price >= 0) {
-                this.$number.numbers({
-                    value: this._formatCurrent()
-                });
+            if(this.price < 0) {
+                this.price = 0;
+            }
+            // if(this.price >= 0) {
+                this.$number.numbers("setValue", this._formatCurrent());
                 
                 if(this.options.started) {
                     if(this.options.currentTime < this.options.totalTime) {
                         this.timeout = this._delay(this._next, this.options.interval);
                     }
                 }
-            }
+            // }
         },
         
         _next: function() {
@@ -115,9 +109,7 @@
             this.price = this._getPriceByTime();
             
             if(this.price >= 0) {
-                this.$number.numbers({
-                    value: this._formatCurrent()
-                });
+                this.$number.numbers("setValue", this._formatCurrent());
                 
                 console.log("当前时间：  " + this.options.currentTime + " ms");
                 console.log("第 " + this.times + " 次降价: " + (temp - this.price).toFixed(2) + " 元");
