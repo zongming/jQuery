@@ -151,7 +151,7 @@
                     }
                     numbers++;
                     
-                    if(numbers < this.options.numberSize) {
+                    if(numbers <= this.options.numberSize) {
                         this._cache[i].show();
                     } else {
                         this._cache[i].hide();
