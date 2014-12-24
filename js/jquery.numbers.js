@@ -7,13 +7,6 @@
             speed: 300
         },
         
-        _setOption : function(key, value) {
-            this._superApply(arguments);
-            if(key == "number") {
-                this._refresh();
-            }
-        },
-        
         _create : function() {
             this.$number = $('<i class="num"></i>').appendTo(this.widget());
             this.$symbol = $('<em class="symbol"></em>').appendTo(this.widget());
@@ -123,11 +116,9 @@
             this._refresh();
         },
         
-        _setOption : function(key, value) {
-            this._superApply(arguments);
-            if(key == "value") {
-                this._refresh();
-            }
+        setValue: function(v) {
+            this.options.value = v;
+            this._refresh();
         },
         
         _refresh: function() {
