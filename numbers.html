@@ -27,17 +27,17 @@
             $(function() {
                 $('.numbers').numbers({
                     rootClass: "numbers",
-                    size: 15, // all size including charts
                     numberH: 50,
                     speed: 1500,
-                    maxNumbers: 10, // max number of box displayed, in order to keep a fixed size
+                    totalSize: 15, // all size including charts
+                    numberSize: 10, // max number of box displayed, in order to keep a fixed size
                     value: "￥56,789.12"
                 });
                 
                 $('.numbers-small').numbers({
                     rootClass: "numbers numbers-small",
-                    size: 15,
-                    maxNumbers: 10, 
+                    totalSize: 15,
+                    numberSize: 10, 
                     numberH: 41,
                     speed: 3000,
                     value: "￥56,789.12"

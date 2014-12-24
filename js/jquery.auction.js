@@ -9,10 +9,10 @@
             start: 1000.00,
             
             numbers: {
-                rootClass: "numbers",
-                size: 15, 
-                numberH: 50,
-                maxNumbers: 10
+                // rootClass: "numbers",
+                // numberH: 50,
+                // totalSize: 15, 
+                // numberSize: 10
                 // value: "￥56,789.12"        
             }
         },

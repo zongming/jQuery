@@ -98,8 +98,8 @@
         options: {
             value: "",
             
-            size: 10,
-            maxNumbers: 8,
+            totalSize: 10,
+            // numberSize: 8,
             numberH: 50,
             
             rootClass: "numbers",
@@ -107,9 +107,11 @@
         },
         
         _create: function() {
+            this.options.numberSize = this.options.numberSize || this.options.totalSize;
+            
             this.widget().addClass(this.options.rootClass);
             this._cache = [];
-            this._size = this.options.size;
+            this._size = this.options.totalSize;
             
             for(var i = 0; i < this._size; i++) {
                 this._cache[i] = $('<span></span>').number({
@@ -148,12 +150,19 @@
                         this._cache[i].number("showNumber", n);
                     }
                     numbers++;
+                    
+                    if(numbers < this.options.numberSize) {
+                        this._cache[i].show();
+                    } else {
+                        this._cache[i].hide();
+                    }
                 }
+                
             }
             
             for(var k = i; k >=0; k--) {
                 this._cache[k].number("showNumber", -1);
-                if(numbers < this.options.maxNumbers) {
+                if(numbers < this.options.numberSize) {
                     numbers++;
                     this._cache[k].show();
                 } else {
