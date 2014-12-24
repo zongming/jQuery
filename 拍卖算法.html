@@ -18,7 +18,7 @@
         <script src="js/jquery.auction.js" type="text/javascript"></script>
         <script type="text/javascript">
             $(function() {
-                $('.numbers0').auctionA({
+                $('.numbers0').auctionA({ // 匀速下跌式拍卖
                     start: 2500.00,
                     totalTime: 1080000,
                     currentTime: 0,
@@ -30,16 +30,16 @@
                     }
                 });
                 
-                $('.numbers1').auctionB({
+                $('.numbers1').auctionB({ // 加速下跌式拍卖
                     type: 1,
-                    start: 250000,
+                    start: 2500.00,
                     totalTime: 1080000,
                     currentTime: 0,
                     
                     interval: 1000, 
                     
-                    minCutDown: 30,
-                    maxCutDown: 270,
+                    minCutDown: 0.30,
+                    maxCutDown: 2.70,
                     CDchangeTimes: 10,
                     
                     numbers: {
@@ -47,7 +47,7 @@
                     }
                 });
                 
-                $('.numbers2').auctionB({
+                $('.numbers2').auctionB({ // 减速下跌式拍卖
                     type: 1,
                     start: 2500.00,
                     totalTime: 1080000,

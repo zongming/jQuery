@@ -33,7 +33,6 @@
         },
         
         _init: function() {
-            this._superApply();
             this._refresh();
         },
         
@@ -112,6 +111,7 @@
         _next: function() {
             this.options.currentTime += this.options.interval;
             this.times = parseInt(this.options.currentTime / this.options.interval);
+            var temp = this.price;
             this.price = this._getPriceByTime();
             
             if(this.price >= 0) {
@@ -120,8 +120,8 @@
                 });
                 
                 console.log("当前时间：  " + this.options.currentTime + " ms");
-                console.log("第 " + this.times + " 次降价");
-                console.log("价格降为: " + this.price.toFixed(2));
+                console.log("第 " + this.times + " 次降价: " + (temp - this.price).toFixed(2) + " 元");
+                console.log("价格降为: " + this.price);
                 console.log("........................");
                 
                 if(this.options.currentTime < this.options.totalTime) {
@@ -152,7 +152,8 @@
         
         _getPriceByTime: function() {
             var times = parseInt(this.options.currentTime / this.options.interval);
-            return this.options.start - times * this.options.cutDown;
+            var price = this.options.start - times * this.options.cutDown;
+            return Number(price.toFixed(2));
         }
     });
     
@@ -174,10 +175,9 @@
             var steps = time % this.stageSize;
             
             var d = this._getDeltaByStage(stage);
-            console.log("降价: " + d);
             var price = start - steps * d;
             
-            return price;
+            return Number(price.toFixed(2));
         },
         
         _getTimeByPrice: function(price) {
