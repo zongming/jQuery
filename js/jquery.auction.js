@@ -97,7 +97,7 @@
                 
                 if(this.options.started) {
                     if(this.options.currentTime < this.options.totalTime) {
-                        this.timeout = this._delay(this._next, this.options.interval);
+                        this.timeout = setTimeout($.proxy(this._next, this), this.options.interval);
                     }
                 }
             // }
@@ -118,7 +118,7 @@
                 console.log("........................");
                 
                 if(this.options.currentTime < this.options.totalTime) {
-                    this.timeout = this._delay(this._next, this.options.interval);
+                    this.timeout = setTimeout($.proxy(this._next, this), this.options.interval);
                 }
             }
         }
@@ -216,15 +216,15 @@
             this.prices = []; // cache for each stage
             
             var n = this.options.start;
-            for(var i = 0; i < this.total; i++) {
+            for(var i = 0; i < this.total; ) {
                 if(i % this.stageSize == 0) {
                     this.prices.push(Number(n.toFixed(2)));
                     
                     var m = parseInt(i / this.stageSize); 
                     n -= this._getDeltaByStage(m) * this.stageSize;
+                    
+                    i += this.stageSize;
                 }
-                // var m = parseInt(i / this.stageSize); 
-                // n -= this._getDeltaByStage(m);
             }
             this.end = Number(n.toFixed(2));
             this.prices.push(this.end); 
