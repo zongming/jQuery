@@ -45,7 +45,7 @@
             
             // this.price = price;
             // if(this.price >= 0) {
-                // this.$number.numbers("setValue", this._formatCurrent());
+                // this._showPrice();
             // }
             this.options.currentTime = this._getTimeByPrice(price);
             
@@ -61,14 +61,15 @@
                     clearTimeout(this.timeout);
                     this.options.currentTime = 0;
                     this.price = this.end;
-                    this.$number.numbers("setValue", this._formatCurrent());
+                    this._showPrice();
                 }
             }
         },
         
-        _formatCurrent: function() {
+        _showPrice: function() {
             var x = this.price.toFixed(2);
-            return "￥" + String(x).replace(/\d{1,3}(?=(\d{3})+(\.\d*)?$)/g, '$&,');
+            x = "￥" + String(x).replace(/\d{1,3}(?=(\d{3})+(\.\d*)?$)/g, '$&,');
+            this.$number.numbers("setValue", x);
         },
             
         _create: function() {
@@ -83,7 +84,7 @@
             
             if(this.options.currentTime >= this.options.totalTime) {
                 this.price = this.end;
-                this.$number.numbers("setValue", this._formatCurrent());
+                this._showPrice();
                 return;
             }
             
@@ -92,7 +93,7 @@
                 this.price = 0;
             }
             // if(this.price >= 0) {
-                this.$number.numbers("setValue", this._formatCurrent());
+                this._showPrice();
                 
                 if(this.options.started) {
                     if(this.options.currentTime < this.options.totalTime) {
@@ -109,7 +110,7 @@
             this.price = this._getPriceByTime();
             
             if(this.price >= 0) {
-                this.$number.numbers("setValue", this._formatCurrent());
+                this._showPrice();
                 
                 console.log("当前时间：  " + this.options.currentTime + " ms");
                 console.log("第 " + this.times + " 次降价: " + (temp - this.price).toFixed(2) + " 元");
@@ -218,9 +219,12 @@
             for(var i = 0; i < this.total; i++) {
                 if(i % this.stageSize == 0) {
                     this.prices.push(Number(n.toFixed(2)));
+                    
+                    var m = parseInt(i / this.stageSize); 
+                    n -= this._getDeltaByStage(m) * this.stageSize;
                 }
-                var m = parseInt(i / this.stageSize); 
-                n -= this._getDeltaByStage(m);
+                // var m = parseInt(i / this.stageSize); 
+                // n -= this._getDeltaByStage(m);
             }
             this.end = Number(n.toFixed(2));
             this.prices.push(this.end); 
