@@ -14,7 +14,7 @@ var b = $('#auctionB').auctionB(config);
 config.type = -1;
 var c = $('#auctionC').auctionB(config);
 
-QUnit.module( "匀速设置测试" );
+QUnit.module( "匀速降价测试" );
 
 var tests = [
     {time: 0, price: 2500},
@@ -44,7 +44,7 @@ QUnit.test("设置价格测试时间", function(assert) {
     a.auctionA("setTime", 0);
 });
 
-QUnit.module( "加速设置测试" );
+QUnit.module( "加速降价测试" );
 var tests1 = [
     {time: 0, price: 2500},
     {time: 1000, price: 2499.7},
@@ -112,7 +112,7 @@ QUnit.test("设置价格测试时间", function(assert) {
     b.auctionB("setTime", 0);
 });
 
-QUnit.module( "减速设置测试" );
+QUnit.module( "减速降价测试" );
 var tests2 = [
     {time: 0, price: 2500},
     {time: 5000 , price: 2487.7},
