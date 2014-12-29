@@ -11,18 +11,15 @@
             fadeDuration: 500
         },
         
-        current: 0,
-        size: 0,
-        items: undefined,
-        f: undefined,
-        _animating: false,
-        
         getItems: function() {
             this.items = this.items || this.widget().find('li');
             return this.items;
         },
         
         _create: function() {
+            this.current = 0;
+            
+            
             this.items = this.getItems();
             this.size = this.items.size();
             this.widget().addClass('q-banner').css({
