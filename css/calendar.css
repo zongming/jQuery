@@ -1,0 +1,41 @@
+@charset "UTF-8";
+
+.c-calendar {
+    text-align: center;
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+.c-row {}
+.c-row-days {}
+.c-header {}
+
+.c-row .c-cell {
+    margin: 0;
+    padding: 0;
+    border: 1px solid black;
+    background: #FFEEEE;
+    width: 50px;
+    height: 50px;
+    background: #FFF;
+}
+.c-header .c-cell {
+    height: 30px;
+}
+.c-row-days .c-cell {
+    height: 30px;
+}
+.c-row .c-cell-inactive {
+    background: #EEE;
+}
+
+.c-header .title {
+    display: inline-block;
+}
+.c-header .prev {
+    display: inline-block;
+    float: left;
+}
+.c-header .next {
+    float: right;
+    display: inline-block;
+}
