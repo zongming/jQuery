@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <style>
+        
+        /* Clearfix */
+            .clearfix:after, #content:after {
+                content: "\0020";
+                display: block;
+                clear: both;
+                height: 0;
+                font-size: 0;
+            }
+
+            .number {
+                float: left;
+            }
+            .symbol,
+            .num {
+                display: inline-block;
+                overflow:hidden;
+            }
+            .item {
+                display: block;
+            }
+            .numbers > span > .num {
+                display: block;
+            }
+            .numbers > span.symbol > .num {
+                display: none;
+            }
+            .numbers > span > .symbol {
+                display: none;
+            }
+            .numbers > span.symbol > .symbol {
+                display: block;
+            }
+        </style>
+        
+    </head>
+    <body>
+        <div class="numbers clearfix"></div>
+        <div class="numbers clearfix"></div>
+        <div id="test"></div>
+        
+        <script src="js/lib/jquery-1.11.1.js" type="text/javascript"></script>
+        <script src="js/lib/jquery-ui.js" type="text/javascript"></script>
+        <script src="js/jquery.numbers1.js" type="text/javascript"></script>
+        <script type="text/javascript">
+            $(function() {
+                $('.numbers').numbers({
+                    rootClass: "",
+                    numberH: 20,
+                    speed: 900
+                });
+                
+                var n = 0;
+                var a = setInterval(function() {
+                    n++;
+                    var x = "￥" + String(n).replace(/\d{1,3}(?=(\d{3})+(\.\d*)?$)/g, '$&,');
+                    
+                    $(':qbao-numbers').numbers("setValue", x);
+                    
+                    $('#test').text(x);
+                }, 1000);
+                
+                // var n = 0;
+                // var a = setInterval(function() {
+                    // var x;
+                    // var y = (Math.random() * 10);
+                    // if(y > 5) {
+                        // x = (Math.random() * Math.pow(10,y)).toFixed(2);
+                    // } else {
+                        // x = (Math.random() * Math.pow(10,y)).toFixed(0);
+                    // }
+                    // x = "￥" + String(x).replace(/\d{1,3}(?=(\d{3})+(\.\d*)?$)/g, '$&,');
+//                     
+                    // console.log(x);
+                    // $(':qbao-numbers').numbers("setValue", x);
+                // }, 3000);
+//                 
+                // var i = 0;
+                // $('.number').number({
+                    // numberH: 18
+                // });
+                // var a = setInterval(function() {
+                    // $('.number').number("showNumber", i++ % 10);
+                // }, 1000);
+                
+            });
+            
+            
+        </script>
+</html>
