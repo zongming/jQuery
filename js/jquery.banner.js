@@ -45,23 +45,27 @@
         },
         
         next: function() {
-            if(!this._animating) {
-                var c = this.current;
-                var t = (c + 1) % this.size;
-                
-                this._swap(c, t);
-                
-                this._refreshAutoPlay();
+            if(this.size > 1) {
+                if(!this._animating) {
+                    var c = this.current;
+                    var t = (c + 1) % this.size;
+                    
+                    this._swap(c, t);
+                    
+                    this._refreshAutoPlay();
+                }
             }
         },
         
         prev: function() {
-            if(!this._animating) {
-                var c = this.current;
-                var t = (c - 1) % this.size;
-                
-                this._swap(c, t);
-                this._refreshAutoPlay();
+            if(this.size > 1) {
+                if(!this._animating) {
+                    var c = this.current;
+                    var t = (c - 1) % this.size;
+                    
+                    this._swap(c, t);
+                    this._refreshAutoPlay();
+                }
             }
         },
         
