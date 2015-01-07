@@ -65,14 +65,14 @@
             var me = this;
             this.element.on('click.tile', ':qbao-tile', function(e) {
                 var d = $(this).data("date");
-                me._trigger('clickdate', e, d);
+                me._trigger('clickDate', e, d);
             });
         },
         
         _createMonth: function() {
             var tr = $("<tr class='c-row c-header'></tr>");
             this.$month = $("<td class='cell' colspan=" + this.options.col + 
-                "><a class='prev'>prev</a><h3 class='title'></h3><a class='next'>next</a></td>").appendTo(tr);
+                "><a class='next'>next</a><a class='prev'>prev</a><h3 class='title'></h3></td>").appendTo(tr);
             
             var me = this;
             this.$month.find('.prev').on('click', function() {

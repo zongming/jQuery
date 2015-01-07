@@ -13,15 +13,13 @@
 }
 .c-calendar .c-header > .cell > .title {
   margin: 0;
-  display: inline-block;
+  display: inline;
 }
 .c-calendar .c-header > .cell > .prev {
-  display: inline-block;
   float: left;
 }
 .c-calendar .c-header > .cell > .next {
   float: right;
-  display: inline-block;
 }
 .c-calendar .c-row-days > .cell {
   height: 30px;
