@@ -1,13 +1,22 @@
 (function($) {
-    $.widget('qbao.cItem', {
+    $.widget('qbao.tile', {
+        options: {
+            date: new Date()
+        },
+        
+        _create: function() {
+            this.tile = $("<div class='tile'></div>");
+            this.element.append(this.tile);
+        },
+        
         _init: function() {
-            this.date = this.options.date;
-            this.element.text(this.options.test);
+            var date = this.options.date;
+            var str = date.getMonth() + 1 + "." + date.getDate();
+            this.tile.text(str);
         },
         
         clear: function() {
-            this.date = undefined;
-            this.element.empty();
+            this.tile.empty();
         }
     });
     
@@ -27,7 +36,6 @@
                 5: "周五",
                 6: "周六"
             },
-            // data: [{da}]
             showDays : true,
             showMonth : true
         },
@@ -53,11 +61,17 @@
             this._createDates();
             
             this.setTime(this.currentYear, this.currentMonth);
+            
+            var me = this;
+            this.element.on('click.tile', ':qbao-tile', function(e) {
+                var d = $(this).data("date");
+                me._trigger('clickdate', e, d);
+            });
         },
         
         _createMonth: function() {
             var tr = $("<tr class='c-row c-header'></tr>");
-            this.$month = $("<td class='c-cell' colspan=" + this.options.col + 
+            this.$month = $("<td class='cell' colspan=" + this.options.col + 
                 "><a class='prev'>prev</a><h3 class='title'></h3><a class='next'>next</a></td>").appendTo(tr);
             
             var me = this;
@@ -71,20 +85,18 @@
         },
         
         prev: function() {
-            this.currentMonth -= 1;
-            this.setTime(this.currentYear, this.currentMonth);
+            this.setTime(this.currentYear, this.currentMonth - 1);
         },
         
         next: function() {
-            this.currentMonth += 1;
-            this.setTime(this.currentYear, this.currentMonth);
+            this.setTime(this.currentYear, this.currentMonth + 1);
         },
         
         _createDays: function() {
             this.$days = $("<tr class='c-row c-row-days'></tr>");
             var me = this;
             $.each(this.options.days, function(index, item) {
-                var $cell = $("<td class='c-cell'>" + item + "</td>");
+                var $cell = $("<td class='cell'>" + item + "</td>");
                 me.$days.append($cell);
             });
             this.$calendar.append(this.$days);
@@ -95,11 +107,11 @@
                 var c = [];
                 this._cache.push(c);
                 
-                var $row = $("<tr class='c-row c-row-date'></tr>");
+                var $row = $("<tr class='c-row c-row-dates'></tr>");
                 this.$calendar.append($row);
 
                 for (var j = 0; j < this.options.col; j++) {
-                    var $cell = $("<td class='c-cell'></td>").cItem();
+                    var $cell = $("<td class='cell'></td>").tile();
                     $row.append($cell);
                     c.push($cell);
                 }
@@ -118,7 +130,7 @@
             
             for(var i = 0; i < this.options.row; i++) {
                 for(var j = 0; j < this.options.col; j++) {
-                    this._cache[i][j].cItem("clear");
+                    this._cache[i][j].tile("clear");
                 }
             }
             
@@ -130,19 +142,20 @@
             }
             
             for(var i = 0; i < dates.length; i++) {
+                var date = dates[i];
                 var r = Math.floor(i / 7);
                 var c = i % 7;
                 var $cell = this._cache[r][c];
-                $cell.data("date", dates[i]);
-                        
-                $cell.cItem({
-                   test: dates[i].getMonth() + 1 + ":" + dates[i].getDate()
+                $cell.data("date", date);
+                
+                $cell.tile({
+                    date: date
                 });
                 
-                if(dates[i].getMonth() == month) {
-                    $cell.removeClass("c-cell-inactive");
+                if(date.getMonth() == month) {
+                    $cell.removeClass("cell-inactive");
                 } else {
-                    $cell.addClass("c-cell-inactive");
+                    $cell.addClass("cell-inactive");
                 }
             }
         },
@@ -165,7 +178,6 @@
                 this.$month.remove();
             }
             this.$calendar.remove();
-            
         }
     });
 })(jQuery);

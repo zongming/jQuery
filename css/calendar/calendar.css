@@ -1,0 +1,40 @@
+@charset "UTF-8";
+.c-calendar {
+  text-align: center;
+  border-collapse: collapse;
+}
+.c-calendar .c-row > .cell {
+  padding: 0;
+  margin: 0;
+  border: 1px solid black;
+}
+.c-calendar .c-header > .cell {
+  height: 30px;
+}
+.c-calendar .c-header > .cell > .title {
+  margin: 0;
+  display: inline-block;
+}
+.c-calendar .c-header > .cell > .prev {
+  display: inline-block;
+  float: left;
+}
+.c-calendar .c-header > .cell > .next {
+  float: right;
+  display: inline-block;
+}
+.c-calendar .c-row-days > .cell {
+  height: 30px;
+}
+.c-calendar .c-row-dates > .cell {
+  width: 50px;
+  height: 50px;
+  background: #ffffff;
+}
+.c-calendar .c-row-dates > .cell:hover {
+  background: blue;
+}
+.c-calendar .c-row-dates > .cell-inactive {
+  /*background: #EEE;*/
+  color: gray;
+}

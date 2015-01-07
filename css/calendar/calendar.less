@@ -1,0 +1,62 @@
+@charset "UTF-8";
+
+@borderColor: black;
+@dateW: 50px;
+@dateH: 50px;
+@dateBC: #FFF;
+@DateHighlightBC: blue;
+
+@headerH: 30px;
+@daysH: 30px;
+
+.c-calendar {
+  text-align: center;
+  border-collapse: collapse;
+  
+  .c-row {
+    > .cell {
+      padding: 0;
+      margin: 0;
+      border: 1px solid @borderColor;
+    }
+  }
+  .c-header {
+    > .cell {
+      height: @headerH;
+      > .title {
+        margin: 0;
+        display: inline-block;
+      }
+      > .prev {
+          display: inline-block;
+          float: left;
+      }
+      > .next {
+          float: right;
+          display: inline-block;
+      }
+    }
+  }
+  .c-row-days {
+    > .cell {
+      height: @daysH;
+    }
+  }
+  .c-row-dates {
+    > .cell {
+      width: @dateW;
+      height: @dateH;
+      background: @dateBC;
+      
+      &:hover {
+        background: @DateHighlightBC;
+      }
+    }
+    > .cell-inactive {
+      /*background: #EEE;*/
+        color: gray;
+    }
+  }
+  
+}
+
