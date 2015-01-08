@@ -216,15 +216,14 @@
             this.prices = []; // cache for each stage
             
             var n = this.options.start;
-            for(var i = 0; i < this.total; ) {
-                if(i % this.stageSize == 0) {
-                    this.prices.push(Number(n.toFixed(2)));
-                    
-                    var m = parseInt(i / this.stageSize); 
-                    n -= this._getDeltaByStage(m) * this.stageSize;
-                    
-                    i += this.stageSize;
-                }
+            var i = 0;
+            while(i < this.total) {
+                this.prices.push(Number(n.toFixed(2)));
+                
+                var m = parseInt(i / this.stageSize); 
+                n -= this._getDeltaByStage(m) * this.stageSize;
+                
+                i += this.stageSize;
             }
             this.end = Number(n.toFixed(2));
             this.prices.push(this.end); 
