@@ -5,12 +5,16 @@
             .main {
                 position: relative;
             }
-            img {
+            .img {
                 position: absolute;
                 list-style: none;
                 z-index: 1;
+                width: 165px;
+                height: 165px;
+                background: yellow;
+                text-align: center;
             }
-            img.curr {
+            .img.curr {
                 z-index: 3;
             }
             .mask {
@@ -30,17 +34,16 @@
     </head>
     <body>
         <div class="main">
-            <img src="images/choujiang/1.jpg" />
-            <img src="images/choujiang/2.jpg" />
-            <img src="images/choujiang/3.jpg" />
-            <img src="images/choujiang/4.jpg" />
-            <img src="images/choujiang/5.jpg" />
-            <img src="images/choujiang/6.jpg" />
-            <img src="images/choujiang/7.jpg" />
-            <img src="images/choujiang/8.jpg" />
-            <img src="images/choujiang/9.jpg" />
-            <img src="images/choujiang/10.jpg" />
-        
+            <div class="img">0</div>
+            <div class="img">1</div>
+            <div class="img">2</div>
+            <div class="img">3</div>
+            <div class="img">4</div>
+            <div class="img">5</div>
+            <div class="img">6</div>
+            <div class="img">7</div>
+            <div class="img">8</div>
+            <div class="img">9</div>
             <div class="mask"></div>
         </div>
         <script type="text/javascript" src="js/lib/jquery-1.11.1.js"></script>

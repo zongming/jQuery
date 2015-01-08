@@ -1,6 +1,6 @@
 $(function() {
     var x = 0, y = 0;
-    var $imgs = $('img');
+    var $imgs = $('.img');
     $imgs.each(function(index, element) {
         $(element).data('number', index);
 
@@ -25,7 +25,7 @@ $(function() {
 });
 
 $(function() {
-    var $imgs = $('img'), count = $imgs.size();
+    var $imgs = $('.img'), count = $imgs.size();
     var deffer, running, current, target,
         ending = false,
         endingPoint = -1, 
