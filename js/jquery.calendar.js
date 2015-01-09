@@ -1,22 +1,61 @@
 (function($) {
     $.widget('qbao.tile', {
         options: {
-            date: new Date()
+            // date: new Date()
         },
         
         _create: function() {
-            this.tile = $("<div class='tile'></div>");
-            this.element.append(this.tile);
+            this.$tile = $("<div class='tile'></div>");
+            this.element.append(this.$tile);
+            
+            this.$point = $("<span class='point'></span>").appendTo(this.$tile);
+            this.$day = $("<p class='day'></p>").appendTo(this.$tile);
+            this.$status = $("<p class='status'>").appendTo(this.$tile);
         },
         
         _init: function() {
             var date = this.options.date;
-            var str = date.getDate();
-            this.tile.text(str);
+            if(date) {
+                var str = date.getDate();
+                this.$day.text(str);
+            }
+            
+            var x = Math.random() * 100;
+            x = Math.floor(x);
+            this.$status.text(x);
+            
+            if(x < 0) {
+                this.$status.addClass('status-gray');
+            }
         },
         
         clear: function() {
-            this.tile.empty();
+            this.$day.empty();
+            this.$status.empty();
+            this.$status.removeClass('status-gray');
+        }
+    });
+    
+    $.widget('qbao.detail', {
+        _create: function() {
+            this.element.addClass('c-detail');
+            this.$title = $('<h4 class="title"></h4>').appendTo(this.element);
+            this.$content = $('<div class="content"><p><span class="m"></span><span class="u">钱宝币</span></p>'
+            +'<p>剩余名额/名额总数：<em>233</em>/500</p></div>').appendTo(this.element);
+        },
+        
+        _init: function() {
+            // this.$content.removeClass('content-ended');
+            // this.$content.removeClass('content-notstarted');
+            if(this.options.date) {
+                var y = this.options.date.getFullYear();
+                var month = this.options.date.getMonth();
+                var date = this.options.date.getDate();
+                var str = y + "年" + (month + 1) + "月" + date + "日";
+                this.$title.text(str);
+            }
+            this.$content.addClass('content-ended');
+            this.$content.find('.m').text("1000");
         }
     });
     
@@ -49,7 +88,7 @@
 
             this.$calendar = $("<table cellpadding='0' cellspacing='0' class='c-calendar'></table>");
             this.element.append(this.$calendar);
-
+            
             if (this.options.showMonth) {
                 this._createMonth();
             }
@@ -63,10 +102,23 @@
             this.setTime(this.currentYear, this.currentMonth);
             
             var me = this;
-            this.element.on('click.tile', ':qbao-tile', function(e) {
+            this.element.on('mouseover.tile', ':qbao-tile', function(e) {
                 var d = $(this).data("date");
-                me._trigger('clickDate', e, d);
+                // me._trigger('clickDate', e, d);
+                
+                me.$detail.detail({
+                    date: d
+                }).show();
             });
+            this.element.on('mouseout', function(e) {
+                me.$detail.detail().hide(); 
+            });
+            
+            this.element.css('position', 'relative');
+            this.$detail = $("<div></div>").css({
+                top: 0,
+                left: this.$calendar.outerWidth(true)
+            }).detail().appendTo(this.element);
         },
         
         _createMonth: function() {
@@ -177,8 +229,6 @@
                 if(date.getMonth() != month) {
                     $cell.addClass("cell-notCurrentMonth");
                 }
-                
-                
             }
         },
         
@@ -198,6 +248,9 @@
             }
             if(this.$month) {
                 this.$month.remove();
+            }
+            if(this.$detail) {
+                this.$detail.remove();
             }
             this.$calendar.remove();
         }

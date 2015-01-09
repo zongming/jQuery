@@ -16,7 +16,8 @@
 @dateBackColor: #FFF;
 @dateHighlightBC: #d5f3d2;
 @dateFontSize: 12px;
-@dateFontColor: #666;
+// @dateFontColor: #666;
+@dateFontColor: #000;
 @dateNotCurrentMonthFontColor: #ccc;
 @dateHeight: 35px;
 @todayBackColor: #ffc9c9;
@@ -122,33 +123,64 @@
   .row-dates {
     > .cell {
       background: @dateBackColor;
-      font-size: @dateFontSize;
-      color: @dateFontColor;
       
       &:hover {
         background: @dateHighlightBC;
       }
       
       .tile {
+        position: relative;
         width: @cellWidth;
         height: @dateHeight;
-        line-height: @dateHeight;
+        .point {
+          background: url("@{imgPath}/red.png") no-repeat;
+          position: absolute;
+          width: 5px;
+          height: 5px;
+          
+          top: 4px;
+          right: 4px;
+        }
+        .day {
+          line-height: 22px;
+          font-size: 14px;
+          color: @dateFontColor;
+          margin: 0;
+        }
+        .status {
+          line-height: 10px;
+          font-size: 10px;
+          color: #d03a24;
+          margin: 0;
+        }
+        .status-gray {
+          color: #888;
+        }
       }
     }
     > .cell-today {
       background-color: @todayBackColor;
+      .tile {
+        border: @todayHighlightBorderWidth solid @todayBackColor;
+        width: @cellWidth - @todayHighlightBorderWidth * 2;
+        height: @dateHeight - @todayHighlightBorderWidth * 2;
+        .day {
+          line-height: 22px - @todayHighlightBorderWidth;
+        }
+      }
       &:hover {
         background-color: @todayBackColor;
         .tile {
-          width: @cellWidth - @todayHighlightBorderWidth * 2;
-          height: @dateHeight - @todayHighlightBorderWidth * 2;
-          line-height: @dateHeight - @todayHighlightBorderWidth * 2;
           border: @todayHighlightBorderWidth solid @todayHighlightBorderColor;
         }
       }
     }
     > .cell-notCurrentMonth {
-      color: @dateNotCurrentMonthFontColor;
+      .tile {
+        .day {
+          color: @dateNotCurrentMonthFontColor;
+        }
+      }
     }
     > .cell-passed {
       background-color: @datePassedBC;
@@ -160,6 +192,43 @@
       color: gray;
     }
   }
-  
+}
+
+.c-detail {
+  display: none;
+  position: absolute;
+  width: 278px;
+  background-color: #13ba00;
+  >.title {
+    margin: 0;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    font-size: 14px;
+    color: #FFF;
+  }
+  >.content {
+    p {
+      margin: 0;
+    }
+    padding: 15px 20px;
+    background-color: #FFF;
+    margin: 0 5px 5px 5px;
+    .m {
+      font-size: 24px;
+      color: #d03a24;
+    }
+    .u {
+      font-size: 14px;
+      color: #000;
+    }
+  }
+  > .content-ended {
+    padding-bottom: 20px;
+    // border-bottom: 1px solid 
+  }
+  >.content-nostarted {
+    
+  }
 }
 

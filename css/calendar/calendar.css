@@ -60,18 +60,18 @@
 .c-calendar .c-header > .cell > .header > .prev {
   float: left;
   margin-left: 10px;
-  background: url("http://127.0.0.1:8020/jQuerySkills/images/calendar/c_arrow_l_light.png") no-repeat;
+  background: url("../../images/calendar/c_arrow_l_light.png") no-repeat;
 }
 .c-calendar .c-header > .cell > .header > .prev:hover {
-  background: url("http://127.0.0.1:8020/jQuerySkills/images/calendar/c_arrow_l.png") no-repeat;
+  background: url("../../images/calendar/c_arrow_l.png") no-repeat;
 }
 .c-calendar .c-header > .cell > .header > .next {
   float: right;
   margin-right: 10px;
-  background: url("http://127.0.0.1:8020/jQuerySkills/images/calendar/c_arrow_r_light.png") no-repeat;
+  background: url("../../images/calendar/c_arrow_r_light.png") no-repeat;
 }
 .c-calendar .c-header > .cell > .header > .next:hover {
-  background: url("http://127.0.0.1:8020/jQuerySkills/images/calendar/c_arrow_r.png") no-repeat;
+  background: url("../../images/calendar/c_arrow_r.png") no-repeat;
 }
 .c-calendar .row-days > .cell {
   height: 20px;
@@ -80,30 +80,56 @@
 }
 .c-calendar .row-dates > .cell {
   background: #ffffff;
-  font-size: 12px;
-  color: #666666;
 }
 .c-calendar .row-dates > .cell:hover {
   background: #d5f3d2;
 }
 .c-calendar .row-dates > .cell .tile {
+  position: relative;
   width: 48px;
   height: 35px;
-  line-height: 35px;
+}
+.c-calendar .row-dates > .cell .tile .point {
+  background: url("../../images/calendar/red.png") no-repeat;
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  top: 4px;
+  right: 4px;
+}
+.c-calendar .row-dates > .cell .tile .day {
+  line-height: 22px;
+  font-size: 14px;
+  color: #000000;
+  margin: 0;
+}
+.c-calendar .row-dates > .cell .tile .status {
+  line-height: 10px;
+  font-size: 10px;
+  color: #d03a24;
+  margin: 0;
+}
+.c-calendar .row-dates > .cell .tile .status-gray {
+  color: #888;
 }
 .c-calendar .row-dates > .cell-today {
   background-color: #ffc9c9;
+}
+.c-calendar .row-dates > .cell-today .tile {
+  border: 2px solid #ffc9c9;
+  width: 44px;
+  height: 31px;
+}
+.c-calendar .row-dates > .cell-today .tile .day {
+  line-height: 20px;
 }
 .c-calendar .row-dates > .cell-today:hover {
   background-color: #ffc9c9;
 }
 .c-calendar .row-dates > .cell-today:hover .tile {
-  width: 44px;
-  height: 31px;
-  line-height: 31px;
   border: 2px solid #f7b4b4;
 }
-.c-calendar .row-dates > .cell-notCurrentMonth {
+.c-calendar .row-dates > .cell-notCurrentMonth .tile .day {
   color: #cccccc;
 }
 .c-calendar .row-dates > .cell-passed {
@@ -115,4 +141,37 @@
 }
 .c-calendar .row-dates > .cell-inactive:hover {
   background: #ffffff;
+}
+.c-detail {
+  display: none;
+  position: absolute;
+  width: 278px;
+  background-color: #13ba00;
+}
+.c-detail > .title {
+  margin: 0;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  font-size: 14px;
+  color: #FFF;
+}
+.c-detail > .content {
+  padding: 15px 20px;
+  background-color: #FFF;
+  margin: 0 5px 5px 5px;
+}
+.c-detail > .content p {
+  margin: 0;
+}
+.c-detail > .content .m {
+  font-size: 24px;
+  color: #d03a24;
+}
+.c-detail > .content .u {
+  font-size: 14px;
+  color: #000;
+}
+.c-detail > .content-ended {
+  padding-bottom: 20px;
 }
