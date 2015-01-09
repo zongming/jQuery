@@ -2,6 +2,10 @@
 .c-calendar {
   text-align: center;
   border-collapse: collapse;
+  border: 2px solid #e3e3e3;
+}
+.c-calendar:hover {
+  border: 2px solid #13ba00;
 }
 .c-calendar .row > .cell {
   padding: 0;
@@ -9,28 +13,28 @@
   border: 1px solid #f7f7f7;
 }
 .c-calendar .row > .cell:first-child {
-  border-left: 2px solid #e3e3e3;
+  border-left: none;
 }
 .c-calendar .row > .cell-last {
-  border-right: 2px solid #e3e3e3;
+  border-right: none;
 }
 .c-calendar .row:first-child .cell {
-  border-top: 2px solid #e3e3e3;
+  border-top: none;
 }
 .c-calendar .row-last .cell {
-  border-bottom: 2px solid #e3e3e3;
+  border-bottom: none;
 }
 .c-calendar:hover .row > .cell:first-child {
-  border-left: 2px solid #13ba00;
+  border-left: none;
 }
 .c-calendar:hover .row > .cell-last {
-  border-right: 2px solid #13ba00;
+  border-right: none;
 }
 .c-calendar:hover .row:first-child .cell {
-  border-top: 2px solid #13ba00;
+  border-top: none;
 }
 .c-calendar:hover .row-last .cell {
-  border-bottom: 2px solid #13ba00;
+  border-bottom: none;
 }
 .c-calendar .c-header > .cell {
   height: 26px;

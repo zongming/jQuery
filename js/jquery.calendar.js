@@ -47,7 +47,7 @@
             
             this._cache = [];
 
-            this.$calendar = $("<table class='c-calendar'></table>");
+            this.$calendar = $("<table cellpadding='0' cellspacing='0' class='c-calendar'></table>");
             this.element.append(this.$calendar);
 
             if (this.options.showMonth) {

@@ -32,7 +32,10 @@
 .c-calendar {
   text-align: center;
   border-collapse: collapse;
-  
+  border: @outerBorderWidth solid @outerBorderColor;
+  &:hover {
+    border: @outerBorderWidth solid @outerBorderColorHighlight;
+  }
   .row {
     > .cell {
       padding: 0;
@@ -40,32 +43,32 @@
       border: 1px solid @innerBorderColor;
     }
     > .cell:first-child {
-      border-left: @outerBorderWidth solid @outerBorderColor;
+      border-left: none;
     }
     > .cell-last {
-      border-right: @outerBorderWidth solid @outerBorderColor;
+      border-right: none;
     }
   }
   .row:first-child .cell {
-    border-top: @outerBorderWidth solid @outerBorderColor;
+    border-top: none;
   }
   .row-last .cell {
-    border-bottom: @outerBorderWidth solid @outerBorderColor;
+    border-bottom: none;
   }
   &:hover {
     .row {
       > .cell:first-child {
-        border-left: @outerBorderWidth solid @outerBorderColorHighlight; 
+        border-left: none;
       }
       > .cell-last {
-        border-right: @outerBorderWidth solid @outerBorderColorHighlight; 
+        border-right: none;
       }
     }
     .row:first-child .cell {
-      border-top: @outerBorderWidth solid @outerBorderColorHighlight; 
+      border-top: none;
     }
     .row-last .cell {
-      border-bottom: @outerBorderWidth solid @outerBorderColorHighlight; 
+      border-bottom: none;
     }
   }
   
