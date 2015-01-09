@@ -3,36 +3,112 @@
   text-align: center;
   border-collapse: collapse;
 }
-.c-calendar .c-row > .cell {
+.c-calendar .row > .cell {
   padding: 0;
   margin: 0;
-  border: 1px solid black;
+  border: 1px solid #f7f7f7;
+}
+.c-calendar .row > .cell:first-child {
+  border-left: 2px solid #e3e3e3;
+}
+.c-calendar .row > .cell-last {
+  border-right: 2px solid #e3e3e3;
+}
+.c-calendar .row:first-child .cell {
+  border-top: 2px solid #e3e3e3;
+}
+.c-calendar .row-last .cell {
+  border-bottom: 2px solid #e3e3e3;
+}
+.c-calendar:hover .row > .cell:first-child {
+  border-left: 2px solid #13ba00;
+}
+.c-calendar:hover .row > .cell-last {
+  border-right: 2px solid #13ba00;
+}
+.c-calendar:hover .row:first-child .cell {
+  border-top: 2px solid #13ba00;
+}
+.c-calendar:hover .row-last .cell {
+  border-bottom: 2px solid #13ba00;
 }
 .c-calendar .c-header > .cell {
-  height: 30px;
+  height: 26px;
 }
-.c-calendar .c-header > .cell > .title {
+.c-calendar .c-header > .cell > .header {
+  line-height: 14px;
+}
+.c-calendar .c-header > .cell > .header > .title {
+  font-size: 14px;
+  font-weight: normal;
   margin: 0;
+}
+.c-calendar .c-header > .cell > .header > .title .time {
   display: inline;
 }
-.c-calendar .c-header > .cell > .prev {
+.c-calendar .c-header > .cell > .header > .title .sub-title {
+  color: #888;
+}
+.c-calendar .c-header > .cell > .header > .btn {
+  width: 9px;
+  height: 15px;
+}
+.c-calendar .c-header > .cell > .header > .prev {
   float: left;
+  margin-left: 10px;
+  background: url("http://127.0.0.1:8020/jQuerySkills/images/calendar/c_arrow_l_light.png") no-repeat;
 }
-.c-calendar .c-header > .cell > .next {
+.c-calendar .c-header > .cell > .header > .prev:hover {
+  background: url("http://127.0.0.1:8020/jQuerySkills/images/calendar/c_arrow_l.png") no-repeat;
+}
+.c-calendar .c-header > .cell > .header > .next {
   float: right;
+  margin-right: 10px;
+  background: url("http://127.0.0.1:8020/jQuerySkills/images/calendar/c_arrow_r_light.png") no-repeat;
 }
-.c-calendar .c-row-days > .cell {
-  height: 30px;
+.c-calendar .c-header > .cell > .header > .next:hover {
+  background: url("http://127.0.0.1:8020/jQuerySkills/images/calendar/c_arrow_r.png") no-repeat;
 }
-.c-calendar .c-row-dates > .cell {
-  width: 50px;
-  height: 50px;
+.c-calendar .row-days > .cell {
+  height: 20px;
+  background-color: #ededed;
+  font-size: 12px;
+}
+.c-calendar .row-dates > .cell {
   background: #ffffff;
+  font-size: 12px;
+  color: #666666;
 }
-.c-calendar .c-row-dates > .cell:hover {
-  background: blue;
+.c-calendar .row-dates > .cell:hover {
+  background: #d5f3d2;
 }
-.c-calendar .c-row-dates > .cell-inactive {
-  /*background: #EEE;*/
+.c-calendar .row-dates > .cell .tile {
+  width: 48px;
+  height: 35px;
+  line-height: 35px;
+}
+.c-calendar .row-dates > .cell-today {
+  background-color: #ffc9c9;
+}
+.c-calendar .row-dates > .cell-today:hover {
+  background-color: #ffc9c9;
+}
+.c-calendar .row-dates > .cell-today:hover .tile {
+  width: 44px;
+  height: 31px;
+  line-height: 31px;
+  border: 2px solid #f7b4b4;
+}
+.c-calendar .row-dates > .cell-notCurrentMonth {
+  color: #cccccc;
+}
+.c-calendar .row-dates > .cell-passed {
+  background-color: #f3f3f3;
+}
+.c-calendar .row-dates > .cell-inactive {
+  /*不在活动期*/
   color: gray;
+}
+.c-calendar .row-dates > .cell-inactive:hover {
+  background: #ffffff;
 }

@@ -11,7 +11,7 @@
         
         _init: function() {
             var date = this.options.date;
-            var str = date.getMonth() + 1 + "." + date.getDate();
+            var str = date.getDate();
             this.tile.text(str);
         },
         
@@ -28,13 +28,13 @@
             time: new Date(),
 
             days : {
-                0: "周日",
-                1: "周一",
-                2: "周二",
-                3: "周三",
-                4: "周四",
-                5: "周五",
-                6: "周六"
+                0: "日",
+                1: "一",
+                2: "二",
+                3: "三",
+                4: "四",
+                5: "五",
+                6: "六"
             },
             showDays : true,
             showMonth : true
@@ -70,9 +70,9 @@
         },
         
         _createMonth: function() {
-            var tr = $("<tr class='c-row c-header'></tr>");
-            this.$month = $("<td class='cell' colspan=" + this.options.col + 
-                "><a class='next'>next</a><a class='prev'>prev</a><h3 class='title'></h3></td>").appendTo(tr);
+            var tr = $("<tr class='row c-header'></tr>");
+            this.$month = $("<td class='cell cell-last' colspan=" + this.options.col + 
+                "><div class='header'><a class='btn next'></a><a class='btn prev'></a><h5 class='title'><span class='time'></span><span class='sub-title'>（单位：钱宝币）</span></h5></div></td>").appendTo(tr);
             
             var me = this;
             this.$month.find('.prev').on('click', function() {
@@ -93,11 +93,15 @@
         },
         
         _createDays: function() {
-            this.$days = $("<tr class='c-row c-row-days'></tr>");
+            this.$days = $("<tr class='row row-days'></tr>");
             var me = this;
             $.each(this.options.days, function(index, item) {
                 var $cell = $("<td class='cell'>" + item + "</td>");
                 me.$days.append($cell);
+                
+                if(index == me.options.col - 1) {
+                    $cell.addClass("cell-last");
+                }
             });
             this.$calendar.append(this.$days);
         },
@@ -107,11 +111,17 @@
                 var c = [];
                 this._cache.push(c);
                 
-                var $row = $("<tr class='c-row c-row-dates'></tr>");
+                var $row = $("<tr class='row row-dates'></tr>");
                 this.$calendar.append($row);
+                if(i == this.options.row - 1) {
+                    $row.addClass("row-last");
+                }
 
                 for (var j = 0; j < this.options.col; j++) {
                     var $cell = $("<td class='cell'></td>").tile();
+                    if(j == this.options.col - 1) {
+                        $cell.addClass("cell-last");
+                    }
                     $row.append($cell);
                     c.push($cell);
                 }
@@ -125,7 +135,7 @@
             this.currentMonth = month = startDate.getMonth();
             
             if (this.options.showMonth) {
-                this.$month.find('h3').text(year + "年" + (month + 1) + "月");
+                this.$month.find('.time').text(year + "年" + (month + 1) + "月");
             }
             
             for(var i = 0; i < this.options.row; i++) {
@@ -151,12 +161,24 @@
                 $cell.tile({
                     date: date
                 });
+                $cell.removeClass("cell-today");
+                $cell.removeClass("cell-passed");
+                $cell.removeClass("cell-notCurrentMonth");
                 
-                if(date.getMonth() == month) {
-                    $cell.removeClass("cell-inactive");
-                } else {
-                    $cell.addClass("cell-inactive");
+                var today = new Date();
+                if(date.getFullYear() == today.getFullYear() && date.getMonth() == today.getMonth()) {
+                    if(date.getDate() == today.getDate()) {
+                        $cell.addClass("cell-today");
+                    } else if(date.getDate() < today.getDate()) {
+                        $cell.addClass("cell-passed");
+                    }
                 }
+                
+                if(date.getMonth() != month) {
+                    $cell.addClass("cell-notCurrentMonth");
+                }
+                
+                
             }
         },
         
