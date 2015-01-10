@@ -129,6 +129,7 @@
                     this.$status.addClass('status-gray');
                     this.$status.text(x);
                 } else {
+                    this.$status.removeClass('status-gray');
                     this.$status.text("+" + x);
                 }
             }
@@ -141,10 +142,12 @@
         },
         
         clear: function() {
-            this.options = {};
+            delete this.options.date;
+            delete this.options.showDetail;
+            delete this.options.price;
+            
             this.$day.empty();
             this.$status.empty();
-            this.$status.removeClass('status-gray');
         }
     });
     
@@ -159,6 +162,13 @@
         },
         
         _init: function() {
+            if(this.options.showDetail) {
+                this.element.show();
+            } else {
+                this.element.hide();
+                return;
+            }
+            
             this.$content.removeClass('content-less');
             this.$content.removeClass('content-more');
             
@@ -179,11 +189,6 @@
                 this.$content.addClass('content-more');
             } else {
                 this.$content.addClass('content-less');
-            }
-            if(this.options.showDetail) {
-                this.element.show();
-            } else {
-                this.element.hide();
             }
             
             var pricesList = this.$pMore.find('ul.pride-list').empty();
@@ -206,6 +211,15 @@
             if(this.options.detail && this.options.detail.prideTime) {
                 temp.text(this.options.detail.prideTime);
             }
+        },
+        
+        clear: function() {
+            delete this.options.date;
+            delete this.options.showDetail;
+            delete this.options.price;
+            
+            delete this.options.showDetail;
+            delete this.options.detail;
         }
     });
     
@@ -253,15 +267,17 @@
             this.setTime(this.currentYear, this.currentMonth);
             
             var me = this;
-            this.element.on('mouseover.tile', ':qbao-tile', function(e) {
+            this.element.on('mouseenter.tile', ':qbao-tile', function(e) {
                 var d = $(this).data("date");
                 // me._trigger('clickDate', e, d);
                 
                 var info = $(this).tile("option");
                 
+                me.$detail.detail("clear");
                 me.$detail.detail(info);
             });
-            this.element.on('mouseout', function(e) {
+            
+            this.element.on('mouseleave', function(e) {
                 me.$detail.detail().hide(); 
             });
             
