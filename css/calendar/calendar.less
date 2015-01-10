@@ -19,7 +19,7 @@
 // @dateFontColor: #666;
 @dateFontColor: #000;
 @dateNotCurrentMonthFontColor: #ccc;
-@dateHeight: 35px;
+@dateHeight: 34px;
 @todayBackColor: #ffc9c9;
 @todayHighlightBorderWidth: 2px;
 @todayHighlightBorderColor: #f7b4b4;
@@ -29,6 +29,23 @@
 @titleFontSize: 14px;
 
 @imgPath: '../../images/calendar';
+
+ul, li, div, p {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.clearfix:after, #content:after {
+    content: "\0020";
+    display: block;
+    clear: both;
+    height: 0;
+    font-size: 0;
+}
+
+.clearfix {
+    zoom: 1;
+}
 
 .c-calendar {
   text-align: center;
@@ -77,12 +94,13 @@
     > .cell {
       height: @headerHeight;
       > .header {
-        line-height: @titleFontSize;
+        line-height: @titleFontSize + 2;
         > .title {
           font-size: @titleFontSize;
           font-weight: normal;
           margin: 0;
           .time {
+            font-weight: bold;
             display: inline;
           }
           .sub-title {
@@ -90,6 +108,7 @@
           }
         }
         > .btn {
+           cursor: pointer;
            width: 9px;
            height: 15px;
         }
@@ -199,36 +218,94 @@
   position: absolute;
   width: 278px;
   background-color: #13ba00;
-  >.title {
+  > h4 {
+    position: relative;
     margin: 0;
     height: 40px;
     line-height: 40px;
     text-align: center;
-    font-size: 14px;
-    color: #FFF;
+  
+    >.title {
+      font-size: 14px;
+      color: #FFF;
+    }
+    .p-l, .p-r {
+      position: absolute;
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      background: url("@{imgPath}/green.png");
+    }
+    .p-l {
+      left: 32px;
+      top: 16px;
+    }
+    .p-r {
+      right: 32px;
+      top: 16px;
+    }
   }
   >.content {
-    p {
-      margin: 0;
-    }
     padding: 15px 20px;
     background-color: #FFF;
     margin: 0 5px 5px 5px;
-    .m {
-      font-size: 24px;
-      color: #d03a24;
+    > .p-less {
+      > p {
+        margin: 0;
+        > .m {
+          font-size: 24px;
+          color: #d03a24;
+        }
+        > .u {
+          font-size: 14px;
+          color: #000;
+        }
+      }
+      > p.x {
+        font-size: 12px;
+        color: #333;
+        em {
+          color: #d03a24;
+        }
+      }
     }
-    .u {
-      font-size: 14px;
-      color: #000;
+    > .p-more {
+      margin-top: 10px;
+      > .pride-list > li {
+        line-height: 18px;
+        font-size: 12px;
+        color: #333;
+      }
+      > .img-list > li {
+        float: left;
+        margin-right: 5px;
+        margin-top: 10px;
+        img {
+          width: 40px;
+          height: 40px;
+        }
+      }
+      .pride-time {
+        margin-top: 10px;
+        font-size: 12px;
+        color: #666;
+      }
     }
   }
-  > .content-ended {
-    padding-bottom: 20px;
-    // border-bottom: 1px solid 
+  > .content-less {
+    > .p-more {
+      display: none;
+    }
   }
-  >.content-nostarted {
-    
+  >.content-more {
+    padding-bottom: 10px;
+    > .p-less {
+      padding-bottom: 8px;
+      border-bottom: 1px solid #e5e5e5;
+    }
+    > .p-more {
+      display: block;
+    }
   }
 }
 

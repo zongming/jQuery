@@ -1,4 +1,82 @@
 (function($) {
+    var testing = [
+        {
+            date: new Date(2015, 0, 1),
+            price: 100,
+            showDetail: true,
+            detail: {
+                type: "ended", //"notStarted"
+                price: 1
+            }
+        },
+        {
+            date: new Date(2015, 0, 2),
+            price: -1000,
+            showDetail: true,
+            detail: {
+                type: "notStarted", 
+                price: 2,
+                listItem: [
+                    "1、奖励 10 个抢红包机会；",
+                    "2、此产品免交易手续费服务；",
+                    "3、奖励 10 个抢红包机会；"
+                ],
+                imgItem: [
+                    "images/calendar/a.png",
+                    "images/calendar/b.png",
+                    "images/calendar/c.png"
+                ],
+                prideTime: "奖励发放时间：2014-12-20 0:00:00"
+            }
+        },
+        {
+            date: new Date(2015, 0, 3),
+            price: -1000,
+            showDetail: false,
+            detail: {
+                price: 3
+            }
+        },
+        {
+            date: new Date(2015, 0, 4),
+            price: -1000,
+            showDetail: true,
+            detail: {
+                price: -4
+            }
+        },
+        {
+            date: new Date(2015, 0, 16),
+            price: 1000,
+            showDetail: true,
+            detail: {
+                price: -5
+            }
+        },
+        {
+            date: new Date(2015, 2, 1),
+            price: -100,
+            showDetail: false,
+            detail: {
+                price: -99
+            }
+        }
+    ];
+    
+    function getInfoByDate(date) {
+        var d = {
+            price: undefined,
+            showDetail: false,
+            detail: undefined
+        };
+        $.each(testing, function(i, item) {
+            if(date.getTime() == item.date.getTime()) {
+                d = item;
+                return false;
+            }
+        });
+        return d;
+    }
     $.widget('qbao.tile', {
         options: {
             // date: new Date()
@@ -20,12 +98,17 @@
                 this.$day.text(str);
             }
             
-            var x = Math.random() * 100;
-            x = Math.floor(x);
+            var x = this.options.price;
             this.$status.text(x);
             
             if(x < 0) {
                 this.$status.addClass('status-gray');
+            }
+            
+            if(this.options.showDetail) {
+                this.$tile.find(".point").show();
+            } else {
+                this.$tile.find(".point").hide();
             }
         },
         
@@ -39,23 +122,61 @@
     $.widget('qbao.detail', {
         _create: function() {
             this.element.addClass('c-detail');
-            this.$title = $('<h4 class="title"></h4>').appendTo(this.element);
-            this.$content = $('<div class="content"><p><span class="m"></span><span class="u">钱宝币</span></p>'
-            +'<p>剩余名额/名额总数：<em>233</em>/500</p></div>').appendTo(this.element);
+            this.$title = $('<h4><span class="p-l"></span><span class="title"></span><span class="p-r"></span></h4>').appendTo(this.element);
+            this.$content = $('<div class="content"></div>').appendTo(this.element);
+            
+            this.$pLess = $("<div class='p-less'><p><span class='m'></span><span class='u'>钱宝币</span></p><p class='x'>剩余名额/名额总数：<em>233</em>/500</p></div>").appendTo(this.$content);
+            this.$pMore = $("<div class='p-more'><ul class='pride-list'></ul><ul class='img-list clearfix'></ul><p class='pride-time'></p></div>").appendTo(this.$content);
         },
         
         _init: function() {
-            // this.$content.removeClass('content-ended');
-            // this.$content.removeClass('content-notstarted');
+            this.$content.removeClass('content-less');
+            this.$content.removeClass('content-more');
+            
             if(this.options.date) {
                 var y = this.options.date.getFullYear();
                 var month = this.options.date.getMonth();
                 var date = this.options.date.getDate();
                 var str = y + "年" + (month + 1) + "月" + date + "日";
-                this.$title.text(str);
+                this.$title.find('.title').text(str);
             }
-            this.$content.addClass('content-ended');
-            this.$content.find('.m').text("1000");
+            this.$content.addClass('content-less');
+            
+            if(this.options.detail && this.options.detail.price) {
+                this.$pLess.find('.m').text(this.options.detail.price);
+            }
+            
+            if(this.options.detail && this.options.detail.type == "notStarted") {
+                this.$content.addClass('content-more');
+            } else {
+                this.$content.addClass('content-less');
+            }
+            if(this.options.showDetail) {
+                this.element.show();
+            } else {
+                this.element.hide();
+            }
+            
+            var pricesList = this.$pMore.find('ul.pride-list').empty();
+            if(this.options.detail && this.options.detail.listItem) {
+                var me = this;
+                $.each(this.options.detail.listItem, function(index, item) {
+                    pricesList.append("<li>" + item + "</li>");
+                });
+            }
+            
+            var imgsList = this.$pMore.find('ul.img-list').empty();
+            if(this.options.detail && this.options.detail.imgItem) {
+                var me = this;
+                $.each(this.options.detail.imgItem, function(index, item) {
+                    imgsList.append("<li><img src='" + item + "'></img></li>");
+                });
+            }
+            
+            var temp = this.$pMore.find('.pride-time');
+            if(this.options.detail && this.options.detail.prideTime) {
+                temp.text(this.options.detail.prideTime);
+            }
         }
     });
     
@@ -106,9 +227,9 @@
                 var d = $(this).data("date");
                 // me._trigger('clickDate', e, d);
                 
-                me.$detail.detail({
-                    date: d
-                }).show();
+                var info = $(this).tile("option");
+                
+                me.$detail.detail(info);
             });
             this.element.on('mouseout', function(e) {
                 me.$detail.detail().hide(); 
@@ -210,9 +331,10 @@
                 var $cell = this._cache[r][c];
                 $cell.data("date", date);
                 
-                $cell.tile({
-                    date: date
-                });
+                var config = {date: date};
+                $.extend(config, getInfoByDate(date));
+                $cell.tile(config);
+                
                 $cell.removeClass("cell-today");
                 $cell.removeClass("cell-passed");
                 $cell.removeClass("cell-notCurrentMonth");
