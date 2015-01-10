@@ -54,9 +54,17 @@
             }
         },
         {
+            date: new Date(2015, 1, 10),
+            price: -130,
+            showDetail: true,
+            detail: {
+                price: -99
+            }
+        },
+        {
             date: new Date(2015, 2, 1),
             price: -100,
-            showDetail: false,
+            showDetail: true,
             detail: {
                 price: -99
             }
@@ -64,11 +72,7 @@
     ];
     
     function getInfoByDate(date) {
-        var d = {
-            price: undefined,
-            showDetail: false,
-            detail: undefined
-        };
+        var d = {};
         $.each(testing, function(i, item) {
             if(date.getTime() == item.date.getTime()) {
                 d = item;
@@ -99,10 +103,13 @@
             }
             
             var x = this.options.price;
-            this.$status.text(x);
-            
-            if(x < 0) {
-                this.$status.addClass('status-gray');
+            if(!isNaN(x)) {
+                if(x < 0) {
+                    this.$status.addClass('status-gray');
+                    this.$status.text(x);
+                } else {
+                    this.$status.text("+" + x);
+                }
             }
             
             if(this.options.showDetail) {
@@ -113,6 +120,7 @@
         },
         
         clear: function() {
+            this.options = {};
             this.$day.empty();
             this.$status.empty();
             this.$status.removeClass('status-gray');
