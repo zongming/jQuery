@@ -1,5 +1,26 @@
 (function($) {
+    var now = new Date();
     var testing = [
+        {
+            date: new Date(now.getFullYear(), now.getMonth(), now.getDate()),
+            price: 1000,
+            showDetail: true,
+            detail: {
+                type: "notStarted", 
+                price: 2,
+                listItem: [
+                    "1、奖励 10 个抢红包机会；",
+                    "2、此产品免交易手续费服务；",
+                    "3、奖励 10 个抢红包机会；"
+                ],
+                imgItem: [
+                    "images/calendar/a.png",
+                    "images/calendar/b.png",
+                    "images/calendar/c.png"
+                ],
+                prideTime: "奖励发放时间：2014-12-20 0:00:00"
+            }
+        },
         {
             date: new Date(2015, 0, 1),
             price: 100,
@@ -133,7 +154,7 @@
             this.$title = $('<h4><span class="p-l"></span><span class="title"></span><span class="p-r"></span></h4>').appendTo(this.element);
             this.$content = $('<div class="content"></div>').appendTo(this.element);
             
-            this.$pLess = $("<div class='p-less'><p><span class='m'></span><span class='u'>钱宝币</span></p><p class='x'>剩余名额/名额总数：<em>233</em>/500</p></div>").appendTo(this.$content);
+            this.$pLess = $("<div class='p-less'><p class='money'><span class='m'></span><span class='u'>钱宝币</span></p><p class='x'>剩余名额/名额总数：<em>233</em>/500</p></div>").appendTo(this.$content);
             this.$pMore = $("<div class='p-more'><ul class='pride-list'></ul><ul class='img-list clearfix'></ul><p class='pride-time'></p></div>").appendTo(this.$content);
         },
         
@@ -190,7 +211,7 @@
     
     $.widget('qbao.calendar', {
         options : {
-            row : 1,
+            row : 6,
             col : 7,
             
             time: new Date(),
@@ -214,9 +235,10 @@
             this.currentYear = time.getFullYear();
             
             this._cache = [];
-
+            
+            this.element.append("<div class='outer-border'></div>");
             this.$calendar = $("<table cellpadding='0' cellspacing='0' class='c-calendar'></table>");
-            this.element.append(this.$calendar);
+            this.element.find('.outer-border').append(this.$calendar);
             
             if (this.options.showMonth) {
                 this._createMonth();
@@ -243,7 +265,8 @@
                 me.$detail.detail().hide(); 
             });
             
-            this.element.css('position', 'relative');
+            // this.element.css('position', 'relative');
+            this.element.addClass('qbao-calendar');
             this.$detail = $("<div></div>").css({
                 top: 0,
                 left: this.$calendar.outerWidth(true)

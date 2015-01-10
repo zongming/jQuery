@@ -15,18 +15,31 @@ p {
   height: 0;
   font-size: 0;
 }
+.qbao-calendar {
+  position: relative;
+}
+.outer-border {
+  width: 344px;
+  border: 1px solid #ffffff;
+}
+.outer-border:hover {
+  padding: 0;
+  border-color: #13ba00;
+}
 .c-calendar {
+  width: 344px;
   text-align: center;
-  border: 2px solid #e3e3e3;
+  border: 1px solid #e3e3e3;
 }
 .c-calendar:hover {
-  border: 2px solid #13ba00;
+  border: 1px solid #13ba00;
 }
 .c-calendar .row > .cell {
   padding: 0;
   margin: 0;
   border: 1px solid #f7f7f7;
   border-bottom: none;
+  border-right: none;
 }
 .c-calendar .row > .cell:first-child {
   border-left: none;
@@ -53,7 +66,7 @@ p {
   border-bottom: none;
 }
 .c-calendar .c-header > .cell {
-  height: 26px;
+  height: 25px;
 }
 .c-calendar .c-header > .cell > .header {
   line-height: 16px;
@@ -105,7 +118,7 @@ p {
 .c-calendar .row-dates > .cell .tile {
   position: relative;
   width: 48px;
-  height: 34px;
+  height: 35px;
 }
 .c-calendar .row-dates > .cell .tile .point {
   background: url("../../images/calendar/red.png") no-repeat;
@@ -136,7 +149,7 @@ p {
 .c-calendar .row-dates > .cell-today .tile {
   border: 2px solid #ffc9c9;
   width: 44px;
-  height: 30px;
+  height: 31px;
 }
 .c-calendar .row-dates > .cell-today .tile .day {
   line-height: 20px;
@@ -194,22 +207,24 @@ p {
   top: 16px;
 }
 .c-detail > .content {
-  padding: 10px 20px;
+  padding: 8px 20px 10px 20px;
   background-color: #FFF;
-  margin: 0 5px 5px 5px;
+  margin: 0 6px 6px 6px;
 }
-.c-detail > .content > .p-less > p {
-  margin: 0;
+.c-detail > .content > .p-less > p.money {
+  height: 31px;
+  line-height: 31px;
 }
-.c-detail > .content > .p-less > p > .m {
+.c-detail > .content > .p-less > p.money > .m {
   font-size: 24px;
   color: #d03a24;
 }
-.c-detail > .content > .p-less > p > .u {
+.c-detail > .content > .p-less > p.money > .u {
   font-size: 14px;
   color: #000;
 }
 .c-detail > .content > .p-less > p.x {
+  line-height: 14px;
   font-size: 12px;
   color: #333;
 }
@@ -217,10 +232,10 @@ p {
   color: #d03a24;
 }
 .c-detail > .content > .p-more {
-  margin-top: 8px;
+  margin-top: 9px;
 }
 .c-detail > .content > .p-more > .pride-list > li {
-  line-height: 18px;
+  line-height: 19px;
   font-size: 12px;
   color: #333;
 }
@@ -233,22 +248,21 @@ p {
   margin-right: 5px;
 }
 .c-detail > .content > .p-more > .img-list li img {
+  display: block;
   width: 40px;
   height: 40px;
 }
 .c-detail > .content > .p-more > .pride-time {
-  margin-top: 10px;
+  margin-top: 21px;
   font-size: 12px;
+  line-height: 14px;
   color: #666;
 }
 .c-detail > .content-less > .p-more {
   display: none;
 }
-.c-detail > .content-more {
-  padding-bottom: 10px;
-}
 .c-detail > .content-more > .p-less {
-  padding-bottom: 8px;
+  padding-bottom: 7px;
   border-bottom: 1px solid #e5e5e5;
 }
 .c-detail > .content-more > .p-more {

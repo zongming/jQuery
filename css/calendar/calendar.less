@@ -1,6 +1,7 @@
 @charset "UTF-8";
 
-@outerBorderWidth: 2px;
+@outerBorderWidth: 1px;
+@outerBorderHoverWidth: 2px;
 @outerBorderColor: #e3e3e3;
 @outerBorderColorHighlight: #13ba00;
 
@@ -19,15 +20,16 @@
 // @dateFontColor: #666;
 @dateFontColor: #000;
 @dateNotCurrentMonthFontColor: #ccc;
-@dateHeight: 34px;
+@dateHeight: 35px;
 @todayBackColor: #ffc9c9;
 @todayHighlightBorderWidth: 2px;
 @todayHighlightBorderColor: #f7b4b4;
 @datePassedBC: #f3f3f3;
 
-@headerHeight: 26px;
+@headerHeight: 25px;
 @titleFontSize: 14px;
 
+@calendarWidth: 344px;
 @imgPath: '../../images/calendar';
 
 ul, li, div, p {
@@ -42,8 +44,19 @@ ul, li, div, p {
     height: 0;
     font-size: 0;
 }
-
+.qbao-calendar {
+  position: relative;
+}
+.outer-border {
+  width: @calendarWidth;//set width for ie7, which doesnt support inline-block
+  border: @outerBorderHoverWidth - @outerBorderWidth solid #FFF;
+}
+.outer-border:hover {
+  padding: 0;
+  border-color: @outerBorderColorHighlight;
+}
 .c-calendar {
+  width: @calendarWidth;
   text-align: center;
   // border-collapse: collapse;
   border: @outerBorderWidth solid @outerBorderColor;
@@ -56,6 +69,7 @@ ul, li, div, p {
       margin: 0;
       border: 1px solid @innerBorderColor;
       border-bottom: none;
+      border-right: none;
     }
     > .cell:first-child {
       border-left: none;
@@ -243,12 +257,13 @@ ul, li, div, p {
     }
   }
   >.content {
-    padding: 10px 20px;
+    padding: 8px 20px 10px 20px;
     background-color: #FFF;
-    margin: 0 5px 5px 5px;
+    margin: 0 6px 6px 6px;
     > .p-less {
-      > p {
-        margin: 0;
+      > p.money {
+        height: 31px;
+        line-height: 31px;
         > .m {
           font-size: 24px;
           color: #d03a24;
@@ -259,6 +274,7 @@ ul, li, div, p {
         }
       }
       > p.x {
+        line-height: 14px;
         font-size: 12px;
         color: #333;
         em {
@@ -267,9 +283,9 @@ ul, li, div, p {
       }
     }
     > .p-more {
-      margin-top: 8px;
+      margin-top: 9px;
       > .pride-list > li {
-        line-height: 18px;
+        line-height: 19px;
         font-size: 12px;
         color: #333;
       }
@@ -280,14 +296,16 @@ ul, li, div, p {
           float: left;
           margin-right: 5px;
           img {
+            display: block;
             width: 40px;
             height: 40px;
           }
         }
       }
       > .pride-time {
-        margin-top: 10px;
+        margin-top: 21px;
         font-size: 12px;
+        line-height: 14px;
         color: #666;
       }
     }
@@ -298,9 +316,8 @@ ul, li, div, p {
     }
   }
   >.content-more {
-    padding-bottom: 10px;
     > .p-less {
-      padding-bottom: 8px;
+      padding-bottom: 7px;
       border-bottom: 1px solid #e5e5e5;
     }
     > .p-more {
