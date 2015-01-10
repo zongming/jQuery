@@ -15,8 +15,10 @@ p {
   height: 0;
   font-size: 0;
 }
-.qbao-calendar {
+.calendar {
+  float: left;
   position: relative;
+  margin-top: -1px;
 }
 .outer-border {
   width: 344px;
@@ -69,10 +71,10 @@ p {
   height: 25px;
 }
 .c-calendar .c-header > .cell > .header {
-  line-height: 16px;
+  line-height: 14px;
 }
 .c-calendar .c-header > .cell > .header > .title {
-  font-size: 14px;
+  font-size: 12px;
   font-weight: normal;
   margin: 0;
 }
@@ -84,6 +86,7 @@ p {
   color: #888;
 }
 .c-calendar .c-header > .cell > .header > .btn {
+  padding: 0;
   cursor: pointer;
   width: 9px;
   height: 15px;

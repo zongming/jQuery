@@ -282,7 +282,7 @@
             });
             
             // this.element.css('position', 'relative');
-            this.element.addClass('qbao-calendar');
+            this.element.addClass('calendar');
             this.$detail = $("<div></div>").css({
                 top: 0,
                 left: this.$calendar.outerWidth(true)

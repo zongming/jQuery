@@ -27,7 +27,7 @@
 @datePassedBC: #f3f3f3;
 
 @headerHeight: 25px;
-@titleFontSize: 14px;
+@titleFontSize: 12px;
 
 @calendarWidth: 344px;
 @imgPath: '../../images/calendar';
@@ -44,8 +44,10 @@ ul, li, div, p {
     height: 0;
     font-size: 0;
 }
-.qbao-calendar {
+.calendar {
+  float: left;
   position: relative;
+  margin-top: -1px; // can be removed
 }
 .outer-border {
   width: @calendarWidth;//set width for ie7, which doesnt support inline-block
@@ -119,6 +121,7 @@ ul, li, div, p {
           }
         }
         > .btn {
+           padding: 0;
            cursor: pointer;
            width: 9px;
            height: 15px;
