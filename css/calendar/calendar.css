@@ -15,12 +15,8 @@ p {
   height: 0;
   font-size: 0;
 }
-.clearfix {
-  zoom: 1;
-}
 .c-calendar {
   text-align: center;
-  border-collapse: collapse;
   border: 2px solid #e3e3e3;
 }
 .c-calendar:hover {
@@ -30,6 +26,7 @@ p {
   padding: 0;
   margin: 0;
   border: 1px solid #f7f7f7;
+  border-bottom: none;
 }
 .c-calendar .row > .cell:first-child {
   border-left: none;
@@ -197,7 +194,7 @@ p {
   top: 16px;
 }
 .c-detail > .content {
-  padding: 15px 20px;
+  padding: 10px 20px;
   background-color: #FFF;
   margin: 0 5px 5px 5px;
 }
@@ -220,23 +217,26 @@ p {
   color: #d03a24;
 }
 .c-detail > .content > .p-more {
-  margin-top: 10px;
+  margin-top: 8px;
 }
 .c-detail > .content > .p-more > .pride-list > li {
   line-height: 18px;
   font-size: 12px;
   color: #333;
 }
-.c-detail > .content > .p-more > .img-list > li {
+.c-detail > .content > .p-more > .img-list {
+  width: 100%;
+  margin-top: 8px;
+}
+.c-detail > .content > .p-more > .img-list li {
   float: left;
   margin-right: 5px;
-  margin-top: 10px;
 }
-.c-detail > .content > .p-more > .img-list > li img {
+.c-detail > .content > .p-more > .img-list li img {
   width: 40px;
   height: 40px;
 }
-.c-detail > .content > .p-more .pride-time {
+.c-detail > .content > .p-more > .pride-time {
   margin-top: 10px;
   font-size: 12px;
   color: #666;
