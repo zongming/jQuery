@@ -1,24 +1,8 @@
 @charset "UTF-8";
-ul,
-li,
-div,
-p {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-.clearfix:after,
-#content:after {
-  content: "\0020";
-  display: block;
-  clear: both;
-  height: 0;
-  font-size: 0;
-}
 .calendar {
-  float: left;
+  width: 346px;
+  height: 266px;
   position: relative;
-  margin-top: -1px;
 }
 .outer-border {
   width: 344px;
@@ -137,6 +121,9 @@ p {
   color: #000000;
   margin: 0;
 }
+.c-calendar .row-dates > .cell .tile .day-full {
+  line-height: 35px;
+}
 .c-calendar .row-dates > .cell .tile .status {
   line-height: 10px;
   font-size: 10px;
@@ -166,15 +153,18 @@ p {
 .c-calendar .row-dates > .cell-notCurrentMonth .tile .day {
   color: #cccccc;
 }
-.c-calendar .row-dates > .cell-passed {
-  background-color: #f3f3f3;
-}
 .c-calendar .row-dates > .cell-inactive {
   /*不在活动期*/
   color: gray;
 }
+.c-calendar .row-dates > .cell-inactive .tile .day {
+  color: #cccccc;
+}
 .c-calendar .row-dates > .cell-inactive:hover {
   background: #ffffff;
+}
+.c-calendar .row-dates > .cell-passed {
+  background-color: #f3f3f3;
 }
 .c-detail {
   display: none;
@@ -244,10 +234,11 @@ p {
 }
 .c-detail > .content > .p-more > .img-list {
   width: 100%;
-  margin-top: 8px;
+  margin-top: 3px;
 }
 .c-detail > .content > .p-more > .img-list li {
   float: left;
+  margin-top: 5px;
   margin-right: 5px;
 }
 .c-detail > .content > .p-more > .img-list li img {

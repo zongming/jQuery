@@ -32,22 +32,11 @@
 @calendarWidth: 344px;
 @imgPath: '../../images/calendar';
 
-ul, li, div, p {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-.clearfix:after, #content:after {
-    content: "\0020";
-    display: block;
-    clear: both;
-    height: 0;
-    font-size: 0;
-}
 .calendar {
-  float: left;
+  width: @cellWidth * 7 + 6 * @innerrBorderWidth + @outerBorderWidth * 2 + @innerrBorderWidth * 2;
+  // height: 266px;
+  height: @headerHeight + @dateHeight * 6 + @daysHeight + 7 * @innerrBorderWidth + @outerBorderWidth * 2 + @innerrBorderWidth * 2; 
   position: relative;
-  margin-top: -1px; // can be removed
 }
 .outer-border {
   width: @calendarWidth;//set width for ie7, which doesnt support inline-block
@@ -176,9 +165,12 @@ ul, li, div, p {
         }
         .day {
           line-height: 22px;
+          
           font-size: 14px;
           color: @dateFontColor;
-          margin: 0;
+        }
+        .day-full {
+          line-height: @dateHeight;
         }
         .status {
           line-height: 10px;
@@ -215,14 +207,19 @@ ul, li, div, p {
         }
       }
     }
-    > .cell-passed {
-      background-color: @datePassedBC;
-    }
     > .cell-inactive { /*不在活动期*/
+      .tile {
+        .day {
+          color: @dateNotCurrentMonthFontColor;
+        }
+      }
       &:hover {
         background: @dateBackColor;
       }
       color: gray;
+    }
+    > .cell-passed {
+      background-color: @datePassedBC;
     }
   }
 }
@@ -294,9 +291,10 @@ ul, li, div, p {
       }
       > .img-list {
         width: 100%;
-        margin-top: 8px;
+        margin-top: 3px;
         li {
           float: left;
+          margin-top: 5px;
           margin-right: 5px;
           img {
             display: block;
