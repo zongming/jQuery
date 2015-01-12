@@ -21,6 +21,7 @@
   border: 1px solid #13ba00;
 }
 .c-calendar .row > .cell {
+  font-family: Arial, Helvetica, sans-serif;
   padding: 0;
   margin: 0;
   border: 1px solid #f7f7f7;
@@ -78,18 +79,22 @@
 .c-calendar .c-header > .cell > .header > .prev {
   float: left;
   margin-left: 10px;
-  background: url("../../images/calendar/c_arrow_l_light.png") no-repeat;
+  background: url("../../images/calendar/calendar.png") no-repeat;
+  background-position: 0 -15px;
 }
 .c-calendar .c-header > .cell > .header > .prev:hover {
-  background: url("../../images/calendar/c_arrow_l.png") no-repeat;
+  background: url("../../images/calendar/calendar.png") no-repeat;
+  background-position: 0 0;
 }
 .c-calendar .c-header > .cell > .header > .next {
   float: right;
   margin-right: 10px;
-  background: url("../../images/calendar/c_arrow_r_light.png") no-repeat;
+  background: url("../../images/calendar/calendar.png") no-repeat;
+  background-position: 0 -45px;
 }
 .c-calendar .c-header > .cell > .header > .next:hover {
-  background: url("../../images/calendar/c_arrow_r.png") no-repeat;
+  background: url("../../images/calendar/calendar.png") no-repeat;
+  background-position: 0 -30px;
 }
 .c-calendar .row-days > .cell {
   height: 20px;
@@ -102,62 +107,68 @@
 .c-calendar .row-dates > .cell:hover {
   background: #d5f3d2;
 }
-.c-calendar .row-dates > .cell .tile {
+.c-calendar .row-dates > .cell > .tile {
   position: relative;
   width: 48px;
   height: 35px;
 }
-.c-calendar .row-dates > .cell .tile .point {
-  background: url("../../images/calendar/red.png") no-repeat;
+.c-calendar .row-dates > .cell > .tile .point {
+  background: url("../../images/calendar/calendar.png") no-repeat;
+  background-position: 0 -70px;
   position: absolute;
   width: 5px;
   height: 5px;
   top: 4px;
   right: 4px;
 }
-.c-calendar .row-dates > .cell .tile .day {
+.c-calendar .row-dates > .cell > .tile .day {
   line-height: 22px;
   font-size: 14px;
-  color: #000000;
-  margin: 0;
+  color: #333333;
 }
-.c-calendar .row-dates > .cell .tile .day-full {
+.c-calendar .row-dates > .cell > .tile .day-full {
   line-height: 35px;
 }
-.c-calendar .row-dates > .cell .tile .status {
+.c-calendar .row-dates > .cell > .tile .status {
   line-height: 10px;
   font-size: 10px;
   color: #d03a24;
   margin: 0;
 }
-.c-calendar .row-dates > .cell .tile .status-gray {
-  color: #888;
+.c-calendar .row-dates > .cell > .tile .status-nega {
+  color: #109f00;
 }
 .c-calendar .row-dates > .cell-today {
   background-color: #ffc9c9;
 }
-.c-calendar .row-dates > .cell-today .tile {
+.c-calendar .row-dates > .cell-today > .tile {
   border: 2px solid #ffc9c9;
   width: 44px;
   height: 31px;
 }
-.c-calendar .row-dates > .cell-today .tile .day {
-  line-height: 20px;
+.c-calendar .row-dates > .cell-today > .tile .day {
+  margin-top: -2px;
+}
+.c-calendar .row-dates > .cell-today > .tile .point {
+  top: 2px;
+  right: 2px;
 }
 .c-calendar .row-dates > .cell-today:hover {
   background-color: #ffc9c9;
 }
-.c-calendar .row-dates > .cell-today:hover .tile {
+.c-calendar .row-dates > .cell-today:hover > .tile {
   border: 2px solid #f7b4b4;
 }
-.c-calendar .row-dates > .cell-notCurrentMonth .tile .day {
+.c-calendar .row-dates > .cell-notCurrentMonth > .tile .day {
   color: #cccccc;
+}
+.c-calendar .row-dates > .cell-active > .tile .day {
+  color: #333333;
 }
 .c-calendar .row-dates > .cell-inactive {
   /*不在活动期*/
-  color: gray;
 }
-.c-calendar .row-dates > .cell-inactive .tile .day {
+.c-calendar .row-dates > .cell-inactive > .tile .day {
   color: #cccccc;
 }
 .c-calendar .row-dates > .cell-inactive:hover {
@@ -165,6 +176,10 @@
 }
 .c-calendar .row-dates > .cell-passed {
   background-color: #f3f3f3;
+}
+.c-calendar .row-dates > .cell-passed > .tile .status {
+  color: #888888;
+  /*已经结束的都显示灰色*/
 }
 .c-detail {
   display: none;
@@ -189,7 +204,8 @@
   display: inline-block;
   width: 10px;
   height: 10px;
-  background: url("../../images/calendar/green.png");
+  background: url("../../images/calendar/calendar.png") no-repeat;
+  background-position: 0 -60px;
 }
 .c-detail > h4 .p-l {
   left: 32px;
@@ -200,6 +216,9 @@
   top: 16px;
 }
 .c-detail > .content {
+  border: none;
+  width: auto;
+  height: auto;
   padding: 8px 20px 10px 20px;
   background-color: #FFF;
   margin: 0 6px 6px 6px;
@@ -209,6 +228,7 @@
   line-height: 31px;
 }
 .c-detail > .content > .p-less > p.money > .m {
+  margin-right: 5px;
   font-size: 24px;
   color: #d03a24;
 }
@@ -222,6 +242,7 @@
   color: #333;
 }
 .c-detail > .content > .p-less > p.x em {
+  font-style: normal;
   color: #d03a24;
 }
 .c-detail > .content > .p-more {

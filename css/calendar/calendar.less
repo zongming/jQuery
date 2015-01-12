@@ -18,7 +18,7 @@
 @dateHighlightBC: #d5f3d2;
 @dateFontSize: 12px;
 // @dateFontColor: #666;
-@dateFontColor: #000;
+@dateFontColor: #333;
 @dateNotCurrentMonthFontColor: #ccc;
 @dateHeight: 35px;
 @todayBackColor: #ffc9c9;
@@ -31,6 +31,15 @@
 
 @calendarWidth: 344px;
 @imgPath: '../../images/calendar';
+
+@status-old: #888;
+@status-negative: #109f00;
+@status-positive: #d03a24;
+
+.sprites(@x:0, @y: 0) {
+  background: url("@{imgPath}/calendar.png") no-repeat;
+  background-position: @x @y; 
+}
 
 .calendar {
   width: @cellWidth * 7 + 6 * @innerrBorderWidth + @outerBorderWidth * 2 + @innerrBorderWidth * 2;
@@ -56,6 +65,7 @@
   }
   .row {
     > .cell {
+      font-family: Arial, Helvetica, sans-serif;
       padding: 0;
       margin: 0;
       border: 1px solid @innerBorderColor;
@@ -120,17 +130,17 @@
            margin-left: 10px;
            margin-left: 10px;
            &:hover {
-             background: url("@{imgPath}/c_arrow_l.png") no-repeat;
+             .sprites(0, 0);
            }
-           background: url("@{imgPath}/c_arrow_l_light.png") no-repeat;
+           .sprites(0, -15px);
         }
         > .next {
            float: right;
            margin-right: 10px;
            &:hover {
-             background: url("@{imgPath}/c_arrow_r.png") no-repeat;
+             .sprites(0, -30px); 
            }
-           background: url("@{imgPath}/c_arrow_r_light.png") no-repeat;
+           .sprites(0, -45px); 
         }
       }
     }
@@ -150,12 +160,13 @@
         background: @dateHighlightBC;
       }
       
-      .tile {
+      >.tile {
         position: relative;
         width: @cellWidth;
         height: @dateHeight;
         .point {
-          background: url("@{imgPath}/red.png") no-repeat;
+          .sprites(0, -70px);
+          
           position: absolute;
           width: 5px;
           height: 5px;
@@ -175,40 +186,52 @@
         .status {
           line-height: 10px;
           font-size: 10px;
-          color: #d03a24;
+          color: @status-positive;
           margin: 0;
         }
-        .status-gray {
-          color: #888;
+        .status-nega {
+          color: @status-negative;
         }
       }
     }
     > .cell-today {
       background-color: @todayBackColor;
-      .tile {
+      >.tile {
         border: @todayHighlightBorderWidth solid @todayBackColor;
         width: @cellWidth - @todayHighlightBorderWidth * 2;
         height: @dateHeight - @todayHighlightBorderWidth * 2;
         .day {
-          line-height: 22px - @todayHighlightBorderWidth;
+          margin-top: -@todayHighlightBorderWidth;
+        }
+        .point {
+          top: 4px - @todayHighlightBorderWidth;
+          right: 4px - @todayHighlightBorderWidth;
         }
       }
+      
       &:hover {
         background-color: @todayBackColor;
-        .tile {
+        >.tile {
           border: @todayHighlightBorderWidth solid @todayHighlightBorderColor;
         }
       }
     }
     > .cell-notCurrentMonth {
-      .tile {
+      >.tile {
         .day {
           color: @dateNotCurrentMonthFontColor;
         }
       }
     }
+    > .cell-active { 
+      >.tile {
+        .day {
+          color: @dateFontColor;
+        }
+      }
+    }
     > .cell-inactive { /*不在活动期*/
-      .tile {
+      >.tile {
         .day {
           color: @dateNotCurrentMonthFontColor;
         }
@@ -216,9 +239,13 @@
       &:hover {
         background: @dateBackColor;
       }
-      color: gray;
     }
     > .cell-passed {
+      >.tile {
+        .status {
+          color: @status-old;/*已经结束的都显示灰色*/
+        }
+      }
       background-color: @datePassedBC;
     }
   }
@@ -245,7 +272,7 @@
       display: inline-block;
       width: 10px;
       height: 10px;
-      background: url("@{imgPath}/green.png");
+      .sprites(0, -60px);
     }
     .p-l {
       left: 32px;
@@ -257,6 +284,9 @@
     }
   }
   >.content {
+    border: none;
+    width: auto;
+    height: auto;
     padding: 8px 20px 10px 20px;
     background-color: #FFF;
     margin: 0 6px 6px 6px;
@@ -265,6 +295,7 @@
         height: 31px;
         line-height: 31px;
         > .m {
+          margin-right: 5px;
           font-size: 24px;
           color: #d03a24;
         }
@@ -278,6 +309,7 @@
         font-size: 12px;
         color: #333;
         em {
+          font-style: normal;
           color: #d03a24;
         }
       }
