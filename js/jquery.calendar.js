@@ -1,102 +1,114 @@
 var now = new Date();
+var year = now.getFullYear();
+var month = now.getMonth();
+var date = now.getDate();
 var testing = [
-{
-    date: new Date(now.getFullYear(), now.getMonth(), now.getDate()),
-    status: 1000,
-    detail: {
-        price: 2,
-        more: {
-            listItem: [
-                "1、奖励 10 个抢红包机会；",
-                "2、此产品免交易手续费服务；",
-                "3、奖励 10 个抢红包机会；"
-            ],
-            imgItem: [
-                "images/calendar/a.png",
-                "images/calendar/b.png",
-                "images/calendar/c.png"
-            ],
-            prideTime: "奖励发放时间：2014-12-20 0:00:00"
-        }
-    }
-},
-{
-    date: new Date(now.getFullYear(), now.getMonth(), now.getDate() - 1),
-    status: 100,
-    detail: {
-        price: 1
-    }
-},
-{
-    date: new Date(now.getFullYear(), now.getMonth(), now.getDate() - 2),
-    status: -1000,
-    detail: {
-        price: 2,
-        more: {
-            listItem: [
-                "1、奖励 10 个抢红包机会；",
-                "2、此产品免交易手续费服务；",
-                "3、奖励 10 个抢红包机会；"
-            ],
-            imgItem: [
-                "images/calendar/a.png",
-                "images/calendar/b.png",
-                "images/calendar/c.png"
-            ],
-            prideTime: "奖励发放时间：2014-12-20 0:00:00"
-        }
-    }
-},
-{
-    date: new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1),
-    status: -1000,
-    detail: {
-        price: 2,
-        more: {
-            listItem: [
-                "1、奖励 10 个抢红包机会；",
-                "2、此产品免交易手续费服务；",
-                "3、奖励 10 个抢红包机会；"
-            ],
-            imgItem: [
-                "images/calendar/a.png",
-                "images/calendar/b.png",
-                "images/calendar/c.png"
-            ],
-            prideTime: "奖励发放时间：2014-12-20 0:00:00"
+    {
+        date: new Date(year, month, date),
+        status: 1000,
+        detail: {
+            price: 20000,
+            left: 1,
+            total: 100,
+            more: {
+                listItem: [
+                    "1、奖励 10 个抢红包机会；",
+                    "2、此产品免交易手续费服务；",
+                    "3、奖励 10 个抢红包机会；"
+                ],
+                imgItem: [
+                    "images/calendar/a.png",
+                    "images/calendar/b.png",
+                    "images/calendar/c.png"
+                ],
+                prideTime: "奖励发放时间：2014-12-20 0:00:00"
             }
         }
     },
     {
-        date: new Date(now.getFullYear(), now.getMonth(), now.getDate() + 2),
+        date: new Date(year, month, date - 1),
+        status: 100,
+        
+        detail: {
+            price: 1,
+            left: 1,
+            total: 100
+        }
+    },
+    {
+        date: new Date(year, month, date - 2),
+        status: -1000,
+        detail: {
+            price: 2,
+            left: 1,
+            total: 100,
+            more: {
+                listItem: [
+                    "1、奖励 10 个抢红包机会；",
+                    "2、此产品免交易手续费服务；",
+                    "3、奖励 10 个抢红包机会；"
+                ],
+                imgItem: [
+                    "images/calendar/a.png",
+                    "images/calendar/b.png",
+                    "images/calendar/c.png"
+                ],
+                prideTime: "奖励发放时间：2014-12-20 0:00:00"
+            }
+        }
+    },
+    {
+        date: new Date(year, month, date + 1),
+        status: -1000,
+        detail: {
+            price: 2,
+            left: 1,
+            total: 100,
+            more: {
+                listItem: [
+                    "1、奖励 10 个抢红包机会；",
+                    "2、此产品免交易手续费服务；",
+                    "3、奖励 10 个抢红包机会；"
+                ],
+                imgItem: [
+                    "images/calendar/a.png",
+                    "images/calendar/b.png",
+                    "images/calendar/c.png"
+                ],
+                prideTime: "奖励发放时间：2014-12-20 0:00:00"
+                }
+            }
+        },
+    {
+        date: new Date(year, month, date + 2),
         status: -1000,
         detail: {
             price: -4
         }
     },
     {
-        date: new Date(now.getFullYear(), now.getMonth(), now.getDate() + 10),
+        date: new Date(year, month, date + 10),
         status: 1000,
         detail: {
             price: -5
         }
     },
     {
-        date: new Date(now.getFullYear(), now.getMonth(), now.getDate() + 11),
+        date: new Date(year, month, date + 11),
         status: 130,
         detail: {
             price: -6
         }
     },
     {
-        date: new Date(now.getFullYear(), now.getMonth(), now.getDate() + 15),
+        date: new Date(year, month, date + 15),
         status: -100,
         detail: {
-            price: -7,
+            price: -7
         }
     },
     {
-        date: new Date(now.getFullYear(), now.getMonth() + 1, 1),
+        date: new Date(year, month + 1, 1),
         status: 100,
         detail: {
             price: -7,
@@ -116,7 +128,7 @@ var testing = [
         }
     },
     {
-        date: new Date(now.getFullYear(), now.getMonth() + 1, 3),
+        date: new Date(year, month + 1, date + 2),
         status: -100,
         detail: {
             price: -7,
@@ -162,10 +174,10 @@ var testing = [
             var x = this.options.status;
             if(!isNaN(x)) {
                 if(x < 0) {
-                    this.$status.addClass('status-gray');
+                    this.$status.addClass('status-nega');
                     this.$status.text(x);
                 } else {
-                    this.$status.removeClass('status-gray');
+                    this.$status.removeClass('status-nega');
                     this.$status.text("+" + x);
                 }
                 this.$day.removeClass('day-full');
@@ -180,12 +192,24 @@ var testing = [
             } else {
                 this.$tile.find(".point").hide();
             }
+            
+            // check for today, show price not status for today
+            var today = new Date();
+            today = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+            
+            if(date && today.getTime() == date.getTime()) {
+                if(this.options.detail.price) {
+                    this.$status.removeClass('status-nega');
+                    this.$status.text(this.options.detail.price);
+                } else {
+                    this.$status.text("");
+                }
+            }
         },
         
         clear: function() {
             delete this.options.date;
             delete this.options.status;
-            delete this.options.price;
             delete this.options.detail;
             
             this.$day.empty();
@@ -199,7 +223,7 @@ var testing = [
             this.$title = $('<h4><span class="p-l"></span><span class="title"></span><span class="p-r"></span></h4>').appendTo(this.element);
             this.$content = $('<div class="content"></div>').appendTo(this.element);
             
-            this.$pLess = $("<div class='p-less'><p class='money'><span class='m'></span><span class='u'>钱宝币</span></p><p class='x'>剩余名额/名额总数：<em>233</em>/500</p></div>").appendTo(this.$content);
+            this.$pLess = $("<div class='p-less'><p class='money'><span class='m'></span><span class='u'>钱宝币</span></p><p class='x'>剩余名额/名额总数：<em class='left'></em>/<span class='total'></span></p></div>").appendTo(this.$content);
             this.$pMore = $("<div class='p-more'><ul class='pride-list'></ul><ul class='img-list clearfix'></ul><p class='pride-time'></p></div>").appendTo(this.$content);
         },
         
@@ -226,6 +250,12 @@ var testing = [
             if(this.options.detail && this.options.detail.price) {
                 this.$pLess.find('.m').text(this.options.detail.price);
             }
+            
+            var total = this.options.detail && this.options.detail.left || "";
+            this.$pLess.find('.x > .left').text(total);
+            
+            var total = this.options.detail && this.options.detail.total || "";
+            this.$pLess.find('.x > .total').text(total);
             
             if(this.options.detail && this.options.detail.more) {
                 this.$content.addClass('content-more');
@@ -257,7 +287,6 @@ var testing = [
         clear: function() {
             delete this.options.date;
             delete this.options.status;
-            delete this.options.price;
             delete this.options.detail;
         }
     });
@@ -448,12 +477,14 @@ var testing = [
                     $cell.addClass("cell-notCurrentMonth");
                 }
                 
-                //不在活动期间
-                if(date.getTime() < this.options.start.getTime() || date.getTime() > this.options.end.getTime()) {
+                if(date.getTime() < this.options.start.getTime() || date.getTime() > this.options.end.getTime()) {//不在活动期间
                     $cell.addClass('cell-inactive');
-                } else if(date.getTime() < today.getTime()) {
-                    $cell.addClass("cell-passed"); //在活动期，但是已经过去的日期
-                }
+                } else {
+                    $cell.addClass("cell-active"); 
+                    if(date.getTime() < today.getTime()) {
+                        $cell.addClass("cell-passed"); //在活动期，但是已经过去的日期
+                    }
+                } 
             }
         },
         
