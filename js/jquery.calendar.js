@@ -7,7 +7,7 @@ var testing = [
         date: new Date(year, month, date -3).toString(),
         status: 1000,
         detail: {
-            price: 1111,
+            price: 88888888,
             left: 1,
             total: 100,
             more: {
@@ -29,8 +29,8 @@ var testing = [
         date: new Date(year, month, date),
         status: 1000,
         detail: {
-            price: 20000,
-            left: 1,
+            price: 88888888,
+            left: 0,
             total: 100,
             more: {
                 listItem: [
@@ -62,7 +62,7 @@ var testing = [
         status: -1000,
         detail: {
             price: 2,
-            left: 1,
+            left: 0,
             total: 100,
             more: {
                 listItem: [
@@ -216,14 +216,38 @@ var testing = [
             }
             
             // check for today, show price not status for today
+            // if it's not started, show price on the first day
+            // if it's ended, show price on the last day
             var today = this.options.today;
+            var start = this.options.start;
+            var end = this.options.end;
             
-            if(date && today.getTime() == date.getTime()) {
-                if(this.options.detail && this.options.detail.price) {
-                    this.$status.removeClass('status-nega');
-                    this.$status.text(this.options.detail.price);
+            var notStarted = today.getTime() < start.getTime();
+            var ended = today.getTime() > end.getTime();
+            
+            if(date) {
+                var showPrice = false;
+                if(notStarted) {
+                    if(date.getTime() == start.getTime()) {
+                        showPrice = true;
+                    }
+                } else if(ended) {
+                    if(date.getTime() == end.getTime()) {
+                        showPrice = true;
+                    }
                 } else {
-                    this.$status.text("");
+                    if(date.getTime() == today.getTime()) {
+                        showPrice = true;
+                    }
+                }
+                
+                if(showPrice) {
+                    if(this.options.detail && this.options.detail.price) {
+                        this.$status.removeClass('status-nega');
+                        this.$status.text(this.options.detail.price);
+                    } else {
+                        this.$status.text("");
+                    }
                 }
             }
         },
@@ -272,11 +296,15 @@ var testing = [
                 this.$pLess.find('.m').text(this.options.detail.price);
             }
             
-            var total = this.options.detail && this.options.detail.left || "";
-            this.$pLess.find('.x > .left').text(total);
-            
-            var total = this.options.detail && this.options.detail.total || "";
-            this.$pLess.find('.x > .total').text(total);
+            var left = this.options.detail && this.options.detail.left;
+            var total = this.options.detail && this.options.detail.total;
+            if(left != undefined || total != undefined) {
+                this.$pLess.find('.x').show()
+                    .find('.left').text(left).end()
+                    .find('.total').text(total);
+            } else {
+                this.$pLess.find('.x').hide();
+            }
             
             if(this.options.detail && this.options.detail.more) {
                 this.$content.addClass('content-more');
@@ -296,7 +324,7 @@ var testing = [
                     });
                 }
                 
-                var temp = this.$pMore.find('.pride-time');
+                var temp = this.$pMore.find('.pride-time').empty();
                 if(this.options.detail.more.prideTime) {
                     temp.text(this.options.detail.more.prideTime);
                 }
@@ -334,7 +362,21 @@ var testing = [
         
         _init: function() {
             this._parseDate();
+            this._parsePrice();
             this._superApply(arguments);
+        },
+        
+        _parsePrice : function() {
+            var options = this.options;
+            
+            if(options.informations) {
+                $.each(options.informations, function(i, item) {
+                    var price = item && item.detail && item.detail.price;
+                    if(price != undefined) {
+                        item.detail.price = String(price).replace(/\d{1,3}(?=(\d{3})+(\.\d*)?$)/g, '$&,');
+                    }
+                });
+            }
         },
         
         _parseDate : function() {
@@ -378,6 +420,7 @@ var testing = [
     
         _create : function() {
             this._parseDate();
+            this._parsePrice();
             
             var time = this.options.today;
             this.currentMonth = time.getMonth();
@@ -413,7 +456,7 @@ var testing = [
             });
             
             this.element.find('.row-dates').on('mouseleave', function(e) {
-                me.$detail.detail().hide(); 
+                me.$detail.hide(); 
             });
             
             // this.element.css('position', 'relative');
@@ -474,7 +517,9 @@ var testing = [
 
                 for (var j = 0; j < this.options.col; j++) {
                     var $cell = $("<td class='cell'></td>").tile({
-                        today: this.options.today
+                        today: this.options.today,
+                        start: this.options.start,
+                        end: this.options.end
                     });
                     if(j == this.options.col - 1) {
                         $cell.addClass("cell-last");

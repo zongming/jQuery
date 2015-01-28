@@ -131,7 +131,7 @@
 }
 .c-calendar .row-dates > .cell > .tile .status {
   line-height: 10px;
-  font-size: 10px;
+  font-size: 9px;
   color: #d03a24;
   margin: 0;
 }
@@ -154,7 +154,7 @@
   right: 2px;
 }
 .c-calendar .row-dates > .cell-today:hover {
-  background-color: #ffc9c9;
+  background-color: #ffc9c9 !important;
 }
 .c-calendar .row-dates > .cell-today:hover > .tile {
   border: 2px solid #f7b4b4;
