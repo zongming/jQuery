@@ -1,0 +1,267 @@
+@charset "UTF-8";
+.calendar {
+  width: 343px;
+  height: 255px;
+}
+.outer-border {
+  width: 343px;
+  border: 0 solid #ffffff;
+}
+.outer-border:hover {
+  padding: 0;
+  border-color: #13ba00;
+}
+.c-calendar {
+  width: 343px;
+  text-align: center;
+  border: 0 solid #e3e3e3;
+}
+.c-calendar:hover {
+  border: 0 solid #13ba00;
+}
+.c-calendar .row > .cell {
+  font-family: Arial, Helvetica, sans-serif;
+  padding: 0;
+  margin: 0;
+  border: 0 solid #f7f7f7;
+  border-bottom: none;
+  border-right: none;
+}
+.c-calendar .row > .cell:first-child {
+  border-left: none;
+}
+.c-calendar .row > .cell-last {
+  border-right: none;
+}
+.c-calendar .row:first-child .cell {
+  border-top: none;
+}
+.c-calendar .row-last .cell {
+  border-bottom: none;
+}
+.c-calendar:hover .row > .cell:first-child {
+  border-left: none;
+}
+.c-calendar:hover .row > .cell-last {
+  border-right: none;
+}
+.c-calendar:hover .row:first-child .cell {
+  border-top: none;
+}
+.c-calendar:hover .row-last .cell {
+  border-bottom: none;
+}
+.c-calendar .c-header {
+  user-select: none;
+  -webkit-user-select: none;
+  /* Chrome all / Safari all */
+  -moz-user-select: none;
+  /* Firefox all */
+  -ms-user-select: none;
+  /* IE 10+ */
+  /* No support for these yet, use at own risk */
+  -o-user-select: none;
+  height: 50px;
+  line-height: 50px;
+}
+.c-calendar .c-header > .cell {
+  height: 25px;
+}
+.c-calendar .c-header > .cell > .header {
+  color: #666666;
+}
+.c-calendar .c-header > .cell > .header > .title {
+  font-size: 18px;
+  font-weight: normal;
+  margin: 0;
+}
+.c-calendar .c-header > .cell > .header > .title .time {
+  width: 80%;
+  font-weight: normal;
+  display: inline-block;
+}
+.c-calendar .c-header > .cell > .header > .title > .btn {
+  display: inline-block;
+  padding: 0;
+  cursor: pointer;
+  width: 9px;
+  height: 15px;
+}
+.c-calendar .c-header > .cell > .header > .title > .prev {
+  background: url("../../images/calendar/calendar.png") no-repeat;
+  background-position: 0 -15px;
+}
+.c-calendar .c-header > .cell > .header > .title > .prev:hover {
+  background: url("../../images/calendar/calendar.png") no-repeat;
+  background-position: 0 0;
+}
+.c-calendar .c-header > .cell > .header > .title > .next {
+  background: url("../../images/calendar/calendar.png") no-repeat;
+  background-position: 0 -45px;
+}
+.c-calendar .c-header > .cell > .header > .title > .next:hover {
+  background: url("../../images/calendar/calendar.png") no-repeat;
+  background-position: 0 -30px;
+}
+.c-calendar .row-days {
+  height: 50px;
+  line-height: 50px;
+}
+.c-calendar .row-days > .cell {
+  height: 20px;
+  background-color: #ffffff;
+  font-size: 12px;
+}
+.c-calendar .row-days > .day0,
+.c-calendar .row-days > .day6 {
+  color: #e77d00;
+}
+.c-calendar .row-dates > .cell {
+  color: #333333;
+}
+.c-calendar .row-dates > .cell:hover {
+  background: url("../../images/calendar/hover.png") no-repeat 50% 50%;
+}
+.c-calendar .row-dates > .cell > .tile {
+  visibility: visible;
+  position: relative;
+  width: 49px;
+  height: 35px;
+}
+.c-calendar .row-dates > .cell > .tile .point {
+  background: url("../../images/calendar/calendar.png") no-repeat;
+  background-position: 0 -70px;
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  top: 4px;
+  right: 4px;
+}
+.c-calendar .row-dates > .cell > .tile > .day {
+  line-height: 35px;
+  font-size: 13px;
+}
+.c-calendar .row-dates > .cell-focused {
+  color: #FFF;
+  background: url("../../images/calendar/focus.png") no-repeat 50% 50%;
+}
+.c-calendar .row-dates > .cell-focused:hover {
+  background: url("../../images/calendar/focus.png") no-repeat 50% 50%;
+}
+.c-calendar .row-dates > .cell-passed {
+  background-color: #ffffff;
+}
+.c-calendar .row-dates > .cell-passed .tile .day {
+  color: #bbbbbb;
+}
+.c-calendar .row-dates > .cell-notCurrentMonth {
+  background: none;
+}
+.c-calendar .row-dates > .cell-notCurrentMonth > .tile {
+  visibility: hidden;
+}
+.c-calendar .row-dates > .cell-notCurrentMonth:hover {
+  background: none;
+}
+.c-detail {
+  display: none;
+  position: absolute;
+  width: 278px;
+  background-color: #13ba00;
+}
+.c-detail > h4 {
+  position: relative;
+  margin: 0;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+}
+.c-detail > h4 > .title {
+  font-size: 14px;
+  color: #FFF;
+}
+.c-detail > h4 .p-l,
+.c-detail > h4 .p-r {
+  position: absolute;
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  background: url("../../images/calendar/calendar.png") no-repeat;
+  background-position: 0 -60px;
+}
+.c-detail > h4 .p-l {
+  left: 32px;
+  top: 16px;
+}
+.c-detail > h4 .p-r {
+  right: 32px;
+  top: 16px;
+}
+.c-detail > .content {
+  border: none;
+  width: auto;
+  height: auto;
+  padding: 8px 20px 10px 20px;
+  background-color: #FFF;
+  margin: 0 6px 6px 6px;
+}
+.c-detail > .content > .p-less > p.money {
+  height: 31px;
+  line-height: 31px;
+}
+.c-detail > .content > .p-less > p.money > .m {
+  margin-right: 5px;
+  font-size: 24px;
+  color: #d03a24;
+}
+.c-detail > .content > .p-less > p.money > .u {
+  font-size: 14px;
+  color: #000;
+}
+.c-detail > .content > .p-less > p.x {
+  line-height: 14px;
+  font-size: 12px;
+  color: #333;
+}
+.c-detail > .content > .p-less > p.x em {
+  font-style: normal;
+  color: #d03a24;
+}
+.c-detail > .content > .p-more {
+  margin-top: 9px;
+}
+.c-detail > .content > .p-more > .pride-list > li {
+  line-height: 19px;
+  font-size: 12px;
+  color: #333;
+}
+.c-detail > .content > .p-more > .img-list {
+  width: 100%;
+  margin-top: 3px;
+}
+.c-detail > .content > .p-more > .img-list li {
+  float: left;
+  margin-top: 5px;
+  margin-right: 5px;
+}
+.c-detail > .content > .p-more > .img-list li img {
+  display: block;
+  width: 40px;
+  height: 40px;
+}
+.c-detail > .content > .p-more > .pride-time {
+  margin-top: 21px;
+  font-size: 12px;
+  line-height: 14px;
+  color: #666;
+}
+.c-detail > .content-less > .p-more {
+  display: none;
+}
+.c-detail > .content-more > .p-less {
+  padding-bottom: 7px;
+  border-bottom: 1px solid #e5e5e5;
+}
+.c-detail > .content-more > .p-more {
+  display: block;
+}

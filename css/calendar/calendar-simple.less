@@ -1,40 +1,37 @@
 @charset "UTF-8";
 
-@outerBorderWidth: 1px;
-@outerBorderHoverWidth: 2px;
+@outerBorderWidth: 0;
+@outerBorderHoverWidth: 0;
 @outerBorderColor: #e3e3e3;
 @outerBorderColorHighlight: #13ba00;
 
-@innerBorderWidth: 1px;
+@innerBorderWidth: 0;
 @innerBorderColor: #f7f7f7;
 
-@cellWidth: 48px;
+@cellWidth: 49px;
 
-@dayBackColor: #ededed;
+@dayBackColor: #FFF;
 @dayFontSize: 12px;
 @daysHeight: 20px;
 
 @dateBackColor: #FFF;
-@dateHighlightBC: #d5f3d2;
-@dateFontSize: 12px;
-// @dateFontColor: #666;
+@dateHighlightBC: #FFF;
+@dateFontSize: 13px;
 @dateFontColor: #333;
-@dateNotCurrentMonthFontColor: #ccc;
+@dateNotCurrentMonthFontColor: #333;
 @dateHeight: 35px;
 @todayBackColor: #ffc9c9;
-@todayHighlightBorderWidth: 2px;
+@todayHighlightBorderWidth: 0;
 @todayHighlightBorderColor: #f7b4b4;
-@datePassedBC: #f3f3f3;
+@datePassedBC: #FFF;
+@datePassedColor: #BBB;
 
 @headerHeight: 25px;
-@titleFontSize: 12px;
+@titleFontSize: 18px;
+@titleColor: #666;
 
-@calendarWidth: 344px;
+@calendarWidth: @cellWidth * 7 + 6 * @innerBorderWidth + @outerBorderWidth * 2 + @innerBorderWidth * 2;
 @imgPath: '../../images/calendar';
-
-@status-old: #888;
-@status-negative: #109f00;
-@status-positive: #d03a24;
 
 .sprites(@x:0, @y: 0) {
   background: url("@{imgPath}/calendar.png") no-repeat;
@@ -42,10 +39,10 @@
 }
 
 .calendar {
-  width: @cellWidth * 7 + 6 * @innerBorderWidth + @outerBorderWidth * 2 + @innerBorderWidth * 2;
+  width: @calendarWidth;
   // height: 266px;
   height: @headerHeight + @dateHeight * 6 + @daysHeight + 7 * @innerBorderWidth + @outerBorderWidth * 2 + @innerBorderWidth * 2; 
-  position: relative;
+  // position: relative;
 }
 .outer-border {
   width: @calendarWidth;//set width for ie7, which doesnt support inline-block
@@ -103,64 +100,75 @@
   }
   
   .c-header {
+    user-select: none;
+    -webkit-user-select: none;  /* Chrome all / Safari all */
+    -moz-user-select: none;     /* Firefox all */
+    -ms-user-select: none;      /* IE 10+ */
+  
+    /* No support for these yet, use at own risk */
+    -o-user-select: none;
+  
+    height: 50px;
+    line-height: 50px;
     > .cell {
       height: @headerHeight;
       > .header {
-        line-height: @titleFontSize + 2;
+        color: @titleColor;
         > .title {
+          
           font-size: @titleFontSize;
           font-weight: normal;
           margin: 0;
           .time {
-            font-weight: bold;
-            display: inline;
+            width: 80%;
+            font-weight: normal;
+            display: inline-block;
           }
-          .sub-title {
-            color: #888;
+          > .btn {
+             display: inline-block;
+             padding: 0;
+             cursor: pointer;
+             width: 9px;
+             height: 15px;
           }
-        }
-        > .btn {
-           padding: 0;
-           cursor: pointer;
-           width: 9px;
-           height: 15px;
-        }
-        > .prev {
-           float: left;
-           margin-left: 10px;
-           margin-left: 10px;
-           &:hover {
-             .sprites(0, 0);
-           }
-           .sprites(0, -15px);
-        }
-        > .next {
-           float: right;
-           margin-right: 10px;
-           &:hover {
-             .sprites(0, -30px); 
-           }
-           .sprites(0, -45px); 
+          > .prev {
+             &:hover {
+               .sprites(0, 0);
+             }
+             .sprites(0, -15px);
+          }
+          > .next {
+             &:hover {
+               .sprites(0, -30px); 
+             }
+             .sprites(0, -45px); 
+          }
         }
       }
     }
   }
   .row-days {
+    height: 50px;
+    line-height: 50px;
     > .cell {
       height: @daysHeight;
       background-color: @dayBackColor;
       font-size: @dayFontSize;
     }
+    > .day0, 
+    > .day6 {
+      color: #e77d00;
+    }
   }
   .row-dates {
     > .cell {
-      background: @dateBackColor;
-      
+      color: @dateFontColor;
       &:hover {
-        background: @dateHighlightBC;
+        background: url("@{imgPath}/hover.png") no-repeat 50% 50%;
       }
       
       >.tile {
+        visibility: visible;
         position: relative;
         width: @cellWidth;
         height: @dateHeight;
@@ -174,79 +182,58 @@
           top: 4px;
           right: 4px;
         }
-        .day {
-          line-height: 22px;
-          
-          font-size: 14px;
-          color: @dateFontColor;
-        }
-        .day-full {
+        > .day {
           line-height: @dateHeight;
-        }
-        .status {
-          line-height: 10px;
-          font-size: 9px;
-          color: @status-positive;
-          margin: 0;
-        }
-        .status-nega {
-          color: @status-negative;
+          
+          font-size: @dateFontSize;
         }
       }
     }
-    > .cell-today {
-      background-color: @todayBackColor;
-      >.tile {
-        border: @todayHighlightBorderWidth solid @todayBackColor;
-        width: @cellWidth - @todayHighlightBorderWidth * 2;
-        height: @dateHeight - @todayHighlightBorderWidth * 2;
-        .day {
-          margin-top: -@todayHighlightBorderWidth;
-        }
-        .point {
-          top: 4px - @todayHighlightBorderWidth;
-          right: 4px - @todayHighlightBorderWidth;
-        }
-      }
-      
+    > .cell-focused {
+      color: #FFF;
+      background: url("@{imgPath}/focus.png") no-repeat 50% 50%;
       &:hover {
-        background-color: @todayBackColor !important;
-        >.tile {
-          border: @todayHighlightBorderWidth solid @todayHighlightBorderColor;
+        background: url("@{imgPath}/focus.png") no-repeat 50% 50%;
+      }
+    }
+    // > .cell-today {
+      // background-color: @todayBackColor;
+      // >.tile {
+        // border: @todayHighlightBorderWidth solid @todayBackColor;
+        // width: @cellWidth - @todayHighlightBorderWidth * 2;
+        // height: @dateHeight - @todayHighlightBorderWidth * 2;
+        // .day {
+          // margin-top: -@todayHighlightBorderWidth;
+        // }
+        // .point {
+          // top: 4px - @todayHighlightBorderWidth;
+          // right: 4px - @todayHighlightBorderWidth;
+        // }
+      // }
+//       
+      // &:hover {
+        // background-color: @todayBackColor !important;
+        // >.tile {
+          // border: @todayHighlightBorderWidth solid @todayHighlightBorderColor;
+        // }
+      // }
+    // }
+    > .cell-passed {
+      background-color: @datePassedBC;
+      .tile {
+        .day {
+          color: @datePassedColor;
         }
       }
     }
     > .cell-notCurrentMonth {
-      >.tile {
-        .day {
-          color: @dateNotCurrentMonthFontColor;
-        }
-      }
-    }
-    > .cell-active { 
-      >.tile {
-        .day {
-          color: @dateFontColor;
-        }
-      }
-    }
-    > .cell-inactive { /*不在活动期*/
-      >.tile {
-        .day {
-          color: @dateNotCurrentMonthFontColor;
-        }
+      background: none;
+      > .tile {
+        visibility: hidden;
       }
       &:hover {
-        background: @dateBackColor;
+        background: none;
       }
-    }
-    > .cell-passed {
-      >.tile {
-        .status {
-          color: @status-old;/*已经结束的都显示灰色*/
-        }
-      }
-      background-color: @datePassedBC;
     }
   }
 }

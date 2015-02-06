@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <title>jquery canlendar plugin</title>
+        <link type="text/css" href="css/calendar/calendar-simple.css" rel="stylesheet" />
+        
+        <style>
+        ul, li, div, p {
+          margin: 0;
+          padding: 0;
+          list-style: none;
+        }
+        .clearfix:after, #content:after {
+            content: "\0020";
+            display: block;
+            clear: both;
+            height: 0;
+            font-size: 0;
+        }
+        </style>
+    </head>
+    <body>
+        <div id="c" class="calendar"></div>
+        
+        <script src="js/lib/jquery-1.11.1.js" type="text/javascript"></script>
+        <script src="js/lib/jquery-ui.js" type="text/javascript"></script>
+        
+        <script src="js/jquery.calendar-simple.js" type="text/javascript"></script>
+        <script type="text/javascript">
+            $(function() {
+                $('#c').calendar({
+                    clickDate: function() {
+                        alert("clickDate");
+                    },
+                    informations: testing,
+                    today: new Date(year, month, date),
+                    start: "2015-01-3",
+                    end: "2015-02-25"
+                    // start: new Date(year, month, 4),
+                    // end: new Date(year, month + 1, 24)
+                });
+            });
+        </script>
+</html>
