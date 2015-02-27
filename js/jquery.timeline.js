@@ -1,7 +1,7 @@
 (function($) {
     $.widget('qbao.timeline', {
         options: {
-            max: 8,
+            maxDisplayed: 8,
             data: []
         },
         
@@ -25,7 +25,7 @@
             
             $.each(this.options.data, function(index, item) {
                 var $li = $('<li class="item"><a class="link" href="' + item.url + '"><em class="time">' 
-                    + item.title + '</em><span class="label">'
+                    + item.time + '</em><span class="label">'
                     + item.label + '</span></a><i></i></li>');
                 $li.toggleClass('item-new', !!item.isNew);
                 $li.appendTo(me.$list);
@@ -34,11 +34,12 @@
         
         _init: function() {
             this.$items = this.element.find('.item');
+            this._scrollToIndex(0);
         },
         
         _prev: function() {
             var i = this.current - 1;
-            if(i >= 0 && i + this.options.max - 1 < this.size) {
+            if(i >= 0 && i + this.options.maxDisplayed - 1 < this.size) {
                 this.current = i;
                 this._scrollToIndex(i);
             }
@@ -46,7 +47,7 @@
         
         _next: function() {
             var i = this.current + 1;
-            if(i >= 0 && i + this.options.max - 1 < this.size) {
+            if(i >= 0 && i + this.options.maxDisplayed - 1 < this.size) {
                 this.current = i;
                 this._scrollToIndex(i);
             }
@@ -58,7 +59,7 @@
                 this.$list.animate({left: -p.left + 'px'}, 400);
             }
             this.$prev.toggle(index != 0);
-            this.$next.toggle(index != this.size - this.options.max);
+            this.$next.toggle(index + this.options.maxDisplayed < this.size);
         }
     });
 })(jQuery);
