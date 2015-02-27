@@ -21,7 +21,8 @@ var testing = [
                     "images/calendar/b.png",
                     "images/calendar/c.png"
                 ],
-                prideTime: "奖励发放时间：2014-12-20 0:00:00"
+                prideTime: "奖励发放时间：2014-12-20 0:00:00",
+                prideType: -1 
             }
         }
     },
@@ -43,7 +44,8 @@ var testing = [
                     "images/calendar/b.png",
                     "images/calendar/c.png"
                 ],
-                prideTime: "奖励发放时间：2014-12-20 0:00:00"
+                prideTime: "奖励发放时间：2014-12-20 0:00:00",
+                prideType: 1
             }
         }
     },
@@ -207,7 +209,8 @@ var testing = [
                 this.$day.addClass('day-full');
             }
             
-            var showIndicator = this.options.detail && this.options.detail.more;
+            var temp = this.options.detail;
+            var showIndicator = temp && temp.more && temp.more.prideType && temp.more.prideType > 0;
             
             if(showIndicator) {
                 this.$tile.find(".point").show();

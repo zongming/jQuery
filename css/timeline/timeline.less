@@ -1,0 +1,118 @@
+@charset "UTF-8";
+
+@width: 1000px;
+@height: 77px;
+
+@item-width: 120px;
+@lable-width: 70px;
+@line-width: 50px;
+
+@bg-color: #f6f1e6;
+@line-color: #cfa370;
+
+@imgPath: '../../images/timeline';
+.timeline {
+  font-size: 12px;
+  background: @bg-color;
+  
+  margin: 0 auto;
+  position: relative;
+  width: @width;
+  height: @height;
+  border-bottom: 1px solid #d8d0c7;
+  
+  > .nav {
+    position: absolute;
+    display: inline-block;
+    width: 15px;
+    height: 24px;
+    top: 23px;
+    cursor: pointer;
+  }  
+  > .nav-prev {
+    background: url("@{imgPath}/arrow-left.png") no-repeat;
+    left: 19px;
+    margin-right: 8px;
+  }
+  > .nav-next {
+    background: url("@{imgPath}/arrow-right.png") no-repeat;
+    right: 19px;
+    margin-left: 8px;
+  }
+  > .scroll {
+    position: absolute;
+    overflow: hidden;
+    left: 43px;
+    width: @width - 43px * 2 - 10;
+    height: @height;
+    > .list {
+      position: absolute;
+      width: 2000px;
+      > .item {
+        position: relative;
+        float: left;
+        width: @item-width;
+        
+        > .link {
+          cursor: default;
+          text-align: center;
+          float: left;
+          color: #7d521d;
+          text-decoration: none;
+          display: inline-block;
+          width: @lable-width;
+          .time {
+            display: inline-block;
+            width: 52px;
+            height: 22px;
+            line-height: 22px;
+            font-style: normal;
+            margin: 10px 0;
+          }
+          .label {
+            display: block;
+          }
+        }
+        > i {
+          position: absolute;
+          width: @line-width;
+          height: 0;
+          line-height: 0;
+          font-size: 0;
+          border: 1px solid @line-color;
+          display: block;
+          right: 0;
+          top: 23px;
+        }
+      }
+      > .item-new {
+        > .link {
+          cursor: pointer;
+          color: #559819;
+          &:hover {
+            .time {
+              background: #559819;
+              color: #FFF;
+              border-radius: 3px;
+            }
+          }
+        }
+        > i {
+          border-color: #559819;
+        }
+      }
+      > .item:last-child {
+        width: @lable-width;
+        i {
+          display: none;
+        }
+      }
+    }
+  }
+}
+
+.nowrap {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;  
+}

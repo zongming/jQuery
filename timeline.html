@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <title>jquery canlendar plugin</title>
+        <link type="text/css" href="css/timeline/timeline.css" rel="stylesheet" />
+        <!-- <link type="text/less" href="css/timeline/timeline.less" rel="stylesheet" /> -->
+        
+        <style>
+        body {
+             font-family: "微软雅黑", arial;
+        }
+        ul, li, div, p {
+          margin: 0;
+          padding: 0;
+          list-style: none;
+        }
+        .clearfix:after, #content:after {
+            content: "\0020";
+            display: block;
+            clear: both;
+            height: 0;
+            font-size: 0;
+        }
+        </style>
+    </head>
+    <body>
+        <div class="timeline"></div>
+        
+        <script src="js/lib/jquery-1.11.1.js" type="text/javascript"></script>
+        <script src="js/lib/jquery-ui.js" type="text/javascript"></script>
+        <script src="js/lib/less.min.js" type="text/javascript"></script>
+        
+        <script src="js/jquery.timeline.js" type="text/javascript"></script>
+        <script type="text/javascript">
+            $('.timeline').timeline({
+                data: [
+                    {title: '10:00', label: '欢乐时光', url: '#'},
+                    {title: '11:00', label: '女装饰品', url: '#'},
+                    {title: '12:00', label: '家装家电', url: '#', isNew: true},
+                    {title: '13:00', label: '数码家电', url: '#', isNew: true},
+                    {title: '14:00', label: '运动户外', url: '#', isNew: true},
+                    {title: '15:00', label: '新潮男装', url: '#', isNew: true},
+                    {title: '16:00', label: '饰品内衣', url: '#', isNew: true},
+                    {title: '17:00', label: '鞋类箱包', url: '#', isNew: true},
+                    {title: '17:00', label: '鞋类箱包', url: '#', isNew: true},
+                    {title: '17:00', label: '鞋类箱包', url: '#', isNew: true},
+                    {title: '17:00', label: '鞋类箱包', url: '#', isNew: true},
+                    {title: '17:00', label: '鞋类箱包', url: '#', isNew: true},
+                    {title: '18:00', label: '鞋类箱包', url: '#', isNew: true}
+                ]
+            });
+        </script>
+</html>
