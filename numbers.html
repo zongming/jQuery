@@ -7,10 +7,9 @@
     <body>
         <div class="numbers" id="big"></div>
         <br />
-        <div class="numbers-small"></div>
-        <div class="numbers-small"></div>
-        <div class="numbers-small"></div>
-        <div class="numbers-small"></div>
+        <div class="numbers-md">
+            
+        </div>
         <div class="numbers-small"></div>
         
         <input id="n1"/>
@@ -35,6 +34,15 @@
                 });
                 
                 $('.numbers-small').numbers({
+                    rootClass: "numbers numbers-small",
+                    totalSize: 15,
+                    numberSize: 10, 
+                    numberH: 41,
+                    speed: 3000,
+                    value: "￥56,789.12"
+                });
+                
+                $('.numbers-md').numbers({
                     rootClass: "numbers numbers-small",
                     totalSize: 15,
                     numberSize: 10, 

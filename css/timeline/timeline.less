@@ -7,7 +7,7 @@
 @lable-width: 70px;
 @line-width: 50px;
 
-@bg-color: #f6f1e6;
+@bg-color: #fff4dd;
 @line-color: #cfa370;
 
 @imgPath: '../../images/timeline';
@@ -25,19 +25,26 @@
     position: absolute;
     display: inline-block;
     width: 15px;
-    height: 24px;
-    top: 23px;
+    height: 29px;
+    top: 21px;
     cursor: pointer;
   }  
   > .nav-prev {
-    background: url("@{imgPath}/arrow-left.png") no-repeat;
+    background: url("@{imgPath}/time-arrow.png") no-repeat 0 -29px;
     left: 19px;
     margin-right: 8px;
+    
+    &:hover {
+      background-position: 0 0;
+    }
   }
   > .nav-next {
-    background: url("@{imgPath}/arrow-right.png") no-repeat;
+    background: url("@{imgPath}/time-arrow.png") no-repeat 0 -87px;
     right: 19px;
     margin-left: 8px;
+    &:hover {
+      background-position: 0 -58px;
+    }
   }
   > .scroll {
     position: absolute;
@@ -54,22 +61,23 @@
         width: @item-width;
         
         > .link {
-          cursor: default;
+          cursor: pointer;
           text-align: center;
           float: left;
           color: #7d521d;
           text-decoration: none;
           display: inline-block;
           width: @lable-width;
-          .time {
+          > .time {
             display: inline-block;
             width: 52px;
             height: 22px;
             line-height: 22px;
             font-style: normal;
-            margin: 10px 0;
+            margin: 12px 0 10px 0;
+            border-radius: 3px;
           }
-          .label {
+          > .label {
             display: block;
           }
         }
@@ -85,15 +93,67 @@
           top: 23px;
         }
       }
-      > .item-new {
+      > .item-prev {
         > .link {
-          cursor: pointer;
+            &:hover {
+              > .time {
+                background: #ffba58;
+                color: #FFF;
+              }
+            }
+        }
+        > .link-selected {
+          > .time {
+              background: #f6a83a;
+              color: #FFF;
+          }
+          &:hover {
+            > .time {
+              background: #f6a83a;
+            }
+          }
+        }
+      }
+      > .item-now {
+        > .link {
+            color: #d03a21;
+            &:hover {
+              > .time {
+                background: #d03a21;
+                color: #FFF;
+              }
+            }
+        }
+        > .link-selected {
+          > .time {
+            background: #d03a21;
+            color: #FFF;
+          }
+          &:hover {
+            > .time {
+              background: #d03a21;
+            }
+          }
+        }
+      }
+      > .item-next {
+        > .link {
           color: #559819;
           &:hover {
-            .time {
-              background: #559819;
+            > .time {
+              background: #69cb43;
               color: #FFF;
-              border-radius: 3px;
+            }
+          }
+        }
+        > .link-selected {
+          > .time {
+              background: #46b807;
+              color: #FFF;
+          }
+          &:hover {
+            > .time {
+              background: #46b807;
             }
           }
         }

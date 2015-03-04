@@ -2,9 +2,9 @@
 <html>
     <head>
         <meta charset="utf-8"/>
-        <title>jquery canlendar plugin</title>
-        <link type="text/css" href="css/timeline/timeline.css" rel="stylesheet" />
-        <!-- <link type="text/less" href="css/timeline/timeline.less" rel="stylesheet" /> -->
+        <title>jquery timeline plugin</title>
+        <!-- <link type="text/css" href="css/timeline/timeline.css" rel="stylesheet" /> -->
+        <link type="text/less" href="css/timeline/timeline.less" rel="stylesheet" />
         
         <style>
         body {
@@ -30,7 +30,7 @@
                 height: 34px;
                 line-height: 34px;
                 margin: 0 auto;
-                background: #e9e0cf;
+                background: #f7e3c0;
             }
             .t-nav > .t-nav-item {
                 height: 34px;
@@ -39,8 +39,10 @@
                 font-size: 12px;
                 color: #6d4b1b;
                 text-align: center;
-                background: #e8dfce;
                 cursor: pointer;
+            }
+            .t-nav > .t-nav-item:hover {
+                background: #fadaa8;
             }
             .t-nav > .t-nav-item-curr {
                 margin-top: -3px;
@@ -48,6 +50,9 @@
                 line-height: 37px;
                 color: #FFF;
                 font-size: 14px;
+                background: #f6a83a;
+            }
+            .t-nav > .t-nav-item-curr:hover {
                 background: #f6a83a;
             }
         </style>
@@ -61,9 +66,6 @@
                 <li class="t-nav-item">2.1预告</li>
             </ul>
             <div class="timeline"></div>
-            <div class="timeline" style="display: none;"></div>
-            <div class="timeline" style="display: none;"></div>
-            <div class="timeline" style="display: none;"></div>
         </div>
         
         <script src="js/lib/jquery-1.11.1.js" type="text/javascript"></script>
@@ -73,20 +75,23 @@
         <script src="js/jquery.timeline.js" type="text/javascript"></script>
         <script type="text/javascript">
             $('.timeline').timeline({
+                dateType: 0, //0: today, -1: before today, 1: after today
+                currentTime: '13:00', 
+                selectedTime: '10:00',
                 data: [
                     {time: '10:00', label: '欢乐时光', url: '#'},
                     {time: '11:00', label: '女装饰品', url: '#'},
-                    {time: '12:00', label: '家装家电', url: '#', isNew: true},
-                    {time: '13:00', label: '数码家电', url: '#', isNew: true},
-                    {time: '14:00', label: '运动户外', url: '#', isNew: true},
-                    {time: '15:00', label: '新潮男装', url: '#', isNew: true},
-                    {time: '16:00', label: '饰品内衣', url: '#', isNew: true},
-                    {time: '17:00', label: '鞋类箱包', url: '#', isNew: true},
-                    {time: '17:00', label: '鞋类箱包', url: '#', isNew: true},
-                    {time: '17:00', label: '鞋类箱包', url: '#', isNew: true},
-                    {time: '17:00', label: '鞋类箱包', url: '#', isNew: true},
-                    {time: '17:00', label: '鞋类箱包', url: '#', isNew: true},
-                    {time: '18:00', label: '鞋类箱包', url: '#', isNew: true}
+                    {time: '12:00', label: '家装家电', url: '#'},
+                    {time: '13:00', label: '数码家电', url: '#'},
+                    {time: '14:00', label: '运动户外', url: '#'},
+                    {time: '15:00', label: '新潮男装', url: '#'},
+                    {time: '16:00', label: '饰品内衣', url: '#'},
+                    {time: '17:00', label: '鞋类箱包', url: '#'},
+                    {time: '18:00', label: '鞋类箱包', url: '#'},
+                    {time: '19:00', label: '鞋类箱包', url: '#'},
+                    {time: '20:00', label: '鞋类箱包', url: '#'},
+                    {time: '21:00', label: '鞋类箱包', url: '#'},
+                    {time: '22:00', label: '鞋类箱包', url: '#'}
                 ]
             });
             
