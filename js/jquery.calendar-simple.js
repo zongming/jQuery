@@ -431,10 +431,12 @@ var testing = [
         
         prev: function() {
             this.setTime(this.currentYear, this.currentMonth - 1);
+            this._trigger('prev', null, [this.currentYear, this.currentMonth]);
         },
         
         next: function() {
             this.setTime(this.currentYear, this.currentMonth + 1);
+            this._trigger('next', null, [this.currentYear, this.currentMonth]);
         },
         
         _createDays: function() {
@@ -508,7 +510,7 @@ var testing = [
                 var c = i % 7;
                 var $cell = this._cache[r][c];
                 $cell.data("date", date);
-                
+//                 
                 var config = {date: date};
                 $.extend(config, this._getInfoByDate(date));
                 $cell.tile(config);
@@ -520,6 +522,20 @@ var testing = [
                 
                 $cell.toggleClass('cell-passed', date.getFullYear() == today.getFullYear() 
                                     && date.getMonth() == today.getMonth() && date.getDate() < today.getDate());
+            }
+        },
+        
+        update: function() {
+            for(var r = 0; r < this.options.row; r++) {
+                for(var c = 0; c < this.options.col; c++) {
+                    var $cell = this._cache[r][c];
+                    var date = $cell.data("date");
+                    
+                    var config = {date: date};
+                    $.extend(config, this._getInfoByDate(date));
+                    $cell.tile('clear');
+                    $cell.tile(config);
+                }
             }
         },
         

@@ -61,7 +61,7 @@
                 me.currentTimeIndex = -1;
             }
             
-            if(this.currentTimeIndex) {
+            if(!isNaN(this.currentTimeIndex)) {
                 this.$items.each(function(index, li) {
                     var $li = $(li);
                     if(index > me.currentTimeIndex) {
@@ -74,15 +74,16 @@
                 });
             }
             if(!isNaN(this.selectedIndex)) {
-                var a = this.selectedIndex - 4;
-                var b = this.selectedIndex + 3;
-                if(a < 0) {
-                    this.currentIndex = 0;
-                } else {
-                    this.currentIndex = a;
-                }
-                if(b > this.size - 1) {
-                    this.currentIndex = this.size - this.dateDisplayed;
+                if(this.size > this.dateDisplayed) { //scroll selected one to center by setting currentIndex 
+                    var a = this.selectedIndex - 4;
+                    var b = this.selectedIndex + 3;
+                    if(a < 0) {
+                        this.currentIndex = 0;
+                    } else if(b > this.size - 1) {
+                        this.currentIndex = this.size - this.dateDisplayed;
+                    } else {
+                        this.currentIndex = a;
+                    }
                 }
                 this.$items.eq(this.selectedIndex).find('.link').addClass('link-selected');
             }
@@ -111,7 +112,7 @@
             if(p) {
                 this.$list.animate({left: -p.left + 'px'}, noAnimation ? 0: 400);
             }
-            this.$prev.toggle(index != 0);
+            this.$prev.toggle(index > 0);
             this.$next.toggle(index + this.dateDisplayed < this.size);
         }
     });

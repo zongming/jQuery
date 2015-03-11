@@ -229,4 +229,41 @@
             this.prices.push(this.end); 
         }
     });
+
+    $.widget('qbao.auctionC', $.qbao.baseAuction, { // 按步下跌，后端设置好每步降幅
+        _createDefaults: function() {
+            this.total = this.options.totalTime / this.options.interval; // how many time should the price goes down?
+            this.total = parseInt(this.total);
+            
+            var n = this.options.start;
+            this.steps = [{change: 0, result: n}]; // steps comes from backend
+            
+            for(var i = 0; i < this.total; i++) {
+                var c = -1;
+                n += c;
+                this.steps.push({change: c, result: n});
+            }
+            this.end = n;
+        },
+        
+        _getPriceByTime: function() {
+            var times = parseInt(this.options.currentTime / this.options.interval);
+            var price = this.steps[times].result;
+            return Number(price.toFixed(2));
+        },
+        
+        _getTimeByPrice: function(price) {
+            if(price < this.end) {
+                price = this.end;
+            }
+            for(var i = 0; i < this.total; i++) {
+                var r1 = this.steps[i].result;
+                var r2 = this.steps[i + 1].result;
+                if(r1 >= price && r2 < price) {
+                    break;
+                }
+            }
+            return i * this.options.interval;
+        },
+    });
 })(jQuery);
