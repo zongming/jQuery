@@ -5,11 +5,11 @@
         <link rel="stylesheet" type="text/css" href="css/number/number.css" />
     </head>
     <body>
-        <div class="numbers0" id="big"></div>
+        <div class="auctionA" id="big"></div>
         <br />
-        <div class="numbers1" id="big"></div>
+        <div class="auctionB" id="big"></div>
         <br />
-        <div class="numbers2" id="big"></div>
+        <div class="auctionB1" id="big"></div>
         <br />
         
         <div class="auctionC" id="big"></div>
@@ -21,7 +21,7 @@
         <script src="js/jquery.auction.js" type="text/javascript"></script>
         <script type="text/javascript">
             $(function() {
-                $('.numbers0').auctionA({ // 匀速下跌式拍卖
+                $('.auctionA').auctionA({ // 匀速下跌式拍卖
                     start: 2500.00,
                     totalTime: 1080000,
                     currentTime: 0,
@@ -37,7 +37,7 @@
                     }
                 });
                 
-                $('.numbers1').auctionB({ // 加速下跌式拍卖
+                $('.auctionB').auctionB({ // 加速下跌式拍卖
                     type: 1,
                     start: 2500.00,
                     totalTime: 1080000,
@@ -54,7 +54,7 @@
                     }
                 });
                 
-                $('.numbers2').auctionB({ // 减速下跌式拍卖
+                $('.auctionB1').auctionB({ // 减速下跌式拍卖
                     type: -1,
                     start: 2500.00,
                     totalTime: 1080000,
@@ -74,14 +74,65 @@
                     }
                 });
                 
-                $('.auctionC').auctionC({ // 按步下跌
-                    start: 2500.00,
-                    totalTime: 1080000,
-                    currentTime: 0,
-                    
-                    interval: 1000, 
-                });
             });
             
+            
+            $(function() {
+                // simulate data
+                var start = 2500000;
+                var interval = 1000;
+                var n = start;
+                var steps = [{time: 0, price: n}]; // steps comes from backend
+                for(var i = 0; i < 1080; i++) {
+                    var c = -(i + 1);
+                    n += c;
+                    steps[i+1] = {time: (i + 1) * 1000, price: n};
+                }
+            
+                console.log(JSON.stringify(steps));
+                // simulate data end
+                
+                var index = 0;
+                var a = $('.auctionC').auctionC({ // 按步下跌, 从server动态拿数据 {time: 20000,  price: 2450}]
+                    // $('.auctionC').auctionC('updateSteps', [{time: 20000,  price: 2450}]).auctionC('setTime', 1079000);
+                    refresh: function(e, data) {
+                        var left = a.auctionC('getLeftStepsCount');
+                        if(left <= 5) { // 少于5条开始拿数据
+                            // ajax to get lastest values
+                            function callback(r) { // {currentTime: 1079000, steps: [{s: 3, r: 2492}, stopped: false, stopAt:1080]}
+                                console.log('Get new steps: ' + JSON.stringify(r.steps));
+                                index += 10;
+                                a.auctionC('updateSteps', r.steps);
+                                var stopped = !!r.stopped;
+                                if(stopped) {
+                                    a.auctionC('stop', r.stopAt);
+                                } else if(!isNaN(r.currentTime)) { //sync
+                                    a.auctionC('setTime', Number(r.currentTime));
+                                }
+                            }
+                            
+                            var slice = steps.slice(index, index + 10);
+                            var stopped = (index + 10) === steps.length - 1;
+                            if(stopped) {
+                                var at = 12415125;
+                                console.log('stopped!! at ' + at);
+                            }
+                            callback({
+                                stopped: stopped,
+                                stopAt: at,
+                                steps: slice
+                            });
+                        }
+                    },
+                    
+                    start: start,
+                    // totalTime: 1080000,
+                    currentTime: 0,
+                    
+                    interval: interval
+                });
+                // .auctionC('updateSteps', steps);
+                
+            });
         </script>
 </html>

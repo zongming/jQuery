@@ -27,12 +27,13 @@
             }
             
             time = parseInt(time / this.options.interval) * this.options.interval;
-            this.options.currentTime = time;
+            this.currentTime = time;
             
             this._refresh();
         },
         
         _init: function() {
+            this.currentTime = this.options.currentTime;
             this._refresh();
         },
         
@@ -43,32 +44,36 @@
                 price = this.end;
             }
             
-            // this.price = price;
-            // if(this.price >= 0) {
-                // this._showPrice();
-            // }
-            this.options.currentTime = this._getTimeByPrice(price);
+            this.price = price;
+            if(this.price >= 0) {
+                this._showPrice();
+            }
+            this.currentTime = this._getTimeByPrice(price);
             
             this._refresh();
         },
         
-        setStarted: function(b) {
-            if(this.options.started != b) {
-                this.options.started = b;
-                if(b) {
-                    this._refresh();
-                } else {
-                    clearTimeout(this.timeout);
-                    this.options.currentTime = 0;
-                    this.price = this.end;
-                    this._showPrice();
-                }
+        start: function(currentTime) {
+            if(!isNaN(currentTime)) {
+                this.currentTime = Number(currentTime);
+            } else {
+                this.currentTime = 0;
             }
+            this._refresh();
+        },
+        
+        stop: function(price) {
+            clearTimeout(this.timeout);
+            
+            if(price && !isNaN(price)) {
+                this.price = price;
+            }
+            this._showPrice();
         },
         
         _showPrice: function() {
-            var x = this.price.toFixed(2);
-            x = "￥" + String(x).replace(/\d{1,3}(?=(\d{3})+(\.\d*)?$)/g, '$&,');
+            var x = this.price.toFixed(0);
+            x = String(x).replace(/\d{1,3}(?=(\d{3})+(\.\d*)?$)/g, '$&,');
             this.$number.numbers("setValue", x);
         },
             
@@ -82,10 +87,12 @@
         _refresh: function() {
             clearTimeout(this.timeout);
             
-            if(this.options.currentTime >= this.options.totalTime) {
-                this.price = this.end;
-                this._showPrice();
-                return;
+            if(this.currentTime >= this.options.totalTime) {
+                if(!isNaN(this.end)) {
+                    this.price = this.end;
+                    this._showPrice();
+                    return;
+                }
             }
             
             this.price = this._getPriceByTime();
@@ -96,7 +103,7 @@
                 this._showPrice();
                 
                 if(this.options.started) {
-                    if(this.options.currentTime < this.options.totalTime) {
+                    if(this.currentTime < this.options.totalTime) {
                         this.timeout = setTimeout($.proxy(this._next, this), this.options.interval);
                     }
                 }
@@ -104,22 +111,23 @@
         },
         
         _next: function() {
-            this.options.currentTime += this.options.interval;
-            this.times = parseInt(this.options.currentTime / this.options.interval);
+            this.currentTime += this.options.interval;
+            this.times = parseInt(this.currentTime / this.options.interval);
             var temp = this.price;
             this.price = this._getPriceByTime();
             
             if(this.price >= 0) {
                 this._showPrice();
                 
-                console.log("当前时间：  " + this.options.currentTime + " ms");
+                console.log("当前时间：  " + this.currentTime + " ms");
                 console.log("第 " + this.times + " 次降价: " + (temp - this.price).toFixed(2) + " 元");
                 console.log("价格降为: " + this.price);
                 console.log("........................");
                 
-                if(this.options.currentTime < this.options.totalTime) {
+                if(this.currentTime < this.options.totalTime) {
                     this.timeout = setTimeout($.proxy(this._next, this), this.options.interval);
                 }
+                this._trigger('refresh');
             }
         }
     });
@@ -144,7 +152,7 @@
         },
         
         _getPriceByTime: function() {
-            var times = parseInt(this.options.currentTime / this.options.interval);
+            var times = parseInt(this.currentTime / this.options.interval);
             var price = this.options.start - times * this.options.cutDown;
             return Number(price.toFixed(2));
         }
@@ -159,7 +167,7 @@
         },
         
         _getPriceByTime: function() {
-            var time = this.options.currentTime;
+            var time = this.currentTime;
             time = time / this.options.interval;
             time = parseInt(time);
             
@@ -232,38 +240,65 @@
 
     $.widget('qbao.auctionC', $.qbao.baseAuction, { // 按步下跌，后端设置好每步降幅
         _createDefaults: function() {
-            this.total = this.options.totalTime / this.options.interval; // how many time should the price goes down?
-            this.total = parseInt(this.total);
-            
-            var n = this.options.start;
-            this.steps = [{change: 0, result: n}]; // steps comes from backend
-            
-            for(var i = 0; i < this.total; i++) {
-                var c = -1;
-                n += c;
-                this.steps.push({change: c, result: n});
-            }
-            this.end = n;
+            this.steps = [];
         },
         
         _getPriceByTime: function() {
-            var times = parseInt(this.options.currentTime / this.options.interval);
-            var price = this.steps[times].result;
+            var price = this.options.start;
+            var s = parseInt(this.currentTime / this.options.interval);
+            if(this.steps[s]) {
+                price = this.steps[s].price;
+            } else {
+                console.log('no data for currentTime');
+                for(var i = s; i > -1; i--) {
+                    if(this.steps[i]) {
+                        price = this.steps[i].price;
+                        break;
+                    }
+                }
+            }
             return Number(price.toFixed(2));
         },
         
         _getTimeByPrice: function(price) {
-            if(price < this.end) {
-                price = this.end;
-            }
-            for(var i = 0; i < this.total; i++) {
-                var r1 = this.steps[i].result;
-                var r2 = this.steps[i + 1].result;
-                if(r1 >= price && r2 < price) {
+            for(var i = this.steps.length - 1; i > -1; i--) {
+                if(this.steps[i] && this.steps[i].price >= price) {
                     break;
                 }
             }
             return i * this.options.interval;
         },
+        
+        // [
+            // {time: 0, price: 2500}, 
+            // {time: 1000, price: 2499},
+            // {time: 2000, price: 2497},
+            // {time: 3000, price: 2492},
+        // ];
+        updateSteps: function(steps) {
+            for(var i = 0; i < steps.length; i++) {
+                var t = steps[i].time;
+                var s = parseInt(t / this.options.interval);
+                
+                this.steps[s] = this.steps[s] || steps[i];
+            }
+        },
+        
+        getLeftStepsCount: function() {
+            var step = parseInt(this.currentTime / this.options.interval);
+            var max = this._getMaxStepInCache();
+            return max - step;
+        },
+        
+        _getMaxStepInCache: function() {
+            var max = 0;
+            for(var i = this.steps.length -1; i > -1; i--) {
+                if(this.steps[i] && max <= i) {
+                    max = i;
+                    break;
+                }
+            }
+            return max;
+        }
     });
 })(jQuery);

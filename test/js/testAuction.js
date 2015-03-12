@@ -1,18 +1,12 @@
+(function() {
 var config = {
     start: 2500.00,
     totalTime: 1080000,
     currentTime: 0,
     interval: 1000, 
     cutDown: 1.00,
-    
-    minCutDown: 0.30,
-    maxCutDown: 2.70,
-    CDchangeTimes: 10
 };
 var a = $('#auctionA').auctionA(config);
-var b = $('#auctionB').auctionB(config);
-config.type = -1;
-var c = $('#auctionC').auctionB(config);
 
 QUnit.module( "匀速降价测试" );
 
@@ -37,12 +31,30 @@ QUnit.test("设置价格测试时间", function(assert) {
     
     $.each(tests, function(i, t) {
         a.auctionA('setPrice', t.price);
-        assert.equal(t.time, instance.options.currentTime, "价格: " + t.price + " ; 时间: " + t.time + " ;实际：" + instance.options.currentTime);
+        assert.equal(t.time, instance.currentTime, "价格: " + t.price + " ; 时间: " + t.time + " ;实际：" + instance.currentTime);
     });
     
     
     a.auctionA("setTime", 0);
 });
+})();
+
+(function() {
+var config = {
+    start: 2500.00,
+    totalTime: 1080000,
+    currentTime: 0,
+    interval: 1000, 
+    cutDown: 1.00,
+    
+    minCutDown: 0.30,
+    maxCutDown: 2.70,
+    CDchangeTimes: 10
+};
+
+var b = $('#auctionB').auctionB(config);
+config.type = -1;
+var b1 = $('#auctionB1').auctionB(config);
 
 QUnit.module( "加速降价测试" );
 var tests1 = [
@@ -106,7 +118,7 @@ QUnit.test("设置价格测试时间", function(assert) {
     x = x.concat(tests1);
     $.each(x, function(i, t) {
         b.auctionB('setPrice', t.price);
-        assert.equal(t.time, instance.options.currentTime, "价格: " + t.price + " ; 时间: " + t.time + " ;实际：" + instance.options.currentTime);
+        assert.equal(t.time, instance.currentTime, "价格: " + t.price + " ; 时间: " + t.time + " ;实际：" + instance.currentTime);
     });
     
     b.auctionB("setTime", 0);
@@ -134,10 +146,10 @@ var tests2 = [
 ];
 
 QUnit.test("设置时间测试价格", function(assert) {
-    var instance = c.auctionB('instance');
+    var instance = b1.auctionB('instance');
     
     $.each(tests2, function(i, t) {
-        c.auctionB('setTime', t.time);
+        b1.auctionB('setTime', t.time);
         assert.equal(t.price, instance.price, "时间: " + t.time + " ; 价格: " + t.price + " ;实际：" + instance.price);
     });
 });
@@ -164,13 +176,58 @@ QUnit.test("设置价格测试时间", function(assert) {
     ];
     
     x = x.concat(tests2);
-    var instance = c.auctionB('instance');
+    var instance = b1.auctionB('instance');
     
     $.each(x, function(i, t) {
-        c.auctionB('setPrice', t.price);
-        assert.equal(t.time, instance.options.currentTime, "价格: " + t.price + " ; 时间: " + t.time + " ;实际：" + instance.options.currentTime);
+        b1.auctionB('setPrice', t.price);
+        assert.equal(t.time, instance.currentTime, "价格: " + t.price + " ; 时间: " + t.time + " ;实际：" + instance.currentTime);
     });
     
-    c.auctionB("setTime", 0);
+    b1.auctionB("setTime", 0);
+});
+})();
+
+(function() {
+var interval = 1000;
+var start = 2500000;
+
+var config = {
+    start: start,
+    // totalTime: 1080000,
+    currentTime: 0,
+    interval: interval, 
+};
+var n = start;
+var steps = [{time: 0, price: n}]; // steps comes from backend
+for(var i = 0; i < 1080; i++) {
+    var c = -(i + 1);
+    n += c;
+    steps[i+1] = {time: (i + 1) * interval, price: n};
+}
+var c = $('#auctionC').auctionC(config).auctionC('updateSteps', steps);
+
+var tests3 = steps.filter(function(item, i) {
+    return i % 50 === 0;
 });
 
+QUnit.module( "按步下跌测试" );
+
+QUnit.test("设置时间测试价格", function(assert) {
+    var instance = c.auctionC('instance');
+    
+    $.each(tests3, function(i, t) {
+        c.auctionC('setTime', t.time);
+        assert.equal(t.price, instance.price, "时间: " + t.time + " ; 价格: " + t.price + " ;实际：" + instance.price);
+    });
+});
+
+QUnit.test("设置价格测试时间", function(assert) {
+    var instance = c.auctionC('instance');
+    
+    $.each(tests3, function(i, t) {
+        c.auctionC('setPrice', t.price);
+        assert.equal(t.time, instance.currentTime, "价格: " + t.price + " ; 时间: " + t.time + " ;实际：" + instance.currentTime);
+    });
+    c.auctionC("setTime", 0);
+});
+})();
