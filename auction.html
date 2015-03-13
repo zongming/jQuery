@@ -76,52 +76,64 @@
                 
             });
             
-            
             $(function() {
                 // simulate data
                 var start = 2500000;
                 var interval = 1000;
                 var n = start;
-                var steps = [{time: 0, price: n}]; // steps comes from backend
+                var steps = [{t: 0, p: n}]; // steps comes from backend
                 for(var i = 0; i < 1080; i++) {
                     var c = -(i + 1);
                     n += c;
-                    steps[i+1] = {time: (i + 1) * 1000, price: n};
+                    steps[i+1] = {t: (i + 1) * 1000, p: n};
                 }
             
                 console.log(JSON.stringify(steps));
                 // simulate data end
                 
-                var index = 0;
-                var a = $('.auctionC').auctionC({ // 按步下跌, 从server动态拿数据 {time: 20000,  price: 2450}]
-                    // $('.auctionC').auctionC('updateSteps', [{time: 20000,  price: 2450}]).auctionC('setTime', 1079000);
+                var refrehing = false;
+                $('.auctionC').auctionC({ // 按步下跌, 从server动态拿数据 {t: 20000,  p: 2450}]
                     refresh: function(e, data) {
-                        var left = a.auctionC('getLeftStepsCount');
-                        if(left <= 5) { // 少于5条开始拿数据
-                            // ajax to get lastest values
-                            function callback(r) { // {currentTime: 1079000, steps: [{s: 3, r: 2492}, stopped: false, stopAt:1080]}
-                                console.log('Get new steps: ' + JSON.stringify(r.steps));
-                                index += 10;
-                                a.auctionC('updateSteps', r.steps);
-                                var stopped = !!r.stopped;
-                                if(stopped) {
-                                    a.auctionC('stop', r.stopAt);
-                                } else if(!isNaN(r.currentTime)) { //sync
-                                    a.auctionC('setTime', Number(r.currentTime));
-                                }
+                        var count = 6; // 6 records from server, including current
+                        var $this = $(this);
+                        
+                        console.log("************************");
+                        console.log(data);
+                        console.log("************************");
+                        
+                        var left = $this.auctionC('getLeftStepsCount');
+                        if(left <= 2) { // 少于2条开始拿数据
+                            
+                            // simulate callback values
+                            var index = data.time / interval;
+                            var ct = index * interval;
+                            
+                            var slice = steps.slice(index, index + count);
+                            slice = slice.map(function(item) {
+                               return item.p; 
+                            });
+                            var cp = slice.shift(0);
+                            
+                            // r: {currentStatus:1,2(2是已结束)  currentTime : 1000 ,currentPrice:10001, p:'[10000,99999,99998,99997]'}
+                            var r = {
+                                currentStatus: slice.length > 0 ? 1: 2, //stopped
+                                p: slice,
+                                currentTime: ct,
+                                currentPrice: cp
+                            };
+                            // simulate callback values end
+                            
+                            if(r.currentStatus === 2) { //stop
+                                $this.auctionC('stop', r.currentPrice);
+                                return;
                             }
                             
-                            var slice = steps.slice(index, index + 10);
-                            var stopped = (index + 10) === steps.length - 1;
-                            if(stopped) {
-                                var at = 12415125;
-                                console.log('stopped!! at ' + at);
-                            }
-                            callback({
-                                stopped: stopped,
-                                stopAt: at,
-                                steps: slice
-                            });
+                            r.p.unshift(r.currentPrice);
+                            
+                            console.log('times: ' + r.currentTime + '; steps: ' + JSON.stringify(r.p));
+                            
+                            $this.auctionC('sync', r.currentTime, r.p)
+                                 .auctionC('setTime', Number(r.currentTime));
                         }
                     },
                     

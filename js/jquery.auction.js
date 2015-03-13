@@ -119,6 +119,7 @@
             if(this.price >= 0) {
                 this._showPrice();
                 
+                console.log("........................");
                 console.log("当前时间：  " + this.currentTime + " ms");
                 console.log("第 " + this.times + " 次降价: " + (temp - this.price).toFixed(2) + " 元");
                 console.log("价格降为: " + this.price);
@@ -127,7 +128,7 @@
                 if(this.currentTime < this.options.totalTime) {
                     this.timeout = setTimeout($.proxy(this._next, this), this.options.interval);
                 }
-                this._trigger('refresh');
+                this._trigger('refresh', null, {time: this.currentTime});
             }
         }
     });
@@ -247,12 +248,12 @@
             var price = this.options.start;
             var s = parseInt(this.currentTime / this.options.interval);
             if(this.steps[s]) {
-                price = this.steps[s].price;
+                price = this.steps[s].p;
             } else {
-                console.log('no data for currentTime');
+                console.log('no data for currentTime in cache');
                 for(var i = s; i > -1; i--) {
                     if(this.steps[i]) {
-                        price = this.steps[i].price;
+                        price = this.steps[i].p;
                         break;
                     }
                 }
@@ -262,25 +263,29 @@
         
         _getTimeByPrice: function(price) {
             for(var i = this.steps.length - 1; i > -1; i--) {
-                if(this.steps[i] && this.steps[i].price >= price) {
+                if(this.steps[i] && this.steps[i].p >= price) {
                     break;
                 }
             }
             return i * this.options.interval;
         },
         
-        // [
-            // {time: 0, price: 2500}, 
-            // {time: 1000, price: 2499},
-            // {time: 2000, price: 2497},
-            // {time: 3000, price: 2492},
-        // ];
+        sync: function(time, prices) {
+            var t = time;
+            for(var i = 0; i < prices.length; i++) {
+                var s = parseInt(t / this.options.interval);
+                this.steps[s] = {t: t, p: prices[i]};
+                
+                t += this.options.interval;
+            }
+        },
+        
         updateSteps: function(steps) {
             for(var i = 0; i < steps.length; i++) {
-                var t = steps[i].time;
+                var t = steps[i].t;
                 var s = parseInt(t / this.options.interval);
                 
-                this.steps[s] = this.steps[s] || steps[i];
+                this.steps[s] = steps[i];
             }
         },
         

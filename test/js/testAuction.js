@@ -198,11 +198,11 @@ var config = {
     interval: interval, 
 };
 var n = start;
-var steps = [{time: 0, price: n}]; // steps comes from backend
+var steps = [{t: 0, p: n}]; // steps comes from backend
 for(var i = 0; i < 1080; i++) {
     var c = -(i + 1);
     n += c;
-    steps[i+1] = {time: (i + 1) * interval, price: n};
+    steps[i+1] = {t: (i + 1) * interval, p: n};
 }
 var c = $('#auctionC').auctionC(config).auctionC('updateSteps', steps);
 
@@ -216,8 +216,8 @@ QUnit.test("设置时间测试价格", function(assert) {
     var instance = c.auctionC('instance');
     
     $.each(tests3, function(i, t) {
-        c.auctionC('setTime', t.time);
-        assert.equal(t.price, instance.price, "时间: " + t.time + " ; 价格: " + t.price + " ;实际：" + instance.price);
+        c.auctionC('setTime', t.t);
+        assert.equal(t.p, instance.price, "时间: " + t.t + " ; 价格: " + t.p + " ;实际：" + instance.price);
     });
 });
 
@@ -225,8 +225,8 @@ QUnit.test("设置价格测试时间", function(assert) {
     var instance = c.auctionC('instance');
     
     $.each(tests3, function(i, t) {
-        c.auctionC('setPrice', t.price);
-        assert.equal(t.time, instance.currentTime, "价格: " + t.price + " ; 时间: " + t.time + " ;实际：" + instance.currentTime);
+        c.auctionC('setPrice', t.p);
+        assert.equal(t.t, instance.currentTime, "价格: " + t.p + " ; 时间: " + t.t + " ;实际：" + instance.currentTime);
     });
     c.auctionC("setTime", 0);
 });
