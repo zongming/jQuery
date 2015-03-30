@@ -3,7 +3,7 @@
   height: 1000px;
   margin-top: 60px;
   position: fixed;
-  background: url("../../images/timeline1/line.png") repeat-y 96% 0;
+  background: url("../../images/timeline/line.png") repeat-y 96% 0;
   width: 92px;
 }
 .timeline1 > ul > li {
@@ -29,7 +29,7 @@
 .timeline1 > ul > li > .default > .circle {
   width: 8px;
   height: 10px;
-  background: url("../../images/timeline1/timeline.png") no-repeat 0 -172px;
+  background: url("../../images/timeline/timeline.png") no-repeat 0 -172px;
   position: absolute;
   right: 0;
   top: 11px;
@@ -58,13 +58,13 @@
   top: 23px;
   width: 4px;
   height: 7px;
-  background: url("../../images/timeline1/timeline.png") no-repeat 0 -192px;
+  background: url("../../images/timeline/timeline.png") no-repeat 0 -192px;
   margin-right: 6px;
 }
 .timeline1 > ul > li > .selected > .circle {
   width: 10px;
   height: 14px;
-  background: url("../../images/timeline1/timeline.png") no-repeat 0 -126px;
+  background: url("../../images/timeline/timeline.png") no-repeat 0 -126px;
   position: absolute;
   margin-top: -7px;
   top: 50%;
@@ -91,7 +91,7 @@
   top: 14px;
   width: 4px;
   height: 7px;
-  background: url("../../images/timeline1/timeline.png") no-repeat 0 -192px;
+  background: url("../../images/timeline/timeline.png") no-repeat 0 -192px;
   margin-right: 6px;
 }
 .timeline1 > ul > li > .hover > .label {
@@ -105,7 +105,7 @@
 .timeline1 > ul > li > .hover > .circle {
   width: 8px;
   height: 12px;
-  background: url("../../images/timeline1/timeline.png") no-repeat 0 -150px;
+  background: url("../../images/timeline/timeline.png") no-repeat 0 -150px;
   position: absolute;
   top: 11px;
   right: 0;
