@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <title>jquery timeline plugin</title>
+        <!-- <link type="text/css" href="css/timeline1/timeline.css" rel="stylesheet" /> -->
+        <link type="text/less" href="css/timeline1/timeline.less" rel="stylesheet" />
+        
+        <style>
+        body {
+             font-family: "微软雅黑", arial;
+        }
+        ul, li, div, p {
+          margin: 0;
+          padding: 0;
+          list-style: none;
+        }
+        .clearfix:after, #content:after {
+            content: "\0020";
+            display: block;
+            clear: both;
+            height: 0;
+            font-size: 0;
+        }
+        </style>
+        
+        <style>
+        </style>
+    </head>
+    <body>
+        <div class="timeline1">
+        </div>
+        
+        <script src="js/lib/jquery-1.11.1.js" type="text/javascript"></script>
+        <script src="js/lib/jquery-ui.js" type="text/javascript"></script>
+        <script src="js/lib/less.min.js" type="text/javascript"></script>
+        
+        <script src="js/jquery.timeline1.js" type="text/javascript"></script>
+        <script type="text/javascript">
+            $('.timeline1').timeline1({
+                currentTime: '10:00', 
+                data: [
+                    {time: '10:00', label: '欢乐时光', url: '#'},
+                    {time: '11:00', label: '女装饰品', url: '#'},
+                    {time: '12:00', label: '家装家电', url: '#'},
+                    {time: '13:00', label: '数码家电电', url: '#'},
+                    {time: '14:00', label: '运动户外', url: '#'},
+                    {time: '15:00', label: '新潮男装', url: '#'},
+                    {time: '16:00', label: '饰品内衣', url: '#'},
+                    {time: '17:00', label: '鞋类箱包', url: '#'},
+                    {time: '18:00', label: '鞋类箱包', url: '#'},
+                    {time: '19:00', label: '鞋类箱包', url: '#'},
+                    {time: '20:00', label: '鞋类箱包', url: '#'},
+                    {time: '21:00', label: '鞋类箱包', url: '#'},
+                    {time: '22:00', label: '鞋类箱包', url: '#'}
+                ],
+                clickitem: function(e, d) {
+                    console.log(d);
+                }
+                
+            });
+            $(':qbao-timeline1').timeline1('setCurrent', 3);
+        </script>
+</html>

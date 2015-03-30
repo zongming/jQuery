@@ -77,20 +77,21 @@
             this.$items.eq(-1).addClass('item-last');
             
             if(!isNaN(this.selectedIndex)) {
-                if(this.size > this.dateDisplayed) { //scroll selected one to center by setting currentIndex 
-                    var a = this.selectedIndex - 4;
-                    var b = this.selectedIndex + 3;
-                    if(a < 0) {
-                        this.currentIndex = 0;
-                    } else if(b > this.size - 1) {
-                        this.currentIndex = this.size - this.dateDisplayed;
-                    } else {
-                        this.currentIndex = a;
-                    }
-                }
+                // if(this.size > this.dateDisplayed) { //scroll selected one to center by setting currentIndex 
+                    // var a = this.selectedIndex - 4;
+                    // var b = this.selectedIndex + 3;
+                    // if(a < 0) {
+                        // this.currentIndex = 0;
+                    // } else if(b > this.size - 1) {
+                        // this.currentIndex = this.size - this.dateDisplayed;
+                    // } else {
+                        // this.currentIndex = a;
+                    // }
+                // }
                 this.$items.eq(this.selectedIndex).find('.link').addClass('link-selected');
             }
 
+            this.currentIndex = this.currentTimeIndex; // scroll selected one to currentTimeIndex
             this._scrollToIndex(this.currentIndex, true);
         },
         

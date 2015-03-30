@@ -1,0 +1,133 @@
+@charset "UTF-8";
+.timeline1 {
+  height: 1000px;
+  margin-top: 60px;
+  position: fixed;
+  background: url("../../images/timeline1/line.png") repeat-y 96% 0;
+  width: 92px;
+}
+.timeline1 > ul > li {
+  margin-bottom: 10px;
+  position: relative;
+  cursor: pointer;
+  display: block;
+  text-align: right;
+  font-size: 14px;
+  color: #666;
+}
+.timeline1 > ul > li > .default > .tag {
+  padding: 3px;
+  margin: 0 10px 10px 0;
+  text-align: center;
+}
+.timeline1 > ul > li > .default > .tag > .time {
+  display: block;
+}
+.timeline1 > ul > li > .default > .tag > .label {
+  display: none;
+}
+.timeline1 > ul > li > .default > .circle {
+  width: 8px;
+  height: 10px;
+  background: url("../../images/timeline1/timeline.png") no-repeat 0 -172px;
+  position: absolute;
+  right: 0;
+  top: 11px;
+  margin-top: -4px;
+}
+.timeline1 > ul > li > .selected > .tag {
+  text-align: center;
+  position: relative;
+  padding: 3px 5px;
+  margin: 0 20px 0 0;
+  background: #d03a24;
+  border-radius: 2px;
+}
+.timeline1 > ul > li > .selected > .tag > .time {
+  color: #FFF;
+  font-size: 22px;
+}
+.timeline1 > ul > li > .selected > .tag > .label {
+  color: #FFF;
+  display: block;
+  font-size: 12px;
+}
+.timeline1 > ul > li > .selected > .tag > .pointer {
+  position: absolute;
+  right: -10px;
+  top: 23px;
+  width: 4px;
+  height: 7px;
+  background: url("../../images/timeline1/timeline.png") no-repeat 0 -192px;
+  margin-right: 6px;
+}
+.timeline1 > ul > li > .selected > .circle {
+  width: 10px;
+  height: 14px;
+  background: url("../../images/timeline1/timeline.png") no-repeat 0 -126px;
+  position: absolute;
+  margin-top: -7px;
+  top: 50%;
+  right: 0;
+}
+.timeline1 > ul > li > .hover {
+  margin-bottom: 5px;
+}
+.timeline1 > ul > li > .hover > .tag {
+  text-align: center;
+  position: relative;
+  padding: 3px 5px;
+  margin: 0 20px 0 0;
+  background: #d03a24;
+  border-radius: 2px;
+}
+.timeline1 > ul > li > .hover > .tag > .time {
+  color: #FFF;
+  font-size: 20px;
+}
+.timeline1 > ul > li > .hover > .tag > .pointer {
+  position: absolute;
+  right: -10px;
+  top: 14px;
+  width: 4px;
+  height: 7px;
+  background: url("../../images/timeline1/timeline.png") no-repeat 0 -192px;
+  margin-right: 6px;
+}
+.timeline1 > ul > li > .hover > .label {
+  display: block;
+  font-size: 12px;
+  color: #d13f2a;
+  text-align: center;
+  width: 73px;
+  margin-right: 19px;
+}
+.timeline1 > ul > li > .hover > .circle {
+  width: 8px;
+  height: 12px;
+  background: url("../../images/timeline1/timeline.png") no-repeat 0 -150px;
+  position: absolute;
+  top: 11px;
+  right: 0;
+}
+.timeline1 > ul > .default > .default {
+  display: block;
+}
+.timeline1 > ul > .default > .hover,
+.timeline1 > ul > .default > .selected {
+  display: none;
+}
+.timeline1 > ul > .selected > .selected {
+  display: block;
+}
+.timeline1 > ul > .selected > .hover,
+.timeline1 > ul > .selected > .default {
+  display: none;
+}
+.timeline1 > ul > .hover > .hover {
+  display: block;
+}
+.timeline1 > ul > .hover > .selected,
+.timeline1 > ul > .hover > .default {
+  display: none;
+}
