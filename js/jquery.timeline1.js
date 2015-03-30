@@ -1,5 +1,5 @@
 (function($) {
-     $.widget('qbao.timeline', {
+    $.widget('qbao.timeline', {
         options: {
             dateType: 0, //0: today, -1: before today, 1: after today
             data: [],
@@ -55,9 +55,9 @@
                     me.currentTimeIndex = i;
                 }
             });
-            if(this.options.dateType < 0) {
+            if(this.options.dateType == -1) {
                 me.currentTimeIndex = 1000;
-            } else if(this.options.dateType > 0) {
+            } else if(this.options.dateType == 1) {
                 me.currentTimeIndex = -1;
             }
             
@@ -73,9 +73,6 @@
                     }
                 });
             }
-            
-            this.$items.eq(-1).addClass('item-last');
-            
             if(!isNaN(this.selectedIndex)) {
                 if(this.size > this.dateDisplayed) { //scroll selected one to center by setting currentIndex 
                     var a = this.selectedIndex - 4;

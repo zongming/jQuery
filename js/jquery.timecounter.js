@@ -1,27 +1,46 @@
 (function($) {
+    function format(number) {
+        return number;
+    }
+    
     $.widget('qbao.timecounter', {
         options : {
             time : 10000,   // second
             interval : 1000, // ms
             started : true,
-            trim: true
+            trim: true,
+            unit: {
+                d: "天",
+                h: "小时",
+                m: "分",
+                s: "秒"
+            },
+            format: {
+                d: format,
+                h: format,
+                m: format,
+                s: format
+            },
+            isAdd: false
         },
 
         _create : function() {
             this.element.addClass('timecounter');
             
-            this.$p = $('<span><span class="d"><em></em>天</span><span class="h"><em></em>小时</span>' 
-                      + '<span class="m"><em></em>分</span><span class="s"><em></em>秒</span></span>');
+            this.element.append(
+                $('<span class="d"><em></em>' + this.options.unit.d + '</span><span class="h"><em></em>' + this.options.unit.h + '</span>' 
+                + '<span class="m"><em></em>' + this.options.unit.m + '</span><span class="s"><em></em>' + this.options.unit.s + '</span>')
+            );
 
-            this.$d = this.$p.find('.d');
-            this.$h = this.$p.find('.h');
-            this.$m = this.$p.find('.m');
-            this.$s = this.$p.find('.s');
-
-            this.element.append(this.$p);
+            this.$d = this.element.find('.d');
+            this.$h = this.element.find('.h');
+            this.$m = this.element.find('.m');
+            this.$s = this.element.find('.s');
         },
 
         _init : function() {
+            clearTimeout(this.timeout);
+            
             this.time = this.options.time;
             this.started = this.options.started;
 
@@ -35,6 +54,7 @@
                 this.time = 0;
                 return;
             }
+            
             var day = Math.floor(this.time / 86400);
             var hour = Math.floor(this.time % 86400 / 3600);
             var minute = Math.floor(this.time % 3600 / 60);
@@ -46,14 +66,18 @@
                 // this.$m.toggle(minute > 0);
             }
             
-            this.$d.find('em').text(day);
-            this.$h.find('em').text(hour);
-            this.$m.find('em').text(minute);
-            this.$s.find('em').text(second);
+            this.$d.find('em').text(this.options.format.d(day));
+            this.$h.find('em').text(this.options.format.h(hour));
+            this.$m.find('em').text(this.options.format.m(minute));
+            this.$s.find('em').text(this.options.format.s(second));
             
             if(this.started) {
                 this.timeout = setTimeout($.proxy(this._refresh, this), this.options.interval);
-                this.time -= this.options.interval / 1000;
+                if(this.options.isAdd) {
+                    this.time += this.options.interval / 1000;
+                } else {
+                    this.time -= this.options.interval / 1000;
+                }
             }
         },
 
@@ -76,6 +100,10 @@
             this.time = time;
             
             this._refresh();
+        },
+        
+        destroy: function() {
+            this.stop();
         }
     });
 })(jQuery); 
