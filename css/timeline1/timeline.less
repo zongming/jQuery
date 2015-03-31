@@ -5,16 +5,19 @@
 @totalWidth: 92px;
 
 .timeline1 {
-  height: 1000px;
-  margin-top: 60px;
-  position: fixed;
-
+  position: absolute;
+  left: -97px;
+  top: 112px;
+  
+  margin-top: 64px;
+  
   background: url("@{imgPath}/line.png") repeat-y 96% 0;
+  
   width: @totalWidth;
   
   > ul {
     > li {
-      margin-bottom: 10px;
+      padding-bottom: 20px;
       position: relative;
       cursor: pointer;
       display: block;
@@ -23,10 +26,10 @@
       color: #666;
       > .default {
         > .tag {
-          text-align: center;
+          line-height: 19px;
           padding: 3px;
-          margin: 0 10px 10px 0;
-          text-align: center;
+          margin: 0 17px 0 0;
+          text-align: right;
           > .time {
             display: block;
           }
@@ -48,15 +51,17 @@
         > .tag {
           text-align: center;
           position: relative;
-          padding: 3px 5px;
+          padding: 1px 5px 5px 5px;
           margin: 0 20px 0 0;
           background: #d03a24;
           border-radius: 2px;    
           > .time {
+            line-height: 29px;
             color: #FFF;
             font-size: 22px;
           }
           > .label {
+            line-height: 16px;
             color: #FFF;
             display: block;
             font-size: 12px;
@@ -77,8 +82,7 @@
           height: 14px;
           background: url("@{imgPath}/timeline.png") no-repeat 0 -126px;
           position: absolute;
-          margin-top: -7px;
-          top: 50%;
+          top: 20px;
           right: 0;
         }
       }
@@ -88,18 +92,19 @@
         > .tag {
           text-align: center;
           position: relative;
-          padding: 3px 5px;
+          padding: 0 5px;
           margin: 0 20px 0 0;
           background: #d03a24;
           border-radius: 2px;    
           > .time {
+            line-height: 26px;
             color: #FFF;
             font-size: 20px;
           }
           > .pointer {
             position: absolute;
             right: -10px;
-            top: 14px;
+            top: 10px;
             width: 4px;
             height: 7px;
             background: url("@{imgPath}/timeline.png") no-repeat 0 -192px;
@@ -107,18 +112,20 @@
           }
         }
         > .label {
+          line-height: 16px;
           display: block;
           font-size: 12px;
           color: #d13f2a;
           text-align: center;
           width: 73px;
-          margin-right: @totalWidth - 73px;
+          margin: 1px  @totalWidth - 73px 0 0;
         }
         > .circle {
-          width: 8px;height: 12px;
+          width: 8px;
+          height: 12px;
           background: url("@{imgPath}/timeline.png") no-repeat 0 -150px;
           position: absolute;
-          top: 11px;
+          top: 8px;
           right: 0;
         }
       }
@@ -147,5 +154,17 @@
         display: none;
       }
     }
+  }
+  
+  > .end {
+    background: #ffdba6;
+    color: #d05b21;
+    font-size: 12px;
+    text-align: center;
+    width: 74px;
+    height: 25px;
+    line-height: 25px;
+    cursor: pointer;
+    margin-top: 50px;
   }
 }

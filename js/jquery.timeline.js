@@ -29,6 +29,8 @@
                 me.element.find('.link').removeClass('link-selected');
                 var $li = $(e.currentTarget).parents('li');
                 $li.find('.link').addClass('link-selected');
+                
+                me._trigger('clickitem', e, $li.data('data'));
             });
         },
         
@@ -38,7 +40,7 @@
             var me = this;
             this.$list.empty();
             $.each(this.options.data, function(index, item) {
-                var $li = $('<li class="item"><a class="link" href="' + item.url + '"><em class="time">' 
+                var $li = $('<li class="item"><a class="link" href="javascript:void(0)"><em class="time">' 
                     + item.time + '</em><span class="label">'
                     + item.label + '</span></a><i></i></li>');
                 $li.data('data', item);
@@ -97,7 +99,7 @@
         
         _prev: function() {
             var i = this.currentIndex - 1;
-            if(i >= 0 && i + this.dateDisplayed - 1 < this.size) {
+            if(i >= 0/* && i + this.dateDisplayed - 1 < this.size*/) {
                 this.currentIndex = i;
                 this._scrollToIndex(i);
             }
@@ -105,7 +107,7 @@
         
         _next: function() {
             var i = this.currentIndex + 1;
-            if(i >= 0 && i + this.dateDisplayed - 1 < this.size) {
+            if(i >= 0/* && i + this.dateDisplayed - 1 < this.size*/) {
                 this.currentIndex = i;
                 this._scrollToIndex(i);
             }

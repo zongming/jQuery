@@ -1,13 +1,14 @@
 @charset "UTF-8";
 .timeline1 {
-  height: 1000px;
-  margin-top: 60px;
-  position: fixed;
+  position: absolute;
+  left: -97px;
+  top: 112px;
+  margin-top: 64px;
   background: url("../../images/timeline/line.png") repeat-y 96% 0;
   width: 92px;
 }
 .timeline1 > ul > li {
-  margin-bottom: 10px;
+  padding-bottom: 20px;
   position: relative;
   cursor: pointer;
   display: block;
@@ -16,9 +17,10 @@
   color: #666;
 }
 .timeline1 > ul > li > .default > .tag {
+  line-height: 19px;
   padding: 3px;
-  margin: 0 10px 10px 0;
-  text-align: center;
+  margin: 0 17px 0 0;
+  text-align: right;
 }
 .timeline1 > ul > li > .default > .tag > .time {
   display: block;
@@ -38,16 +40,18 @@
 .timeline1 > ul > li > .selected > .tag {
   text-align: center;
   position: relative;
-  padding: 3px 5px;
+  padding: 1px 5px 5px 5px;
   margin: 0 20px 0 0;
   background: #d03a24;
   border-radius: 2px;
 }
 .timeline1 > ul > li > .selected > .tag > .time {
+  line-height: 29px;
   color: #FFF;
   font-size: 22px;
 }
 .timeline1 > ul > li > .selected > .tag > .label {
+  line-height: 16px;
   color: #FFF;
   display: block;
   font-size: 12px;
@@ -66,8 +70,7 @@
   height: 14px;
   background: url("../../images/timeline/timeline.png") no-repeat 0 -126px;
   position: absolute;
-  margin-top: -7px;
-  top: 50%;
+  top: 20px;
   right: 0;
 }
 .timeline1 > ul > li > .hover {
@@ -76,38 +79,40 @@
 .timeline1 > ul > li > .hover > .tag {
   text-align: center;
   position: relative;
-  padding: 3px 5px;
+  padding: 0 5px;
   margin: 0 20px 0 0;
   background: #d03a24;
   border-radius: 2px;
 }
 .timeline1 > ul > li > .hover > .tag > .time {
+  line-height: 26px;
   color: #FFF;
   font-size: 20px;
 }
 .timeline1 > ul > li > .hover > .tag > .pointer {
   position: absolute;
   right: -10px;
-  top: 14px;
+  top: 10px;
   width: 4px;
   height: 7px;
   background: url("../../images/timeline/timeline.png") no-repeat 0 -192px;
   margin-right: 6px;
 }
 .timeline1 > ul > li > .hover > .label {
+  line-height: 16px;
   display: block;
   font-size: 12px;
   color: #d13f2a;
   text-align: center;
   width: 73px;
-  margin-right: 19px;
+  margin: 1px 19px 0 0;
 }
 .timeline1 > ul > li > .hover > .circle {
   width: 8px;
   height: 12px;
   background: url("../../images/timeline/timeline.png") no-repeat 0 -150px;
   position: absolute;
-  top: 11px;
+  top: 8px;
   right: 0;
 }
 .timeline1 > ul > .default > .default {
@@ -130,4 +135,15 @@
 .timeline1 > ul > .hover > .selected,
 .timeline1 > ul > .hover > .default {
   display: none;
+}
+.timeline1 > .end {
+  background: #ffdba6;
+  color: #d05b21;
+  font-size: 12px;
+  text-align: center;
+  width: 74px;
+  height: 25px;
+  line-height: 25px;
+  cursor: pointer;
+  margin-top: 50px;
 }

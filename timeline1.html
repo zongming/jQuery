@@ -3,8 +3,8 @@
     <head>
         <meta charset="utf-8"/>
         <title>jquery timeline plugin</title>
-        <link type="text/css" href="css/timeline1/timeline.css" rel="stylesheet" />
-        <!-- <link type="text/less" href="css/timeline1/timeline.less" rel="stylesheet" /> -->
+        <!-- <link type="text/css" href="css/timeline1/timeline.css" rel="stylesheet" /> -->
+        <link type="text/less" href="css/timeline1/timeline.less" rel="stylesheet" />
         
         <style>
         body {
@@ -28,7 +28,10 @@
         </style>
     </head>
     <body>
-        <div class="timeline1">
+        <div style="width: 1000px;height: 1000px;margin: 0 auto;position: relative;">
+            
+            <div class="timeline1">
+            </div>
         </div>
         
         <script src="js/lib/jquery-1.11.1.js" type="text/javascript"></script>
@@ -54,11 +57,13 @@
                     {time: '21:00', label: '鞋类箱包', url: '#'},
                     {time: '22:00', label: '鞋类箱包', url: '#'}
                 ],
+                end: {time: 'end', label: '已结束拍品'},
+                
                 clickitem: function(e, d) {
                     console.log(d);
                 }
                 
             });
-            $(':qbao-timeline1').timeline1('setCurrent', 3);
+            $(':qbao-timeline1').timeline1('setSelectedIndex', 3);
         </script>
 </html>

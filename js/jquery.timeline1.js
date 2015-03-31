@@ -1,6 +1,7 @@
 (function($) {
     $.widget('qbao.timelineitem', {
         options: {
+            time: "",
             selected: false
         },
         
@@ -67,14 +68,84 @@
             this.element.on('click', ':qbao-timelineitem', function(e) {
                 me._trigger('clickitem', e, $(this).timelineitem('option'));
                 var index = me.$lists.index(this);
-                me.setCurrent(index);
+                me.setSelectedIndex(index);
             });
+            
+            this._createEnd();
+        },
+        
+        _createEnd: function() {
+            var end = this.options.end;
+            if(end) {
+                var me = this;
+                this.$end = $('<p class="end">' + end.label + '</p>').appendTo(this.element)
+                    .on('click', function() {
+                        me._trigger('clickitem', null, end);
+                    });
+            }
+        },
+        
+        _init: function() {
+            this.size = this.options.data.length;
+        },
+        
+        // only show 8 items if more than 8
+        refresh: function(noAnimate) {
+            var index = 0;
+            
+            if(this.size > 8) {
+                if(!isNaN(this.selectedIndex)) {// 3 before, 4 after
+                    var s = this.selectedIndex - 3;
+                    s = Math.max(s, 0);
+                    
+                    var e = s + 7;
+                    while(s + 7 > this.size - 1) {
+                        s--;                       
+                    }
+                    
+                    index = s;
+                }
+                
+                // update after set currentIndex
+                var me = this;
+                this.$lists.each(function(i) {
+                    var show = i >= index && i < index + 8;
+                    if(noAnimate) {
+                       $(this).toggle(show);                 
+                    } else {
+                        if(show) {
+                            $(this).show(400);
+                        } else {
+                            $(this).hide(400);
+                        }
+                    }
+                });
+                
+                this.currentIndex = index;
+            }
         },
 
-        setCurrent : function(index) {
-            this.$lists.each(function(i, item) {
-                $(item).timelineitem('setSelected', index === i);
+        setSelectedIndex : function(index) {
+            if(this.selectedIndex === index) {
+                return;
+            }
+            this.$lists.each(function(i) {
+                $(this).timelineitem('setSelected', index === i);
             });
+            
+            this.selectedIndex = index;
+        },
+        
+        setSelectedTime: function(time) {
+            var index = 0;
+            this.$lists.each(function(i) {
+                if($(this).timelineitem('option', 'time') === time) {
+                    index = i;
+                    return false;
+                }
+            });
+            
+            this.setSelectedIndex(index);
         }
     });
 })(jQuery);
