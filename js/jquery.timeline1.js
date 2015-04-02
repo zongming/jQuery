@@ -106,7 +106,6 @@
                     index = s;
                 }
                 
-                // update after set currentIndex
                 var me = this;
                 this.$lists.each(function(i) {
                     var show = i >= index && i < index + 8;
@@ -120,12 +119,13 @@
                         }
                     }
                 });
-                
-                this.currentIndex = index;
             }
         },
 
         setSelectedIndex : function(index) {
+            if(index === -1) {
+                index = this.size.length - 1;
+            }
             if(this.selectedIndex === index) {
                 return;
             }
@@ -137,15 +137,13 @@
         },
         
         setSelectedTime: function(time) {
-            var index = 0;
+            var me = this;
             this.$lists.each(function(i) {
                 if($(this).timelineitem('option', 'time') === time) {
-                    index = i;
+                    me.setSelectedIndex(i);
                     return false;
                 }
             });
-            
-            this.setSelectedIndex(index);
         }
     });
 })(jQuery);

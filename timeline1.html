@@ -3,8 +3,8 @@
     <head>
         <meta charset="utf-8"/>
         <title>jquery timeline plugin</title>
-        <!-- <link type="text/css" href="css/timeline1/timeline.css" rel="stylesheet" /> -->
-        <link type="text/less" href="css/timeline1/timeline.less" rel="stylesheet" />
+        <link type="text/css" href="css/timeline1/timeline.css" rel="stylesheet" />
+        <!-- <link type="text/less" href="css/timeline1/timeline.less" rel="stylesheet" /> -->
         
         <style>
         body {
@@ -61,9 +61,17 @@
                 
                 clickitem: function(e, d) {
                     console.log(d);
+                    var data = $(this).timeline1('option', 'data');
+                    for(var i = 0; i < data.length; i++) {
+                        if(data[i].time === d.time) {
+                            $(this).timeline1('setSelectedIndex', i)
+                                .timeline1('refresh');
+                        }
+                    }
                 }
-                
             });
-            $(':qbao-timeline1').timeline1('setSelectedIndex', 3);
+            $(':qbao-timeline1')
+                .timeline1('setSelectedIndex', 3)
+                .timeline1('refresh');
         </script>
 </html>
