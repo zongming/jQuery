@@ -36,6 +36,7 @@
         
         _init: function() {
             this.currentIndex = 0;
+            this.currentTimeIndex = -1;
             
             var me = this;
             this.$list.empty();
@@ -92,8 +93,10 @@
                 // }
                 this.$items.eq(this.selectedIndex).find('.link').addClass('link-selected');
             }
-
-            this.currentIndex = this.currentTimeIndex; // scroll selected one to currentTimeIndex
+            
+            if(this.currentTimeIndex >= 0 && this.currentTimeIndex < this.size) {// scroll to currentTime item index
+                this.currentIndex = this.currentTimeIndex; 
+            }
             this._scrollToIndex(this.currentIndex, true);
         },
         

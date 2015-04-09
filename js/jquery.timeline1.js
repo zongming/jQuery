@@ -81,7 +81,14 @@
                 this.$end = $('<p class="end">' + end.label + '</p>').appendTo(this.element)
                     .on('click', function() {
                         me._trigger('clickitem', null, end);
+                        me.setSelectedIndex(-1);
                     });
+            }
+        },
+        
+        selectEnd: function(b) {
+            if(this.$end) {
+                this.$end.toggleClass('end-selected', b);
             }
         },
         
@@ -94,16 +101,20 @@
             var index = 0;
             
             if(this.size > 8) {
-                if(!isNaN(this.selectedIndex)) {// 3 before, 4 after
-                    var s = this.selectedIndex - 3;
-                    s = Math.max(s, 0);
-                    
-                    var e = s + 7;
-                    while(s + 7 > this.size - 1) {
-                        s--;                       
+                if(this.selectedIndex != null) {// 3 before, 4 after
+                    if(this.selectedIndex === -1) {
+                        index = Math.max(this.size - 8, 0);
+                    } else {
+                        var s = this.selectedIndex - 3;
+                        s = Math.max(s, 0);
+                        
+                        var e = s + 7;
+                        while(s + 7 > this.size - 1) {
+                            s--;                       
+                        }
+                        
+                        index = s;
                     }
-                    
-                    index = s;
                 }
                 
                 var me = this;
@@ -123,12 +134,11 @@
         },
 
         setSelectedIndex : function(index) {
-            if(index === -1) {
-                index = this.size.length - 1;
-            }
             if(this.selectedIndex === index) {
                 return;
             }
+            this.selectEnd(index === -1);
+            
             this.$lists.each(function(i) {
                 $(this).timelineitem('setSelected', index === i);
             });
@@ -146,4 +156,5 @@
             });
         }
     });
+    
 })(jQuery);

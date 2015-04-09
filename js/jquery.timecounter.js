@@ -1,17 +1,21 @@
 (function($) {
     function format(number) {
-        return number;
+        var ret = String(number);
+        if(number < 10) {
+            ret = "0" + number;
+        }
+        return ret;
     }
     
     $.widget('qbao.timecounter', {
         options : {
-            time : 10000,   // second
+            time : 10000000,   // millisecond
             interval : 1000, // ms
             started : true,
-            trim: true,
+            trim: false,
             unit: {
                 d: "天",
-                h: "小时",
+                h: "时",
                 m: "分",
                 s: "秒"
             },
@@ -52,13 +56,13 @@
         _refresh : function() {
             if(this.time < 0) {
                 this.time = 0;
-                return;
             }
             
-            var day = Math.floor(this.time / 86400);
-            var hour = Math.floor(this.time % 86400 / 3600);
-            var minute = Math.floor(this.time % 3600 / 60);
-            var second = this.time % 60;
+            var t = (this.time / 1000).toFixed(0),
+                day = Math.floor(t / 86400),
+                hour = Math.floor(t % 86400 / 3600),
+                minute = Math.floor(t % 3600 / 60),
+                second = t % 60;
             
             if(this.options.trim) {
                 this.$d.toggle(day > 0);
@@ -74,9 +78,9 @@
             if(this.started) {
                 this.timeout = setTimeout($.proxy(this._refresh, this), this.options.interval);
                 if(this.options.isAdd) {
-                    this.time += this.options.interval / 1000;
+                    this.time += this.options.interval;
                 } else {
-                    this.time -= this.options.interval / 1000;
+                    this.time -= this.options.interval;
                 }
             }
         },

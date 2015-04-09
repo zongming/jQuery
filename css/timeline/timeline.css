@@ -1,7 +1,7 @@
 @charset "UTF-8";
 .timeline {
   font-size: 12px;
-  background: #f6f1e6;
+  background: #fff4dd;
   margin: 0 auto;
   position: relative;
   width: 1000px;
@@ -12,19 +12,25 @@
   position: absolute;
   display: inline-block;
   width: 15px;
-  height: 24px;
-  top: 23px;
+  height: 29px;
+  top: 21px;
   cursor: pointer;
 }
 .timeline > .nav-prev {
-  background: url("../../images/timeline/arrow-left.png") no-repeat;
+  background: url("http://127.0.0.1:8020/jQuerySkills/images/timeline/time-arrow.png") no-repeat 0 -29px;
   left: 19px;
   margin-right: 8px;
 }
+.timeline > .nav-prev:hover {
+  background-position: 0 0;
+}
 .timeline > .nav-next {
-  background: url("../../images/timeline/arrow-right.png") no-repeat;
+  background: url("http://127.0.0.1:8020/jQuerySkills/images/timeline/time-arrow.png") no-repeat 0 -87px;
   right: 19px;
   margin-left: 8px;
+}
+.timeline > .nav-next:hover {
+  background-position: 0 -58px;
 }
 .timeline > .scroll {
   position: absolute;
@@ -43,7 +49,7 @@
   width: 120px;
 }
 .timeline > .scroll > .list > .item > .link {
-  cursor: default;
+  cursor: pointer;
   text-align: center;
   float: left;
   color: #7d521d;
@@ -51,15 +57,16 @@
   display: inline-block;
   width: 70px;
 }
-.timeline > .scroll > .list > .item > .link .time {
+.timeline > .scroll > .list > .item > .link > .time {
   display: inline-block;
   width: 52px;
   height: 22px;
   line-height: 22px;
   font-style: normal;
-  margin: 10px 0;
+  margin: 12px 0 10px 0;
+  border-radius: 3px;
 }
-.timeline > .scroll > .list > .item > .link .label {
+.timeline > .scroll > .list > .item > .link > .label {
   display: block;
 }
 .timeline > .scroll > .list > .item > i {
@@ -73,16 +80,46 @@
   right: 0;
   top: 23px;
 }
-.timeline > .scroll > .list > .item-new > .link {
-  cursor: pointer;
+.timeline > .scroll > .list > .item-prev > .link:hover > .time {
+  background: #ffba58;
+  color: #FFF;
+}
+.timeline > .scroll > .list > .item-prev > .link-selected > .time {
+  background: #f6a83a;
+  color: #FFF;
+}
+.timeline > .scroll > .list > .item-prev > .link-selected:hover > .time {
+  background: #f6a83a;
+}
+.timeline > .scroll > .list > .item-now > .link {
+  color: #d03a21;
+}
+.timeline > .scroll > .list > .item-now > .link:hover > .time {
+  background: #d03a21;
+  color: #FFF;
+}
+.timeline > .scroll > .list > .item-now > .link-selected > .time {
+  background: #d03a21;
+  color: #FFF;
+}
+.timeline > .scroll > .list > .item-now > .link-selected:hover > .time {
+  background: #d03a21;
+}
+.timeline > .scroll > .list > .item-next > .link {
   color: #559819;
 }
-.timeline > .scroll > .list > .item-new > .link:hover .time {
-  background: #559819;
+.timeline > .scroll > .list > .item-next > .link:hover > .time {
+  background: #69cb43;
   color: #FFF;
-  border-radius: 3px;
 }
-.timeline > .scroll > .list > .item-new > i {
+.timeline > .scroll > .list > .item-next > .link-selected > .time {
+  background: #46b807;
+  color: #FFF;
+}
+.timeline > .scroll > .list > .item-next > .link-selected:hover > .time {
+  background: #46b807;
+}
+.timeline > .scroll > .list > .item-next > i {
   border-color: #559819;
 }
 .timeline > .scroll > .list > .item:last-child {
