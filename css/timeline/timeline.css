@@ -17,7 +17,7 @@
   cursor: pointer;
 }
 .timeline > .nav-prev {
-  background: url("http://127.0.0.1:8020/jQuerySkills/images/timeline/time-arrow.png") no-repeat 0 -29px;
+  background: url("../../images/timeline/time-arrow.png") no-repeat 0 -29px;
   left: 19px;
   margin-right: 8px;
 }
@@ -25,7 +25,7 @@
   background-position: 0 0;
 }
 .timeline > .nav-next {
-  background: url("http://127.0.0.1:8020/jQuerySkills/images/timeline/time-arrow.png") no-repeat 0 -87px;
+  background: url("../../images/timeline/time-arrow.png") no-repeat 0 -87px;
   right: 19px;
   margin-left: 8px;
 }
