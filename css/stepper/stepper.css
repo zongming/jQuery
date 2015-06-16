@@ -1,0 +1,47 @@
+@charset "UTF-8";
+.stepper {
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -webkit-user-select: none;
+  border: 1px solid #ccc;
+  width: 102px;
+  height: 26px;
+  color: #000;
+}
+.stepper > .add {
+  float: left;
+  width: 26px;
+  height: 26px;
+  border-left: 1px solid #ccc;
+  text-align: center;
+  line-height: 26px;
+  font-weight: bold;
+  cursor: pointer;
+}
+.stepper > .disabled {
+  color: #aaa;
+}
+.stepper > .subtract {
+  float: left;
+  width: 26px;
+  height: 26px;
+  border-right: 1px solid #ccc;
+  text-align: center;
+  line-height: 26px;
+  font-weight: bold;
+  cursor: pointer;
+}
+.stepper > .input {
+  float: left;
+  width: 48px;
+  height: 26px;
+}
+.stepper > .input input {
+  outline: none;
+  float: left;
+  width: 45px;
+  height: 24px;
+  line-height: 24px;
+  text-align: center;
+  border: none;
+}
