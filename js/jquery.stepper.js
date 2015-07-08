@@ -58,9 +58,9 @@ $.widget('qbao.stepper', {
             this.n = this.options.min;
         }
         if(this.n >  this.options.max) {
-            this.n = this.n =  this.options.max;
+            this.n = this.options.max;
         }
-        this.element.find('input').val(this.n);
+        this.$input.val(this.n);
     },
     
     value: function(n) {

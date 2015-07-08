@@ -37,7 +37,10 @@
         <script src="js/jquery.timecounter.js" type="text/javascript"></script>
         <script type="text/javascript">
             $('.timecounter').timecounter({
-                time: 10000000
+                time: 5000,
+                timeout: function() {
+                    alert('timeout');
+                }
             });
         </script>
 </html>

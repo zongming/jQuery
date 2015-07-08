@@ -57,6 +57,10 @@
             if(this.time < 0) {
                 this.time = 0;
             }
+            if (this.time == 0) {
+                this._trigger('timeout');
+                this.stop();
+            }
             
             var t = (this.time / 1000).toFixed(0),
                 day = Math.floor(t / 86400),
