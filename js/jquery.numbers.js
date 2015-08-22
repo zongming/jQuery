@@ -84,7 +84,13 @@
                 }
                 this._currentNumber = this.options.number;
             }
-        }
+        },
+        
+        _destroy: function() {
+            this.$number.remove();
+            this.$symbol.remove();
+            this.widget().empty();
+        } 
     });
     
     $.widget("qbao.numbers", {
@@ -148,7 +154,6 @@
                         this._cache[i].hide();
                     }
                 }
-                
             }
             
             for(var k = i; k >=0; k--) {
@@ -160,6 +165,15 @@
                     this._cache[k].hide();
                 }
             }
+        },
+        
+        _destroy: function() {
+            $.each(this._cache, function() {
+                $(this).number('destroy');
+            });
+            this._cache.length = 0;
+            
+            this.widget().empty();
         } 
     });
 })(jQuery);

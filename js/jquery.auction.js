@@ -130,6 +130,13 @@
                 }
                 this._trigger('refresh', null, {time: this.currentTime});
             }
+        },
+        
+        // destroy this widget instance
+        _destroy: function() {
+            clearTimeout(this.timeout);
+            
+            this.$number.numbers('destroy');
         }
     });
     
