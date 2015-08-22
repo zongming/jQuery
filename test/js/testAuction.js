@@ -2,6 +2,8 @@
 
 QUnit.module( "匀速降价测试", {
     beforeEach: function() {
+        this.div = $('<div id="auctionA"></div>').appendTo('#qunit-fixture');
+        
         var config = {
             start: 2500.00,
             totalTime: 1080000,
@@ -9,7 +11,7 @@ QUnit.module( "匀速降价测试", {
             interval: 1000, 
             cutDown: 1.00,
         };
-        this.widget = $('#auctionA').auctionA(config);
+        this.widget = this.div.auctionA(config);
 
         this.tests = [
             {time: 0, price: 2500},
@@ -21,6 +23,8 @@ QUnit.module( "匀速降价测试", {
     afterEach: function() {
         this.tests = null;
         this.widget.auctionA('destroy');
+        
+        this.div.remove();
     }
 });
 
@@ -49,6 +53,7 @@ QUnit.test("设置价格测试时间", function(assert) {
 
 QUnit.module( "加速降价测试", {
     beforeEach: function() {
+        this.div = $('<div id="auctionB"></div>').appendTo('#qunit-fixture');
         var config = {
             start: 2500.00,
             totalTime: 1080000,
@@ -61,7 +66,7 @@ QUnit.module( "加速降价测试", {
             CDchangeTimes: 10
         };
         
-        this.widget = $('#auctionB').auctionB(config);
+        this.widget = this.div.auctionB(config);
         
         this.tests = [
             {time: 0, price: 2500},
@@ -95,8 +100,11 @@ QUnit.module( "加速降价测试", {
     },
     
     afterEach: function() {
+        
         this.tests = null;
         this.widget.auctionB('destroy');
+        
+        this.div.remove();
     }
 });
 
@@ -141,6 +149,7 @@ QUnit.test("设置价格测试时间", function(assert) {
 
 QUnit.module( "减速降价测试", {
     beforeEach: function() {
+        this.div = $('<div id="auctionB1"></div>').appendTo('#qunit-fixture');
         var config = {
             start: 2500.00,
             totalTime: 1080000,
@@ -154,7 +163,7 @@ QUnit.module( "减速降价测试", {
         };
         config.type = -1;
         
-        this.widget = $('#auctionB1').auctionB(config);
+        this.widget = this.div.auctionB(config);
         
         this.tests = [
             {time: 0, price: 2500},
@@ -180,6 +189,8 @@ QUnit.module( "减速降价测试", {
     afterEach: function() {
         this.tests = null;
         this.widget.auctionB('destroy');
+        
+        this.div.remove();
     }
 });
 
@@ -229,6 +240,8 @@ QUnit.test("设置价格测试时间", function(assert) {
 
 QUnit.module( "按步下跌测试", {
     beforeEach: function() {
+        this.div = $('<div id="auctionC"></div>').appendTo('#qunit-fixture');
+        
         var interval = 1000;
         var start = 2500000;
         
@@ -245,7 +258,7 @@ QUnit.module( "按步下跌测试", {
             n += c;
             steps[i+1] = {t: (i + 1) * interval, p: n};
         }
-        this.widget = $('#auctionC').auctionC(config).auctionC('updateSteps', steps);
+        this.widget = this.div.auctionC(config).auctionC('updateSteps', steps);
         
         this.tests = steps.filter(function(item, i) {
             return i % 50 === 0;
@@ -255,6 +268,8 @@ QUnit.module( "按步下跌测试", {
     afterEach: function() {
         this.tests = null;
         this.widget.auctionC('destroy');
+        
+        this.div.remove();
     }
 });
 
